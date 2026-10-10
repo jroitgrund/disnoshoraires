@@ -83,7 +83,7 @@ export const MovieSchema = MovieInfoSchema.extend({
 export const CrawlSchema = z.object({
   /** Today. */
   from: z.string(),
-  /** The Tuesday that ends the current cinema week. */
+  /** The first Tuesday after today. */
   to: z.string(),
   crawledAt: z.string(),
   theaters: z.array(TheaterSchema),

@@ -1,5 +1,5 @@
 import { Session } from "pantomime";
-import { cinemaWeek, parisDate } from "../shared/dates.ts";
+import { datesBetween, nextTuesday, parisDate } from "../shared/dates.ts";
 import type { Crawl, Theater } from "../shared/schema.ts";
 import {
   listTheaters,
@@ -9,7 +9,7 @@ import {
 import { mapSequential } from "./lists.ts";
 
 /**
- * All showtimes from today to the end of the cinema week (Tuesday) in a city's theaters,
+ * All showtimes from today to the next Tuesday in a city's theaters,
  * grouped by movie. Fails as a whole or not at all.
  */
 export async function crawlCity(
@@ -30,9 +30,9 @@ export async function crawlCity(
   return assembleCrawl(today, dates, new Date().toISOString(), theaters, rows);
 }
 
-/** The days of the cinema week from today on: AlloCiné does not serve past days. */
+/** From today on: AlloCiné does not serve past days. */
 export function crawlDates(today: string): string[] {
-  return cinemaWeek(today).filter((date) => date >= today);
+  return datesBetween(today, nextTuesday(today));
 }
 
 /** Groups the rows by movie. */

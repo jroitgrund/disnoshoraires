@@ -16,14 +16,13 @@ export function parisTime(now: Date): string {
   }).format(now);
 }
 
-/** The 7 dates from the last Wednesday on or before `today` to the Tuesday after it: French cinemas change their programme on Wednesdays. */
-export function cinemaWeek(today: string): string[] {
-  const sinceWednesday =
-    (new Date(`${today}T00:00:00Z`).getUTCDay() - 3 + 7) % 7;
-  return datesBetween(
-    addDays(today, -sinceWednesday),
-    addDays(today, 6 - sinceWednesday),
-  );
+/**
+ * The first Tuesday after `today`: French cinemas change their programme on Wednesdays.
+ * On a Tuesday, the new programme is out: the next one ends the cinema week to come.
+ */
+export function nextTuesday(today: string): string {
+  const untilTuesday = (2 - new Date(`${today}T00:00:00Z`).getUTCDay() + 7) % 7;
+  return addDays(today, untilTuesday === 0 ? 7 : untilTuesday);
 }
 
 export function addDays(date: string, days: number): string {

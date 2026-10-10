@@ -1,6 +1,6 @@
 # Dis nos horaires
 
-A static site with all cinema showtimes of 20 French cities, one page per city, from today to the end of the cinema week (Tuesday). The root page lets the visitor choose a city.
+A static site with all cinema showtimes of 20 French cities, one page per city, from today to the next Tuesday. The root page lets the visitor choose a city.
 
 ## Scripts
 
