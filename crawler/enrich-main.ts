@@ -55,5 +55,5 @@ await rename(`${output}.tmp`, output);
 
 async function enrichWithSession(movies: readonly MovieInfo[]) {
   await using session = await Session.launch();
-  return enrich(session, movies);
+  return await enrich(session, movies);
 }
