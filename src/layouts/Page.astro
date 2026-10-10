@@ -5,9 +5,11 @@ interface Props {
   /** Read by screen readers after the name, and in the page title. */
   tagline: string;
   description: string;
+  /** Without it the footer is only its icons: the sign above already names the site. */
+  footerName?: boolean;
 }
 
-const { tagline, description } = Astro.props;
+const { tagline, description, footerName = true } = Astro.props;
 ---
 
 <!doctype html>
@@ -28,8 +30,8 @@ const { tagline, description } = Astro.props;
       Dis nos horaires<span class="sr-only">, {tagline}</span>
     </h1>
     <slot />
-    <footer class="footer">
-      <p class="footer-name">Dis nos horaires</p>
+    <footer class:list={["footer", { "footer-bare": !footerName }]}>
+      {footerName && <p class="footer-name">Dis nos horaires</p>}
       <ul class="footer-links">
         <li>
           <a

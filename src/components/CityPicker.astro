@@ -1,5 +1,6 @@
 ---
 import { CITIES } from "../../shared/cities.ts";
+import { wallFontSize } from "../wall.ts";
 ---
 
 <main class="picker">
@@ -25,7 +26,10 @@ import { CITIES } from "../../shared/cities.ts";
   </form>
   <p class="sr-only" id="seek-status" role="status"></p>
   <nav aria-labelledby="villes">
-    <ul class="wall">
+    <ul
+      class="wall"
+      style={`font-size: ${wallFontSize(CITIES.map((city) => city.name))}`}
+    >
       {CITIES.map((city) => (
         <li>
           <a href={`/${city.slug}/`}>{city.name}</a>
