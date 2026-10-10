@@ -23,12 +23,12 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24
-      # Paris first: with 107 theaters, it takes as long as all the other cities.
+      # The longest crawls first: Paris takes 23 min, the other cities 1 to 4 min each.
       - id: list
         run: >
           echo "slugs=$(node --input-type=module -e "const { CITIES } = await import('./shared/cities.ts');
-          console.log(JSON.stringify(CITIES.map((city) => city.slug)
-          .toSorted((a, b) => Number(b === 'paris') - Number(a === 'paris'))))")" >> "$GITHUB_OUTPUT"
+          console.log(JSON.stringify(CITIES.toSorted((a, b) => b.crawlSeconds - a.crawlSeconds)
+          .map((city) => city.slug)))")" >> "$GITHUB_OUTPUT"
 
   # One job per city, in parallel: one after the other, the crawl takes over an hour.
   crawl:
@@ -39,7 +39,7 @@ jobs:
       contents: read
     strategy:
       fail-fast: false
-      # Paris alone takes as long as the other cities on 3 runners: more runners only add load.
+      # Paris takes longer than the other cities on 3 runners: more runners only add load.
       max-parallel: 4
       matrix:
         city: ${{ fromJSON(needs.cities.outputs.slugs) }}
