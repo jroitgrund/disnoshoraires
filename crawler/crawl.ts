@@ -1,13 +1,12 @@
 import { Session } from "pantomime";
+import { cinemaWeek, parisDate } from "../shared/dates.ts";
+import type { Crawl, Theater } from "../shared/schema.ts";
 import {
   listTheaters,
-  mapSequential,
   type ShowtimeRow,
   theaterShowtimes,
 } from "./allocine.ts";
-import type { Crawl, Theater } from "./schema.ts";
-
-export const MARSEILLE = 87914;
+import { mapSequential } from "./lists.ts";
 
 /**
  * All showtimes from today to the end of the cinema week (Tuesday) in a city's theaters,
@@ -15,11 +14,12 @@ export const MARSEILLE = 87914;
  */
 export async function crawlCity(
   cityId: number,
-  today: string = parisToday(),
+  today: string = parisDate(new Date()),
 ): Promise<Crawl> {
   const dates = crawlDates(today);
   await using session = await Session.launch();
   const theaters = await listTheaters(session, cityId);
+  // One at a time: each call loads its referrer page, as a person clicking through would.
   const rows = (
     await mapSequential(theaters, (theater) =>
       mapSequential(dates, (date) =>
@@ -68,22 +68,4 @@ export function assembleCrawl(
       })
       .toSorted((a, b) => a.title.localeCompare(b.title, "fr") || a.id - b.id),
   };
-}
-
-/** The 7 dates from the last Wednesday on or before `today` to the Tuesday after it: French cinemas change their programme on Wednesdays. */
-function cinemaWeek(today: string): string[] {
-  const day = new Date(`${today}T00:00:00Z`);
-  const sinceWednesday = (day.getUTCDay() - 3 + 7) % 7;
-  return Array.from({ length: 7 }, (_, i) =>
-    new Date(day.getTime() + (i - sinceWednesday) * 86_400_000)
-      .toISOString()
-      .slice(0, 10),
-  );
-}
-
-/** AlloCiné days follow French time. */
-function parisToday(): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris" }).format(
-    new Date(),
-  );
 }

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { fixture } from "./fixture.ts";
+import { fixture } from "./test/fixture.ts";
 import {
   parseSensCritiqueProduct,
   parseSensCritiqueSearch,

@@ -5,6 +5,7 @@ import {
   nextStep,
   type SearchResult,
 } from "./lookup.ts";
+import { closeYear } from "./match.ts";
 
 interface Film {
   readonly id: string;
@@ -48,7 +49,7 @@ function simulate(
 const lookup = (known: string[], titles: string[]): Lookup<Film> => ({
   known,
   titles,
-  year: 2026,
+  consider: (result) => closeYear(2026, result.year),
   accept: (film) => film.ok,
 });
 

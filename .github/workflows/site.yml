@@ -9,10 +9,57 @@ on:
     branches-ignore: [main]
 
 jobs:
-  production:
-    if: github.event_name != 'push'
+  cities:
+    if: github.event_name != 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    permissions:
+      contents: read
+    outputs:
+      slugs: ${{ steps.list.outputs.slugs }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - id: list
+        run: >
+          echo "slugs=$(node --input-type=module -e "const { CITIES } = await import('./shared/cities.ts');
+          console.log(JSON.stringify(CITIES.map((city) => city.slug)))")" >> "$GITHUB_OUTPUT"
+
+  # One job per city, in parallel: one after the other, the crawl takes over an hour.
+  crawl:
+    needs: cities
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      # Paris alone takes as long as the other cities on 3 runners: more runners only add load.
+      max-parallel: 4
+      matrix:
+        city: ${{ fromJSON(needs.cities.outputs.slugs) }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # pantomime opens Google Chrome with a window: it needs Chrome and a display.
+      - run: npx patchright install --with-deps --force chrome
+      - run: xvfb-run --auto-servernum npm run crawl -- ${{ matrix.city }}
+      - uses: actions/upload-artifact@v5
+        with:
+          name: showtimes-${{ matrix.city }}
+          path: data/showtimes/
+          retention-days: 1
+
+  # Runs only when all cities are crawled: a city without data has no page.
+  production:
+    needs: crawl
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
     concurrency: data
     permissions:
       contents: read
@@ -26,16 +73,12 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      # pantomime opens Google Chrome with a window: it needs Chrome and a display.
       - run: npx patchright install --with-deps --force chrome
-      - uses: dawidd6/action-download-artifact@v27
+      - uses: actions/download-artifact@v5
         with:
-          name: data
-          path: data
-          search_artifacts: true
-          workflow_conclusion: ""
-          if_no_artifact_found: ignore
-      - run: xvfb-run --auto-servernum npm run crawl
+          pattern: showtimes-*
+          path: data/showtimes/
+          merge-multiple: true
       - run: xvfb-run --auto-servernum npm run enrich
       - uses: actions/upload-artifact@v5
         with:

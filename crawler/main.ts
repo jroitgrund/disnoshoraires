@@ -1,17 +1,20 @@
-import { mkdir, rename, writeFile } from "node:fs/promises";
-import { dirname } from "node:path";
-import { crawlCity, MARSEILLE } from "./crawl.ts";
-import { CrawlSchema } from "./schema.ts";
+import { join } from "node:path";
+import { CITIES, cityBySlug } from "../shared/cities.ts";
+import { CrawlSchema } from "../shared/schema.ts";
+import { crawlCity } from "./crawl.ts";
+import { mapSequential } from "./lists.ts";
+import { writeJson } from "./output.ts";
 
-const [output] = process.argv.slice(2);
-if (output == null) {
-  throw new Error("usage: node crawler/main.ts <output.json>");
+const [dir, ...slugs] = process.argv.slice(2);
+if (dir == null) {
+  throw new Error("usage: node crawler/main.ts <dir> [city slug...]");
 }
 
-// The site reads the file with the same schema: a crawl that does not match it is not written.
-const crawl = CrawlSchema.parse(await crawlCity(MARSEILLE));
-const json = `${JSON.stringify(crawl, null, 2)}\n`;
-await mkdir(dirname(output), { recursive: true });
-// Write then rename, so a reader never sees a half-written file.
-await writeFile(`${output}.tmp`, json);
-await rename(`${output}.tmp`, output);
+const cities = slugs.length === 0 ? CITIES : slugs.map(cityBySlug);
+await mapSequential(cities, async (city) => {
+  // The site reads the file with the same schema: a crawl that does not match it is not written.
+  await writeJson(
+    join(dir, `${city.slug}.json`),
+    CrawlSchema.parse(await crawlCity(city.allocineId)),
+  );
+});

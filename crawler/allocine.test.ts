@@ -1,9 +1,26 @@
 import { expect, test } from "vitest";
-import { parseShowtimesPage, parseTheaters, showtimeRows } from "./allocine.ts";
-import { fixture } from "./fixture.ts";
+import {
+  parsePageCount,
+  parseShowtimesPage,
+  parseTheaters,
+  showtimeRows,
+} from "./allocine.ts";
+import { fixture } from "./test/fixture.ts";
 
 test("theaters", () => {
   expect(parseTheaters(fixture("allocine/theaters.html"))).toMatchSnapshot();
+});
+
+test("theater page count", () => {
+  expect(parsePageCount(fixture("allocine/theaters.html"))).toBe(1);
+  expect(parsePageCount(fixture("allocine/theaters-paris-p1.html"))).toBe(6);
+  expect(parsePageCount(fixture("allocine/theaters-paris-p6.html"))).toBe(6);
+});
+
+test("theaters on the last page", () => {
+  expect(
+    parseTheaters(fixture("allocine/theaters-paris-p6.html")),
+  ).toMatchSnapshot();
 });
 
 test("showtimes", () => {
@@ -13,6 +30,17 @@ test("showtimes", () => {
     "2026-10-10",
   );
   expect(showtimeRows([page], "P0028", "2026-10-10")).toMatchSnapshot();
+});
+
+test("showings without a film are left out", () => {
+  const page = parseShowtimesPage(
+    fixture("allocine/showtimes-p0923-no-movie.json"),
+    "P0923",
+    "2026-10-10",
+  );
+  const rows = showtimeRows([page], "P0923", "2026-10-10");
+  expect(page.results.filter((result) => result.movie == null)).toHaveLength(3);
+  expect(new Set(rows.map((row) => row.movie.id)).size).toBe(12);
 });
 
 test("day without showtimes", () => {

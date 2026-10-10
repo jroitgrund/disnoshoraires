@@ -11,6 +11,8 @@ export const MovieInfoSchema = z.object({
   id: z.number(),
   title: z.string(),
   originalTitle: z.string(),
+  /** In French. */
+  synopsis: z.string().nullable(),
   runtime: z.string().nullable(),
   genres: z.array(z.string()),
   productionYear: z.number().nullable(),
@@ -39,6 +41,8 @@ export const ExternalSchema = z.object({
       ratingCount: z.number(),
       /** The full-size backdrop most likely to be a frame of the film, or `null` when TMDB has none without text. */
       backdrop: z.string().nullable(),
+      /** In French. `null` when TMDB has none in French. */
+      synopsis: z.string().nullable(),
     })
     .nullable(),
   letterboxd: z
@@ -66,6 +70,14 @@ export const ExternalSchema = z.object({
       ratingCount: z.number(),
     })
     .nullable(),
+  /** The film's Wikipedia articles. `null` without a Wikidata item that passes the check. */
+  wikipedia: z
+    .object({ en: z.string().nullable(), fr: z.string().nullable() })
+    .nullable(),
+});
+
+export const MovieSchema = MovieInfoSchema.extend({
+  screenings: z.array(ScreeningSchema),
 });
 
 export const CrawlSchema = z.object({
@@ -75,23 +87,20 @@ export const CrawlSchema = z.object({
   to: z.string(),
   crawledAt: z.string(),
   theaters: z.array(TheaterSchema),
-  movies: z.array(
-    MovieInfoSchema.extend({ screenings: z.array(ScreeningSchema) }),
-  ),
+  movies: z.array(MovieSchema),
 });
 
-/** The output of the enrich pass, next to the crawl it reads. */
+/** The output of the enrich pass, for the crawls of all cities. */
 export const EnrichmentSchema = z.object({
-  /** `crawledAt` of the crawl it enriches. */
-  crawledAt: z.string(),
   enrichedAt: z.string(),
-  /** By AlloCiné movie ID, for every movie of the crawl. */
+  /** By AlloCiné movie ID, for every movie of the crawls. */
   movies: z.record(z.string(), ExternalSchema),
 });
 
 export type Theater = z.infer<typeof TheaterSchema>;
 export type MovieInfo = z.infer<typeof MovieInfoSchema>;
 export type Screening = z.infer<typeof ScreeningSchema>;
+export type Movie = z.infer<typeof MovieSchema>;
 export type External = z.infer<typeof ExternalSchema>;
 export type Crawl = z.infer<typeof CrawlSchema>;
 export type Enrichment = z.infer<typeof EnrichmentSchema>;

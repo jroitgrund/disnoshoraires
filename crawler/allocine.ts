@@ -1,7 +1,8 @@
 import { parse } from "node-html-parser";
 import type { Session } from "pantomime";
 import { z } from "zod";
-import type { MovieInfo, Screening, Theater } from "./schema.ts";
+import type { MovieInfo, Screening, Theater } from "../shared/schema.ts";
+import { mapSequential } from "./lists.ts";
 
 const ORIGIN = "https://www.allocine.fr";
 
@@ -13,23 +14,27 @@ const TheaterCardSchema = z.object({
   address: z.string(),
 });
 
+/** `null` when the field is missing or `null`. */
+function nullish<T extends z.ZodType>(schema: T) {
+  return schema.nullish().transform((v) => v ?? null);
+}
+
 const ShowtimeSchema = z.object({
   startsAt: z.string(),
   diffusionVersion: z.enum(["DUBBED", "ORIGINAL", "LOCAL"]),
   experience: z.array(z.string()).nullable(),
-  data: z
-    .object({
-      ticketing: z
-        .array(z.object({ urls: z.array(z.string()), provider: z.string() }))
-        .nullish()
-        .transform((v) => v ?? null),
-    })
-    .nullish()
-    .transform((v) => v ?? null),
+  data: nullish(
+    z.object({
+      ticketing: nullish(
+        z.array(z.object({ urls: z.array(z.string()), provider: z.string() })),
+      ),
+    }),
+  ),
 });
 
 const MovieSchema = z.object({
   internalId: z.number(),
+  synopsis: nullish(z.string()),
   title: z.string(),
   originalTitle: z.string(),
   runtime: z.string().nullable(),
@@ -52,13 +57,20 @@ const ShowtimesPageSchema = z.object({
   message: z.string().nullable(),
   results: z.array(
     z.object({
-      movie: MovieSchema,
+      // `null` for a showing that AlloCiné has no film page for: no title, nothing to list.
+      movie: MovieSchema.nullable(),
       // Keys name the version bucket: `original`, `multiple_st`, `original_sme`, …
       showtimes: z.record(z.string(), z.array(ShowtimeSchema)),
     }),
   ),
   pagination: z.object({ totalPages: z.number() }),
 });
+
+const LANGUAGES = {
+  DUBBED: "dubbed",
+  ORIGINAL: "original",
+  LOCAL: "local",
+} as const satisfies Record<string, Screening["language"]>;
 
 export type ShowtimesPage = z.infer<typeof ShowtimesPageSchema>;
 
@@ -67,13 +79,31 @@ export interface ShowtimeRow {
   readonly screening: Screening;
 }
 
-/** The city page renders its theater list on the server; there is no API call for it. */
+/**
+ * The city page renders its theater list on the server; there is no API call for it.
+ * It shows 20 theaters per page.
+ */
 export async function listTheaters(
   session: Session,
   cityId: number,
 ): Promise<Theater[]> {
-  return parseTheaters(
-    await session.visit(`${ORIGIN}/salle/cinema/ville-${String(cityId)}/`),
+  const url = `${ORIGIN}/salle/cinema/ville-${String(cityId)}/`;
+  const first = await session.visit(url);
+  const rest = await mapSequential(
+    Array.from({ length: parsePageCount(first) - 1 }, (_, i) => i + 2),
+    (page) => session.visit(`${url}?page=${String(page)}`),
+  );
+  return [first, ...rest].flatMap(parseTheaters);
+}
+
+/** The highest page number in the pagination, 1 without pagination. */
+export function parsePageCount(html: string): number {
+  return Math.max(
+    1,
+    ...parse(html)
+      .querySelectorAll(".pagination-item-holder .item")
+      .map((item) => Number(item.text.trim()))
+      .filter(Number.isInteger),
   );
 }
 
@@ -122,26 +152,28 @@ export function showtimeRows(
   return pages
     .flatMap((page) => page.results)
     .flatMap(({ movie, showtimes }) =>
-      Object.entries(showtimes).flatMap(([bucket, list]) =>
-        list.map((showtime) => {
-          if (!showtime.startsAt.startsWith(date)) {
-            throw new Error(
-              `showtime ${showtime.startsAt} at ${theaterId} is not on ${date}`,
-            );
-          }
-          return {
-            movie: movieInfo(movie),
-            screening: {
-              theaterId,
-              startsAt: showtime.startsAt,
-              language: languageOf(showtime.diffusionVersion),
-              subtitles: subtitlesOf(bucket),
-              experiences: showtime.experience ?? [],
-              bookingUrl: bookingUrl(showtime.data?.ticketing ?? null),
-            },
-          };
-        }),
-      ),
+      movie == null
+        ? []
+        : Object.entries(showtimes).flatMap(([bucket, list]) =>
+            list.map((showtime) => {
+              if (!showtime.startsAt.startsWith(date)) {
+                throw new Error(
+                  `showtime ${showtime.startsAt} at ${theaterId} is not on ${date}`,
+                );
+              }
+              return {
+                movie: movieInfo(movie),
+                screening: {
+                  theaterId,
+                  startsAt: showtime.startsAt,
+                  language: LANGUAGES[showtime.diffusionVersion],
+                  subtitles: subtitlesOf(bucket),
+                  experiences: showtime.experience ?? [],
+                  bookingUrl: bookingUrl(showtime.data?.ticketing ?? null),
+                },
+              };
+            }),
+          ),
     );
 }
 
@@ -184,6 +216,7 @@ function movieInfo(movie: z.infer<typeof MovieSchema>): MovieInfo {
     id: movie.internalId,
     title: movie.title.trim(),
     originalTitle: movie.originalTitle.trim(),
+    synopsis: movie.synopsis?.trim() || null,
     // AlloCiné gives "0h 00min" when it does not know the runtime.
     runtime: movie.runtime === "0h 00min" ? null : movie.runtime,
     genres: movie.genres.map((genre) => genre.translate),
@@ -213,32 +246,12 @@ function theaterUrl(theaterId: string): string {
   return `${ORIGIN}/seance/salle_gen_csalle=${theaterId}.html`;
 }
 
-function languageOf(
-  diffusionVersion: "DUBBED" | "ORIGINAL" | "LOCAL",
-): Screening["language"] {
-  return diffusionVersion === "DUBBED"
-    ? "dubbed"
-    : diffusionVersion === "ORIGINAL"
-      ? "original"
-      : "local";
-}
-
 function subtitlesOf(bucket: string): Screening["subtitles"] {
-  return bucket.endsWith("_sme")
-    ? "deaf"
-    : bucket.endsWith("_st")
-      ? "standard"
-      : "none";
-}
-
-/** One at a time: each call loads its referrer page, as a person clicking through would. */
-export async function mapSequential<T, R>(
-  items: readonly T[],
-  fn: (item: T) => Promise<R>,
-): Promise<R[]> {
-  const results: R[] = [];
-  for (const item of items) {
-    results.push(await fn(item));
+  if (bucket.endsWith("_sme")) {
+    return "deaf";
   }
-  return results;
+  if (bucket.endsWith("_st")) {
+    return "standard";
+  }
+  return "none";
 }

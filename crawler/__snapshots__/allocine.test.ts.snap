@@ -17,6 +17,7 @@ exports[`showtimes 1`] = `
       "originalTitle": "Les Survivants du Che",
       "productionYear": 2026,
       "runtime": "1h 38min",
+      "synopsis": "Après le triomphe de la Révolution cubaine en 1959, six guérilleros ont suivi Che Guevara dans sa tentative d’étendre le soulèvement au-delà de l’île. En 1967, après l’exécution du Che, ils se lancent dans un périple extraordinaire de 2 400 km, poursuivis par 4 000 soldats.",
       "title": "Les Survivants du Che",
       "url": "https://www.allocine.fr/film/fichefilm_gen_cfilm=318226.html",
     },
@@ -47,6 +48,7 @@ exports[`showtimes 1`] = `
       "originalTitle": "Spider-Man: Brand New Day",
       "productionYear": 2026,
       "runtime": "2h 25min",
+      "synopsis": "C’est un tout nouveau jour pour Peter Parker Dans un monde qui ne se souvient plus de lui, il poursuit sans relâche sa lutte contre la criminalité. Mais le sentiment d’avoir été oublié par ses amis qui avancent désormais sans lui provoque un changement chez Peter qu’il n’est peut-être pas en mesure de contrôler. Et pourtant, c’est cette mutation qui pourrait être sa seule chance de s’opposer à un adversaire terrifiant, capable d’agir sans jamais être repéré et prêt à s’attaquer à la ville et à tous les proches de Spider-Man. Car si le monde ne se souvient plus de Peter Parker, lui ne l’a pas oublié…",
       "title": "Spider-Man: Brand New Day",
       "url": "https://www.allocine.fr/film/fichefilm_gen_cfilm=276608.html",
     },
@@ -159,6 +161,53 @@ exports[`theaters 1`] = `
     "id": "W1302",
     "name": "Villa Méditerranée",
     "url": "https://www.allocine.fr/seance/salle_gen_csalle=W1302.html",
+  },
+]
+`;
+
+exports[`theaters on the last page 1`] = `
+[
+  {
+    "address": "92, rue Bonaparte 75006 Paris",
+    "id": "W7506",
+    "name": "Institut Hongrois de Paris",
+    "url": "https://www.allocine.fr/seance/salle_gen_csalle=W7506.html",
+  },
+  {
+    "address": "37 quai Branly 75007 Paris",
+    "id": "P0007",
+    "name": "Cinéma du musée du quai Branly - Jacques Chirac",
+    "url": "https://www.allocine.fr/seance/salle_gen_csalle=P0007.html",
+  },
+  {
+    "address": "38 rue des Francs-Bourgeois 75003 Paris",
+    "id": "W0375",
+    "name": "Centre Culturel Suisse",
+    "url": "https://www.allocine.fr/seance/salle_gen_csalle=W0375.html",
+  },
+  {
+    "address": "126-128 Bd Ney 75018 Paris",
+    "id": "G0G46",
+    "name": "Le CiNey",
+    "url": "https://www.allocine.fr/seance/salle_gen_csalle=G0G46.html",
+  },
+  {
+    "address": "6 Pl. d'Iéna 75116 Paris",
+    "id": "P5016",
+    "name": "Guimet - Musée national des arts asiatiques",
+    "url": "https://www.allocine.fr/seance/salle_gen_csalle=P5016.html",
+  },
+  {
+    "address": "17, Avenue d’Iéna 75116 Paris",
+    "id": "W1675",
+    "name": "Goethe Institut Paris",
+    "url": "https://www.allocine.fr/seance/salle_gen_csalle=W1675.html",
+  },
+  {
+    "address": "37 Av. Hoche 75008 Paris",
+    "id": "G0FQ4",
+    "name": "Royal Monceau - Raffles Paris",
+    "url": "https://www.allocine.fr/seance/salle_gen_csalle=G0FQ4.html",
   },
 ]
 `;

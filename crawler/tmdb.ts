@@ -1,9 +1,12 @@
 import { type HTMLElement, parse } from "node-html-parser";
 import { z } from "zod";
-import { request } from "./http.ts";
-import type { Identity } from "./match.ts";
+import { SITES } from "../shared/sites.ts";
+import type { Identity } from "./film.ts";
+import type { Http } from "./http.ts";
+import type { SearchResult, Site } from "./lookup.ts";
+import { parseJsonLd, yearIn } from "./parse.ts";
 
-const ORIGIN = "https://www.themoviedb.org";
+const ORIGIN = SITES.tmdb.origin;
 /** TMDB's own account. It imports distributor press kits: key art and posed photos as well as stills. */
 const IMPORT_ACCOUNT = "tmdb01tmdb01";
 /** Fewer backdrops than this from one person are hand-picked images, not a series of frame grabs. */
@@ -17,11 +20,8 @@ export interface TmdbFilm extends Identity {
   /** Out of 10. */
   readonly rating: number | null;
   readonly ratingCount: number;
-}
-
-export interface SearchResult {
-  readonly id: string;
-  readonly year: number | null;
+  /** The French overview. `null` when TMDB has none in French. */
+  readonly synopsis: string | null;
 }
 
 export interface Backdrop {
@@ -40,15 +40,25 @@ const LdSchema = z.object({
     .optional(),
 });
 
+export function tmdbSite(http: Http): Site<TmdbFilm> {
+  return {
+    load: (id) => tmdbFilm(http, id),
+    search: (query) => searchTmdb(http, query),
+  };
+}
+
 /** The first page of results, in TMDB's order. TMDB searches all translated titles. */
-export async function searchTmdb(query: string): Promise<SearchResult[]> {
-  const response = await request(
-    `${ORIGIN}/search/movie?language=en-US&query=${encodeURIComponent(query)}`,
+async function searchTmdb(
+  http: Http,
+  query: string,
+): Promise<SearchResult<TmdbFilm>[]> {
+  const response = await http.request(
+    `${SITES.tmdb.search(query)}&language=en-US`,
   );
   return response == null ? [] : parseTmdbSearch(response.text);
 }
 
-export function parseTmdbSearch(html: string): SearchResult[] {
+export function parseTmdbSearch(html: string): SearchResult<TmdbFilm>[] {
   return parse(html)
     .querySelectorAll("#movie_results [data-object-id]")
     .map((card) => ({
@@ -64,13 +74,13 @@ export function parseTmdbSearch(html: string): SearchResult[] {
 }
 
 /** `null` when TMDB has no such film. */
-export async function tmdbFilm(id: string): Promise<TmdbFilm | null> {
-  const response = await request(`${ORIGIN}/movie/${id}?language=en-US`);
+async function tmdbFilm(http: Http, id: string): Promise<TmdbFilm | null> {
+  const response = await http.request(`${ORIGIN}/movie/${id}?language=en-US`);
   if (response == null) {
     return null;
   }
   // AlloCiné and TMDB can share only the French title: "Doraemon et le Château sous-marin".
-  const french = await request(`${ORIGIN}/movie/${id}?language=fr-FR`);
+  const french = await http.request(`${ORIGIN}/movie/${id}?language=fr-FR`);
   return parseTmdbFilm(id, response.text, french?.text ?? null);
 }
 
@@ -80,19 +90,17 @@ export function parseTmdbFilm(
   html: string,
   frenchHtml: string | null,
 ): TmdbFilm {
-  const frenchTitle = frenchHtml == null ? null : pageTitle(parse(frenchHtml));
+  const french = frenchHtml == null ? null : parse(frenchHtml);
+  const frenchTitle = french == null ? null : pageTitle(french);
   const root = parse(html);
+  const frenchOverview = french == null ? null : overview(french);
   const ld = LdSchema.parse(
-    JSON.parse(
-      (
-        root
-          .querySelectorAll('script[type="application/ld+json"]')
-          .map((script) => script.text)
-          .find((text) => text.includes('"@type":"Movie"')) ?? "{}"
-      )
-        .replace("/* <![CDATA[ */", "")
-        .replace("/* ]]> */", ""),
-    ) as unknown,
+    parseJsonLd(
+      root
+        .querySelectorAll('script[type="application/ld+json"]')
+        .map((script) => script.text)
+        .find((text) => text.includes('"@type":"Movie"')) ?? "{}",
+    ),
   );
   const title = pageTitle(root);
   const originalTitle = root
@@ -125,12 +133,17 @@ export function parseTmdbFilm(
       .map((person) => person.querySelector("a")?.text.trim() ?? ""),
     rating: ratingCount > 0 ? (ld.aggregateRating?.ratingValue ?? null) : null,
     ratingCount,
+    // Without a French overview, the French page shows the English one.
+    synopsis: frenchOverview === overview(root) ? null : frenchOverview,
   };
 }
 
 /** See `pickBackdrop`. */
-export async function tmdbBackdrop(id: string): Promise<string | null> {
-  const response = await request(
+export async function tmdbBackdrop(
+  http: Http,
+  id: string,
+): Promise<string | null> {
+  const response = await http.request(
     `${ORIGIN}/movie/${id}/images/backdrops?image_language=xx`,
   );
   return response == null
@@ -178,11 +191,11 @@ export function pickBackdrop(all: readonly Backdrop[]): string | null {
   return (series[0]?.[0] ?? backdrops[0])?.url ?? null;
 }
 
-function pageTitle(root: HTMLElement): string {
-  return root.querySelector(".title h2 a")?.text.trim() ?? "";
+function overview(root: HTMLElement): string | null {
+  const text = root.querySelector(".overview p")?.text.trim() ?? "";
+  return text === "" ? null : text;
 }
 
-function yearIn(text: string): number | null {
-  const match = /\b(\d{4})\b/.exec(text);
-  return match?.[1] == null ? null : Number(match[1]);
+function pageTitle(root: HTMLElement): string {
+  return root.querySelector(".title h2 a")?.text.trim() ?? "";
 }

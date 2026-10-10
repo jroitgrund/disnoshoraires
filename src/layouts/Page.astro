@@ -1,0 +1,60 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  /** Read by screen readers after the name, and in the page title. */
+  tagline: string;
+  description: string;
+}
+
+const { tagline, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a5bb5" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <title>{`Dis nos horaires, ${tagline}`}</title>
+  </head>
+  <body>
+    <h1 class="sign">
+      Dis nos horaires<span class="sr-only">, {tagline}</span>
+    </h1>
+    <slot />
+    <footer class="footer">
+      <p class="footer-name">Dis nos horaires</p>
+      <ul class="footer-links">
+        <li>
+          <a
+            class="footer-link i i-github"
+            href="https://github.com/jroitgrund/disnoshoraires"
+            target="_blank"
+            aria-label="GitHub"
+          ></a>
+        </li>
+        <li>
+          <a
+            class="footer-link i i-instagram"
+            href="https://www.instagram.com/disnoshoraires/"
+            target="_blank"
+            aria-label="Instagram"
+          ></a>
+        </li>
+        <li>
+          <a
+            class="footer-link i i-mail"
+            href="mailto:rawr@disnoshoraires.fr"
+            aria-label="Écrire à rawr@disnoshoraires.fr"
+          ></a>
+        </li>
+      </ul>
+    </footer>
+  </body>
+</html>

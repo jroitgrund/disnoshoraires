@@ -1,10 +1,11 @@
 import { parse } from "node-html-parser";
 import type { Session } from "pantomime";
 import { z } from "zod";
-import { fetchOrNull } from "./fetch.ts";
-import type { Identity } from "./match.ts";
-
-const ORIGIN = "https://www.rottentomatoes.com";
+import { SITES } from "../shared/sites.ts";
+import type { Identity } from "./film.ts";
+import { sessionRequest } from "./http.ts";
+import type { SearchResult, Site } from "./lookup.ts";
+import { parseJsonLd } from "./parse.ts";
 
 export interface RottenTomatoesFilm extends Identity {
   readonly url: string;
@@ -12,12 +13,6 @@ export interface RottenTomatoesFilm extends Identity {
   readonly critics: number | null;
   /** Popcornmeter, in %. Rotten Tomatoes shows none before 50 ratings. */
   readonly audience: number | null;
-}
-
-export interface SearchResult {
-  /** `m/<slug>`, as Wikidata stores it. */
-  readonly id: string;
-  readonly year: number | null;
 }
 
 const ScoreSchema = z
@@ -45,19 +40,29 @@ const HeroSchema = z.object({
 /** Only on pages of films with streaming or ticket offers. */
 const WhereToWatchSchema = z.object({ releaseYear: z.string().optional() });
 
+/** IDs are `m/<slug>`, as Wikidata stores them. */
+export function rottenTomatoesSite(session: Session): Site<RottenTomatoesFilm> {
+  return {
+    load: (id) => rottenTomatoesFilm(session, id),
+    search: (query) => searchRottenTomatoes(session, query),
+  };
+}
+
 /** Films only, in Rotten Tomatoes' order. */
-export async function searchRottenTomatoes(
+async function searchRottenTomatoes(
   session: Session,
   query: string,
-): Promise<SearchResult[]> {
-  const response = await fetchOrNull(
+): Promise<SearchResult<RottenTomatoesFilm>[]> {
+  const response = await sessionRequest(
     session,
-    `${ORIGIN}/search?search=${encodeURIComponent(query)}`,
+    SITES.rottenTomatoes.search(query),
   );
   return response == null ? [] : parseRottenTomatoesSearch(response.text);
 }
 
-export function parseRottenTomatoesSearch(html: string): SearchResult[] {
+export function parseRottenTomatoesSearch(
+  html: string,
+): SearchResult<RottenTomatoesFilm>[] {
   return parse(html)
     .querySelectorAll('search-page-result[type="movie"] search-page-media-row')
     .map((row) => ({
@@ -70,12 +75,15 @@ export function parseRottenTomatoesSearch(html: string): SearchResult[] {
     .filter((result) => result.id !== "");
 }
 
-/** `id` is `m/<slug>`. `null` when there is no such page. */
-export async function rottenTomatoesFilm(
+/** `null` when there is no such page. */
+async function rottenTomatoesFilm(
   session: Session,
   id: string,
 ): Promise<RottenTomatoesFilm | null> {
-  const response = await fetchOrNull(session, `${ORIGIN}/${id}`);
+  const response = await sessionRequest(
+    session,
+    `${SITES.rottenTomatoes.origin}/${id}`,
+  );
   return response == null
     ? null
     : parseRottenTomatoesFilm(response.url, response.text);
@@ -93,7 +101,7 @@ export function parseRottenTomatoesFilm(
     return null;
   }
   const scores = ScorecardSchema.parse(JSON.parse(scorecard) as unknown);
-  const facts = LdSchema.parse(JSON.parse(ld) as unknown);
+  const facts = LdSchema.parse(parseJsonLd(ld));
   const hero = root.querySelector("#media-hero-json")?.text;
   const whereToWatch = root.querySelector("#where-to-watch-json")?.text;
   // Each source misses the year on some pages. The hero shows "Now Playing" instead of the year while a film is in theaters.

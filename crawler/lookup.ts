@@ -1,6 +1,6 @@
-import { closeYear } from "./match.ts";
+import { unique } from "./lists.ts";
 
-/** Search results to load at most, per site and title, after the year filter. */
+/** Search results to load at most, per site and title, after `consider`. */
 const MAX_CANDIDATES = 5;
 
 /** How to find a film on one site. */
@@ -9,8 +9,8 @@ export interface Lookup<T> {
   readonly known: readonly string[];
   /** Searched one at a time. The next title only when the previous one gives no match. */
   readonly titles: readonly string[];
-  /** The AlloCiné year: search results far from it are not loaded. */
-  readonly year: number | null;
+  /** Search results worth loading. */
+  readonly consider: (result: SearchResult<T>) => boolean;
   readonly accept: (film: T) => boolean;
 }
 
@@ -43,7 +43,7 @@ type Searched<T> = Extract<Event<T>, { kind: "searched" }>;
 
 /**
  * The next request, or the first film that passes, in the order of the history.
- * Wikidata's IDs first. Then one title at a time: its results close in year, at most 5, no ID loaded twice.
+ * Wikidata's IDs first. Then one title at a time: its results worth loading, at most 5, no ID loaded twice.
  */
 export function nextStep<T>(
   lookup: Lookup<T>,
@@ -55,7 +55,7 @@ export function nextStep<T>(
   }
   const loaded = history.flatMap((e) => (e.kind === "loaded" ? [e.id] : []));
   const searched = history.flatMap((e) => (e.kind === "searched" ? [e] : []));
-  const id = candidates(lookup.known, searched, lookup.year).find(
+  const id = candidates(lookup.known, searched, lookup.consider).find(
     (c) => !loaded.includes(c),
   );
   if (id !== undefined) {
@@ -101,11 +101,11 @@ function filmsOf<T>(event: Event<T>): T[] {
   return event.results.flatMap((r) => (r.film === undefined ? [] : [r.film]));
 }
 
-/** Wikidata's IDs, then for each search the results to load: close in year, not yet a candidate, at most 5. */
+/** Wikidata's IDs, then for each search the results to load: worth loading, not yet a candidate, at most 5. */
 function candidates<T>(
   tried: readonly string[],
   searches: readonly Searched<T>[],
-  year: number | null,
+  consider: (result: SearchResult<T>) => boolean,
 ): string[] {
   const [first, ...rest] = searches;
   if (first === undefined) {
@@ -113,14 +113,10 @@ function candidates<T>(
   }
   const fresh = unique(
     first.results
-      .filter((r) => r.film === undefined && closeYear(year, r.year))
+      .filter((r) => r.film === undefined && consider(r))
       .map((r) => r.id),
   )
     .filter((id) => !tried.includes(id))
     .slice(0, MAX_CANDIDATES);
-  return candidates([...tried, ...fresh], rest, year);
-}
-
-function unique(values: readonly string[]): string[] {
-  return [...new Set(values)];
+  return candidates([...tried, ...fresh], rest, consider);
 }

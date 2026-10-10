@@ -154,6 +154,10 @@ h3 {
   --icon: url("/icons/map-pin.svg");
 }
 
+.i-arrow-right {
+  --icon: url("/icons/arrow-right.svg");
+}
+
 /* The two listings read as one page with a switch: the knob slides across
    the page change, the rest swaps at once. */
 
@@ -203,6 +207,36 @@ h3 {
   margin-right: 0.15em;
   background: currentColor;
   mask: url("/logo.svg") center / contain no-repeat;
+}
+
+/* The city, on the sign's yellow: the sign names the site, this line the
+   city of the listing. */
+.place {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--s-4);
+  margin: 0;
+  padding: var(--s-1) var(--s-2) var(--s-2);
+  background: var(--loggia);
+  border-top: var(--hairline);
+}
+
+.place-name {
+  font-size: var(--t-film);
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.place-change {
+  font-size: var(--t-label);
+}
+
+.place-change:hover {
+  color: var(--ink);
+  text-decoration-thickness: 4px;
 }
 
 /* Day bar, with the switch at its end. */
@@ -528,6 +562,36 @@ h3 {
   text-wrap: pretty;
 }
 
+.film-synopsis {
+  margin: var(--s-3) 0 0;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.film-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-4);
+  margin: var(--s-3) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--t-label);
+}
+
+.film-link {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.film-link::before {
+  margin-right: 0.3em;
+}
+
+.film-link:hover {
+  color: var(--sea);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card {
     transition: none;
@@ -716,6 +780,154 @@ h3 {
 
   .venue-name {
     font-size: var(--t-label);
+  }
+}
+
+/* City picker: every city on one poster, as big as the page allows. Typing
+   leaves the matches in place and fades the rest, so the poster keeps its
+   shape; the first match is the one Enter opens. */
+
+.seek {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: stretch;
+  min-height: 3.5rem;
+  background: var(--sea);
+  color: var(--on-sea);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.seek ::selection {
+  background: var(--on-sea);
+  color: var(--sea);
+}
+
+.seek-label {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--s-4) 0 var(--s-2);
+  font-size: var(--t-film);
+  white-space: nowrap;
+}
+
+.seek-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: var(--s-2) var(--s-2) var(--s-2) 0;
+  padding: 0 var(--s-2);
+  background: transparent;
+  color: var(--on-sea);
+  font: 700 var(--t-film) / 1 var(--mono);
+  text-transform: uppercase;
+  caret-color: var(--loggia);
+  border: 0;
+  border-bottom: 3px solid var(--on-sea);
+  border-radius: 0;
+  appearance: none;
+}
+
+.seek-input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.seek-input:focus-visible {
+  outline: 0;
+  border-bottom-color: var(--loggia);
+}
+
+.seek-go {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 0 var(--s-4);
+  background: var(--loggia);
+  color: var(--ink);
+  font-size: var(--t-body);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.seek-go[hidden] {
+  display: none;
+}
+
+.seek-go:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.seek-go:focus-visible {
+  outline-offset: -5px;
+}
+
+.seek-go .i::before {
+  width: 1.4em;
+  height: 1.4em;
+  margin: 0;
+}
+
+.wall {
+  margin: 0;
+  padding: var(--s-4) var(--s-2) var(--s-8);
+  list-style: none;
+  font-size: clamp(1.75rem, 0.5rem + 6.5cqi, 6rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+/* Each city with its slash is one block: a line never starts with a slash. */
+.wall li {
+  display: inline-block;
+  margin-right: 0.35em;
+  white-space: nowrap;
+}
+
+.wall li:not(:last-child)::after {
+  content: "\00a0/";
+  color: var(--ink-2);
+  font-weight: 400;
+}
+
+.wall a {
+  text-decoration: none;
+  transition: color 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wall a:hover {
+  color: var(--sea);
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.08em;
+}
+
+.wall a.is-out {
+  color: #c8c8c8;
+}
+
+.wall a.is-out:hover {
+  color: var(--sea);
+}
+
+.wall a.is-first {
+  background: var(--sea);
+  color: var(--on-sea);
+  box-decoration-break: clone;
+}
+
+.wall mark {
+  background: var(--loggia);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wall a {
+    transition: none;
   }
 }
 

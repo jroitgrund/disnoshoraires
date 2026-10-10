@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { fixture } from "./fixture.ts";
+import { fixture } from "./test/fixture.ts";
 import {
   type Backdrop,
   parseTmdbBackdrops,
@@ -30,6 +30,16 @@ test("film page that shares only the French title with AlloCiné", () => {
       fixture("tmdb/doraemon-fr.html"),
     ),
   ).toMatchSnapshot();
+});
+
+test("film page without a French overview", () => {
+  expect(
+    parseTmdbFilm(
+      "16336",
+      fixture("tmdb/ein-mann-ein-fjord-en.html"),
+      fixture("tmdb/ein-mann-ein-fjord-fr.html"),
+    ).synopsis,
+  ).toBeNull();
 });
 
 test("film page without a French page", () => {

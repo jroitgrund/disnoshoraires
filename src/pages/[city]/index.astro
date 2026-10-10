@@ -1,0 +1,12 @@
+---
+import { CITIES, cityBySlug } from "../../../shared/cities.ts";
+import Listing from "../../components/Listing.astro";
+
+export function getStaticPaths() {
+  return CITIES.map(({ slug }) => ({ params: { city: slug } }));
+}
+
+const city = cityBySlug(Astro.params.city);
+---
+
+<Listing city={city} oldOnly={false} />

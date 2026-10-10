@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 import { parseShowtimesPage, parseTheaters, showtimeRows } from "./allocine.ts";
 import { assembleCrawl, crawlDates } from "./crawl.ts";
-import { fixture } from "./fixture.ts";
+import { fixture } from "./test/fixture.ts";
 
 test.each([
   ["Wednesday", "2026-10-07"],

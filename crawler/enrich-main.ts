@@ -1,49 +1,43 @@
-import { existsSync } from "node:fs";
-import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
-import { dirname } from "node:path";
+import { readdir, readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { Session } from "pantomime";
-import { enrich, mergeEnrichment, toEnrich } from "./enrich.ts";
-import {
-  CrawlSchema,
-  type Enrichment,
-  type External,
-  EnrichmentSchema,
-  type MovieInfo,
-} from "./schema.ts";
+import { CrawlSchema, EnrichmentSchema } from "../shared/schema.ts";
+import { enrich } from "./enrich.ts";
+import { pacedHttp } from "./http.ts";
+import { writeJson } from "./output.ts";
 
-const [input, output] = process.argv.slice(2);
-if (input == null || output == null) {
+const [dir, output] = process.argv.slice(2);
+if (dir == null || output == null) {
   throw new Error(
-    "usage: node crawler/enrich-main.ts <showtimes.json> <external.json>",
+    "usage: node crawler/enrich-main.ts <showtimes dir> <external.json>",
   );
 }
 
-const crawl = CrawlSchema.parse(
-  JSON.parse(await readFile(input, "utf8")) as unknown,
+const files = (await readdir(dir)).filter((file) => file.endsWith(".json"));
+const crawls = await Promise.all(
+  files.map(async (file) =>
+    CrawlSchema.parse(
+      JSON.parse(await readFile(join(dir, file), "utf8")) as unknown,
+    ),
+  ),
 );
-const previous: Enrichment["movies"] = existsSync(output)
-  ? EnrichmentSchema.parse(
-      JSON.parse(await readFile(output, "utf8")) as unknown,
-    ).movies
-  : {};
-const missing = toEnrich(crawl.movies, previous);
-console.error(
-  `enrich ${String(missing.length)} of ${String(crawl.movies.length)} movies`,
-);
-const external =
-  missing.length === 0
-    ? new Map<number, External>()
-    : await enrichWithSession(missing);
+// A film on in several cities is looked up once.
+const movies = [
+  ...new Map(
+    crawls.flatMap((crawl) => crawl.movies).map((movie) => [movie.id, movie]),
+  ).values(),
+];
+const external = await enrichWithSession();
 // Parsed before it is written, so the file always matches its schema.
-const enrichment = EnrichmentSchema.parse(
-  mergeEnrichment(crawl, previous, external, new Date().toISOString()),
+await writeJson(
+  output,
+  EnrichmentSchema.parse({
+    enrichedAt: new Date().toISOString(),
+    movies: external,
+  }),
 );
-await mkdir(dirname(output), { recursive: true });
-// Write then rename, so a reader never sees a half-written file.
-await writeFile(`${output}.tmp`, `${JSON.stringify(enrichment, null, 2)}\n`);
-await rename(`${output}.tmp`, output);
 
-async function enrichWithSession(movies: readonly MovieInfo[]) {
+async function enrichWithSession() {
   await using session = await Session.launch();
-  return await enrich(session, movies);
+  return await enrich(session, pacedHttp(), movies);
 }

@@ -172,6 +172,7 @@ exports[`film page 1`] = `
   "id": "1401459",
   "rating": 7.2,
   "ratingCount": 85,
+  "synopsis": "Les Gheorghiu, un couple roumano-norvégien très pieux, s’installent dans un village au bout d’un fjord où ils se lient rapidement d’amitié avec leurs voisins, les Halberg. Les enfants des deux familles deviennent très proches, malgré des éducations différentes. Lorsque le corps enseignant découvre des ecchymoses sur le corps d’Elia, l’aînée des enfants Gheorghiu, la communauté se demande si l’éducation traditionnelle que les enfants Gheorghiu reçoivent de leurs parents pourrait en être la cause.",
   "title": "Fjord",
   "titles": [
     "Fjord",
@@ -189,6 +190,7 @@ exports[`film page that shares only the French title with AlloCiné 1`] = `
   "id": "1542261",
   "rating": 7.1,
   "ratingCount": 11,
+  "synopsis": "Doraemon est un robot-chat bleu qui vient du futur. Il vit avec Nobita, un petit garçon maladroit, et ses parents. Grâce à ses gadgets secrets, Doraemon aide souvent Nobita à s'amuser ou à résoudre ses problèmes.  Un été d'ennui, Doraemon propose à Nobita et leurs amis d'aller faire du camping sous la mer. En explorant les fonds marins, la bande découvre une épave et fait la rencontre des Thalassiens.  C'est alors qu'une annonce très inquiétante survient : « Le Château sous-marin s'est réveillé ! ». Nobita et ses amis doivent se lancer dans une bataille qui décidera du sort de la Terre !",
   "title": "Doraemon the Movie: New Nobita and the Castle of the Undersea Devil",
   "titles": [
     "Doraemon the Movie: New Nobita and the Castle of the Undersea Devil",

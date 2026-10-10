@@ -1,135 +1,77 @@
 ---
+import type { City } from "../../shared/cities.ts";
+import Page from "../layouts/Page.astro";
 import { DaySection } from "../components/DaySection.tsx";
-import { loadCrawl, loadExternal, oldies, programme } from "../data.ts";
-import { formatDayShort, relativeDay } from "../format.ts";
-import "../styles/global.css";
+import { formatDayShort } from "../format.ts";
+import { loadCrawl, loadExternal } from "../load.ts";
+import { programme } from "../programme.ts";
 
 interface Props {
+  city: City;
   /** Leaves out films of this year and last year. */
-  oldies: boolean;
+  oldOnly: boolean;
 }
 
-const crawl = loadCrawl();
-const { today, dates, movies: all } = programme(crawl);
-const movies = Astro.props.oldies ? oldies(all, today) : all;
-const tagline = Astro.props.oldies
-  ? "vieux films à Marseille jour par jour"
-  : "séances à Marseille jour par jour";
-const title = `Dis nos horaires, ${tagline}`;
-const external = loadExternal();
-const theaters = new Map(
-  crawl.theaters.map((theater) => [theater.id, theater]),
-);
+const { city, oldOnly } = Astro.props;
+const copy = oldOnly
+  ? {
+      tagline: `vieux films ${city.at} jour par jour`,
+      description: `Les séances de vieux films ${city.at}, jour par jour, d'aujourd'hui à mardi.`,
+      empty: "Plus de vieux film ce jour.",
+    }
+  : {
+      tagline: `séances ${city.at} jour par jour`,
+      description: `Toutes les séances de cinéma ${city.at}, jour par jour, d'aujourd'hui à mardi.`,
+      empty: "Plus de séance ce jour.",
+    };
+const days = programme(loadCrawl(city.slug), loadExternal(), { oldOnly });
+const home = `/${city.slug}/`;
 ---
 
-<!doctype html>
-<html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content={
-        Astro.props.oldies
-          ? "Les séances de vieux films à Marseille, jour par jour, d'aujourd'hui à mardi."
-          : "Toutes les séances de cinéma à Marseille, jour par jour, d'aujourd'hui à mardi."
-      }
-    />
-    <meta name="theme-color" content="#0a5bb5" />
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <h1 class="sign">
-      Dis nos horaires<span class="sr-only">, {tagline}</span>
-    </h1>
-    <div class="bar">
-      <nav class="days" aria-label="Jours">
-        {dates.map((date) => {
-          const [weekday, day] = formatDayShort(date).split(" ");
-          return (
-            <a
-              href={`#jour-${date}`}
-              aria-current={date === today ? "date" : undefined}
-            >
-              <span class="bar-long">
-                {relativeDay(date, today) ?? formatDayShort(date)}
-              </span>
-              <span class="bar-short">
-                <span>{weekday}</span> {day}
-              </span>
-            </a>
-          );
-        })}
-      </nav>
-      <a
-        class:list={["switch", { "is-on": Astro.props.oldies }]}
-        href={Astro.props.oldies ? "/" : "/vieux-films/"}
-        role="switch"
-        aria-checked={Astro.props.oldies ? "true" : "false"}
-      >
-        <span class="switch-track" aria-hidden="true">
-          <span class="switch-knob"></span>
-        </span>
-        <span class="bar-long" aria-hidden="true">
-          Vieux films seulement
-        </span>
-        <span class="bar-short" aria-hidden="true">
-          Vieux
-        </span>
-        <span class="sr-only">Vieux films seulement</span>
-      </a>
-    </div>
-    <main>
-      {dates.length === 0 ? (
-        <p class="empty">Aucune séance à venir.</p>
-      ) : (
-        dates.map((date) => (
-          <DaySection
-            date={date}
-            today={today}
-            movies={movies}
-            theaters={theaters}
-            external={external}
-            empty={
-              Astro.props.oldies
-                ? "Plus de vieux film ce jour."
-                : "Plus de séance ce jour."
-            }
-          />
-        ))
-      )}
-    </main>
-    <footer class="footer">
-      <p class="footer-name">Dis nos horaires</p>
-      <ul class="footer-links">
-        <li>
-          <a
-            class="footer-link i i-github"
-            href="https://github.com/"
-            target="_blank"
-            aria-label="GitHub"
-          ></a>
-        </li>
-        <li>
-          <a
-            class="footer-link i i-instagram"
-            href="https://www.instagram.com/"
-            target="_blank"
-            aria-label="Instagram"
-          ></a>
-        </li>
-        <li>
-          <a
-            class="footer-link i i-mail"
-            href="mailto:rawr@disnoshoraires.fr"
-            aria-label="Écrire à rawr@disnoshoraires.fr"
-          ></a>
-        </li>
-      </ul>
-    </footer>
-  </body>
-</html>
+<Page tagline={copy.tagline} description={copy.description}>
+  <p class="place">
+    <span class="place-name">{city.name}</span>
+    <a class="place-change" href="/">
+      Changer de ville
+    </a>
+  </p>
+  <div class="bar">
+    <nav class="days" aria-label="Jours">
+      {days.map(({ date }) => {
+        const [weekday, day] = formatDayShort(date).split(" ");
+        return (
+          <a href={`#jour-${date}`}>
+            <span class="bar-long">{formatDayShort(date)}</span>
+            <span class="bar-short">
+              <span>{weekday}</span> {day}
+            </span>
+          </a>
+        );
+      })}
+    </nav>
+    <a
+      class:list={["switch", { "is-on": oldOnly }]}
+      href={oldOnly ? home : `${home}vieux-films/`}
+      role="switch"
+      aria-checked={oldOnly ? "true" : "false"}
+    >
+      <span class="switch-track" aria-hidden="true">
+        <span class="switch-knob"></span>
+      </span>
+      <span class="bar-long" aria-hidden="true">
+        Vieux films seulement
+      </span>
+      <span class="bar-short" aria-hidden="true">
+        Vieux
+      </span>
+      <span class="sr-only">Vieux films seulement</span>
+    </a>
+  </div>
+  <main>
+    {days.length === 0 ? (
+      <p class="empty">Aucune séance à venir.</p>
+    ) : (
+      days.map((day) => <DaySection day={day} empty={copy.empty} />)
+    )}
+  </main>
+</Page>

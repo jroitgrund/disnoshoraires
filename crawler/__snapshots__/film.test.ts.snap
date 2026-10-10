@@ -1,0 +1,57 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`targets 1`] = `
+[
+  {
+    "identity": {
+      "directors": [
+        "Cristian Mungiu",
+      ],
+      "titles": [
+        "Fjord",
+      ],
+      "year": 2026,
+    },
+    "movie": {
+      "countries": [],
+      "directors": [
+        "Cristian Mungiu",
+      ],
+      "genres": [],
+      "id": 188280,
+      "originalTitle": "Fjord",
+      "productionYear": 2026,
+      "runtime": null,
+      "synopsis": null,
+      "title": "Fjord",
+      "url": "https://www.allocine.fr/film/fichefilm_gen_cfilm=188280.html",
+    },
+  },
+  {
+    "identity": {
+      "directors": [
+        "Rodrigo Sorogoyen",
+      ],
+      "titles": [
+        "El ser querido",
+        "L’Être Aimé",
+      ],
+      "year": 2026,
+    },
+    "movie": {
+      "countries": [],
+      "directors": [
+        "Rodrigo Sorogoyen",
+      ],
+      "genres": [],
+      "id": 325965,
+      "originalTitle": "El ser querido",
+      "productionYear": 2026,
+      "runtime": null,
+      "synopsis": null,
+      "title": "L’Être Aimé",
+      "url": "https://www.allocine.fr/film/fichefilm_gen_cfilm=325965.html",
+    },
+  },
+]
+`;

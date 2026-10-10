@@ -1,4 +1,5 @@
-import type { External, Movie, Screening, Theater } from "./data.ts";
+import type { External, Movie, Screening, Theater } from "../shared/schema.ts";
+import { SITES, type SiteInfo } from "../shared/sites.ts";
 
 // Dates are calendar days and times are French local times: format them in UTC to keep them as-is.
 const dayLong = new Intl.DateTimeFormat("fr-FR", {
@@ -21,15 +22,6 @@ export function formatDayShort(date: string): string {
   return dayShort.format(new Date(`${date}T12:00:00Z`)).replace(".", "");
 }
 
-/** "Aujourd'hui" or "Demain" relative to the build date, else `null`. */
-export function relativeDay(date: string, today: string): string | null {
-  const offset = Math.round(
-    (Date.parse(`${date}T00:00:00Z`) - Date.parse(`${today}T00:00:00Z`)) /
-      86_400_000,
-  );
-  return offset === 0 ? "Aujourd'hui" : offset === 1 ? "Demain" : null;
-}
-
 /** French puts a space before ? ! : ; and the sign never starts a line. */
 export function formatTitle(title: string): string {
   return title.replace(/ ([?!:;])/g, " $1");
@@ -46,23 +38,31 @@ export interface Version {
   spoken: string;
 }
 
+const DEAF = "sous-titres pour sourds et malentendants";
+
 /** French cinema labels. A French film in French needs no label. */
 export function versionLabel(screening: Screening): Version | null {
-  const base: Version | null =
-    screening.language === "dubbed"
-      ? { label: "VF", spoken: "version française" }
-      : screening.language === "local"
-        ? null
-        : screening.subtitles === "none"
-          ? { label: "VO", spoken: "version originale" }
-          : { label: "VOST", spoken: "version originale sous-titrée" };
+  const base = baseVersion(screening);
   if (screening.subtitles !== "deaf") {
     return base;
   }
-  const deaf = "sous-titres pour sourds et malentendants";
-  return base == null
-    ? { label: "SME", spoken: deaf }
-    : { label: `${base.label} SME`, spoken: `${base.spoken}, ${deaf}` };
+  if (base == null) {
+    return { label: "SME", spoken: DEAF };
+  }
+  return { label: `${base.label} SME`, spoken: `${base.spoken}, ${DEAF}` };
+}
+
+function baseVersion(screening: Screening): Version | null {
+  if (screening.language === "dubbed") {
+    return { label: "VF", spoken: "version française" };
+  }
+  if (screening.language === "local") {
+    return null;
+  }
+  if (screening.subtitles === "none") {
+    return { label: "VO", spoken: "version originale" };
+  }
+  return { label: "VOST", spoken: "version originale sous-titrée" };
 }
 
 export function mapsUrl(theater: Theater): string {
@@ -89,52 +89,42 @@ const decimal = new Intl.NumberFormat("fr-FR", {
 /** Each site's rating in its own scale: the scales differ too much to merge. */
 export function scores(movie: Movie, external: External | undefined): Score[] {
   const { letterboxd, sensCritique, rottenTomatoes, tmdb } = external ?? {};
-  const title = encodeURIComponent(movie.originalTitle);
-  const search = (site: string, url: string): Score => ({
-    site,
-    url,
+  const search = (site: SiteInfo, query: string): Score => ({
+    site: site.name,
+    url: site.search(query),
     search: true,
     values: [],
   });
   const outOf = (
-    site: string,
+    site: SiteInfo,
     page: { url: string; rating: number | null },
-    scale: number,
   ): Score => ({
-    site,
+    site: site.name,
     url: page.url,
     search: false,
     values: [
       {
         value: page.rating == null ? null : decimal.format(page.rating),
-        scale: `/${scale}`,
+        scale: site.scale,
       },
     ],
   });
   return [
     letterboxd == null
       ? search(
-          "Letterboxd",
-          `https://letterboxd.com/search/films/${encodeURIComponent(
-            [movie.originalTitle, movie.productionYear]
-              .filter((part) => part != null)
-              .join(" "),
-          )}/`,
+          SITES.letterboxd,
+          [movie.originalTitle, movie.productionYear]
+            .filter((part) => part != null)
+            .join(" "),
         )
-      : outOf("Letterboxd", letterboxd, 5),
+      : outOf(SITES.letterboxd, letterboxd),
     sensCritique == null
-      ? search(
-          "SensCritique",
-          `https://www.senscritique.com/search?query=${title}`,
-        )
-      : outOf("SensCritique", sensCritique, 10),
+      ? search(SITES.sensCritique, movie.originalTitle)
+      : outOf(SITES.sensCritique, sensCritique),
     rottenTomatoes == null
-      ? search(
-          "Rotten Tomatoes",
-          `https://www.rottentomatoes.com/search?search=${title}`,
-        )
+      ? search(SITES.rottenTomatoes, movie.originalTitle)
       : {
-          site: "Rotten Tomatoes",
+          site: SITES.rottenTomatoes.name,
           url: rottenTomatoes.url,
           search: false,
           // Both meters always show, so press and public never swap places.
@@ -143,14 +133,25 @@ export function scores(movie: Movie, external: External | undefined): Score[] {
             { percent: rottenTomatoes.audience, label: "public" },
           ].map(({ percent, label }) => ({
             value: percent == null ? null : String(percent),
-            scale: "%",
+            scale: SITES.rottenTomatoes.scale,
             label,
           })),
         },
     tmdb == null
-      ? search("TMDB", `https://www.themoviedb.org/search/movie?query=${title}`)
-      : outOf("TMDB", tmdb, 10),
+      ? search(SITES.tmdb, movie.originalTitle)
+      : outOf(SITES.tmdb, tmdb),
   ];
+}
+
+/** The French article first: the site is in French. */
+export function wikipediaLinks(
+  external: External | undefined,
+): { label: string; url: string }[] {
+  const wikipedia = external?.wikipedia;
+  return [
+    { label: "Wikipédia", url: wikipedia?.fr ?? null },
+    { label: "Wikipedia (en)", url: wikipedia?.en ?? null },
+  ].flatMap(({ label, url }) => (url == null ? [] : [{ label, url }]));
 }
 
 /** TMDB serves each image in fixed widths: a phone loads the small one. */

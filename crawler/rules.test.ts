@@ -1,25 +1,22 @@
 import { expect, test } from "vitest";
+import type { MovieInfo } from "../shared/schema.ts";
+import { targets } from "./film.ts";
+import { parseLetterboxdFilm } from "./letterboxd.ts";
+import { parseRottenTomatoesFilm } from "./rottentomatoes.ts";
+import { nextStep } from "./lookup.ts";
 import {
   letterboxdLookup,
-  lookupFilms,
-  mergeEnrichment,
-  report,
+  type Linked,
+  preloaded,
   rottenTomatoesLookups,
   sensCritiqueLookup,
   tmdbLookup,
-  toEnrich,
-  toExternal,
-} from "./enrich.ts";
-import { fixture } from "./fixture.ts";
-import { parseLetterboxdFilm } from "./letterboxd.ts";
-import { parseRottenTomatoesFilm } from "./rottentomatoes.ts";
-import type { Crawl, External, MovieInfo } from "./schema.ts";
-import {
-  parseSensCritiqueProduct,
-  parseSensCritiqueSearch,
-} from "./senscritique.ts";
+  wikidataLookup,
+} from "./rules.ts";
+import { parseSensCritiqueSearch } from "./senscritique.ts";
+import { fixture } from "./test/fixture.ts";
 import { parseTmdbFilm } from "./tmdb.ts";
-import { parseKnownIds } from "./wikidata.ts";
+import { parseWikidataFilms, type WikidataFilm } from "./wikidata.ts";
 
 const movie = (
   id: number,
@@ -31,6 +28,7 @@ const movie = (
   id,
   title,
   originalTitle,
+  synopsis: null,
   runtime: null,
   genres: [],
   productionYear,
@@ -44,104 +42,106 @@ const beloved = movie(325965, "L’Être Aimé", "El ser querido", 2026, [
   "Rodrigo Sorogoyen",
 ]);
 const akira = movie(6429, "Akira", "Akira", 1988, ["Katsuhiro Otomo"]);
-const surprise = movie(35275, "Film surprise", "Film surprise", 2026, []);
 
-const known = parseKnownIds(
-  JSON.parse(fixture("wikidata/known-ids.json")) as unknown,
+const byAllocineId = parseWikidataFilms(
+  JSON.parse(fixture("wikidata/films-by-allocine.json")) as unknown,
+);
+const fjordCandidates = parseWikidataFilms(
+  JSON.parse(fixture("wikidata/films-fjord.json")) as unknown,
 );
 
-const external: External = {
-  tmdb: null,
-  letterboxd: null,
-  rottenTomatoes: null,
-  sensCritique: {
-    url: "https://www.senscritique.com/film/fjord/112471227",
-    rating: 7,
-    ratingCount: 10,
-  },
+const item = (items: readonly WikidataFilm[], qid: string): WikidataFilm => {
+  const found = items.find((i) => i.id === qid);
+  if (found == null) {
+    throw new Error(qid);
+  }
+  return found;
 };
 
-test("films to look up", () => {
-  expect(lookupFilms([fjord, beloved, surprise], known)).toMatchSnapshot();
-});
+const [fjordTarget, belovedTarget, akiraTarget] = targets([
+  fjord,
+  beloved,
+  akira,
+]).map((target): Linked => ({
+  ...target,
+  wikidata:
+    byAllocineId.find((i) => i.allocineIds.includes(String(target.movie.id))) ??
+    null,
+}));
+if (fjordTarget == null || belovedTarget == null || akiraTarget == null) {
+  throw new Error("targets");
+}
 
-test("external", () => {
-  expect(
-    toExternal({
-      tmdb: parseTmdbFilm("1401459", fixture("tmdb/fjord-en.html"), null),
-      backdrop: "https://image.tmdb.org/t/p/original/fjord.jpg",
-      letterboxd: parseLetterboxdFilm(fixture("letterboxd/fjord.html")),
-      rottenTomatoes: parseRottenTomatoesFilm(
-        "https://www.rottentomatoes.com/m/the_beloved_2026",
-        fixture("rottentomatoes/the_beloved_2026.html"),
-      ),
-      sensCritique: parseSensCritiqueProduct(
-        JSON.parse(fixture("senscritique/product-akira.json")) as unknown,
-      ),
-    }),
-  ).toMatchSnapshot();
-});
-
-test("external without matches", () => {
-  expect(
-    toExternal({
-      tmdb: null,
-      backdrop: null,
-      letterboxd: null,
-      rottenTomatoes: null,
-      sensCritique: null,
-    }),
-  ).toMatchSnapshot();
-});
-
-test("report", () => {
-  expect(report(fjord, external)).toMatchInlineSnapshot(
-    `"-tmdb -lb -rt +sc Fjord (2026)"`,
-  );
-});
-
-const crawl: Crawl = {
-  from: "2026-10-10",
-  to: "2026-10-13",
-  crawledAt: "2026-10-10T08:00:00.000Z",
-  theaters: [],
-  movies: [fjord, beloved].map((m) => ({ ...m, screenings: [] })),
-};
-
-test("only movies without previous output are enriched", () => {
-  expect(
-    toEnrich(crawl.movies, { [String(fjord.id)]: external }).map((m) => m.id),
-  ).toMatchInlineSnapshot(`
-    [
-      325965,
-    ]
+test("Wikidata lookup", () => {
+  const lookup = wikidataLookup(fjordTarget);
+  const [other] = targets([{ ...fjord, id: 1 }]);
+  if (other == null) {
+    throw new Error("targets");
+  }
+  const mungiu = item(fjordCandidates, "Q137652478");
+  const unlinked = { ...mungiu, allocineIds: [] };
+  expect({
+    titles: lookup.titles,
+    accepted: fjordCandidates
+      .filter((candidate) => lookup.accept(candidate))
+      .map((candidate) => candidate.id),
+    withoutAllocineId: lookup.accept(unlinked),
+    otherAllocineId: wikidataLookup(other).accept(mungiu),
+    otherAllocineIdWithoutIt: wikidataLookup(other).accept(unlinked),
+    preloaded: nextStep(lookup, preloaded(fjordTarget, byAllocineId)),
+    notPreloaded: nextStep(
+      wikidataLookup(other),
+      preloaded(other, byAllocineId),
+    ),
+  }).toMatchInlineSnapshot(`
+    {
+      "accepted": [
+        "Q137652478",
+      ],
+      "notPreloaded": {
+        "kind": "search",
+        "title": "Fjord",
+      },
+      "otherAllocineId": false,
+      "otherAllocineIdWithoutIt": true,
+      "preloaded": {
+        "film": {
+          "allocineIds": [
+            "188280",
+          ],
+          "directors": [
+            "Cristian Mungiu",
+          ],
+          "id": "Q137652478",
+          "known": {
+            "rottenTomatoes": [
+              "m/fjord",
+            ],
+            "sensCritique": [
+              "112471227",
+            ],
+            "tmdb": [
+              "1401459",
+            ],
+          },
+          "titles": [
+            "Fjord",
+          ],
+          "wikipedia": {
+            "en": "https://en.wikipedia.org/wiki/Fjord_(film)",
+            "fr": "https://fr.wikipedia.org/wiki/Fjord_(film)",
+          },
+          "year": 2026,
+        },
+        "kind": "done",
+      },
+      "titles": [
+        "Fjord",
+      ],
+      "withoutAllocineId": true,
+    }
   `);
 });
-
-test("merge keeps the previous output", () => {
-  expect(
-    mergeEnrichment(
-      crawl,
-      { [String(fjord.id)]: external },
-      new Map([[beloved.id, { ...external, sensCritique: null }]]),
-      "2026-10-10T09:00:00.000Z",
-    ),
-  ).toMatchSnapshot();
-});
-
-test("merge fails on a movie not enriched", () => {
-  expect(() =>
-    mergeEnrichment(crawl, {}, new Map(), "2026-10-10T09:00:00.000Z"),
-  ).toThrowErrorMatchingInlineSnapshot(`[Error: movie 188280 is not enriched]`);
-});
-
-const [fjordFilm, belovedFilm, akiraFilm] = lookupFilms(
-  [fjord, beloved, akira],
-  known,
-);
-if (fjordFilm == null || belovedFilm == null || akiraFilm == null) {
-  throw new Error("films to look up");
-}
 const tmdbFjord = parseTmdbFilm(
   "1401459",
   fixture("tmdb/fjord-en.html"),
@@ -159,15 +159,19 @@ const tmdbBeloved = parseTmdbFilm(
 );
 
 test("TMDB lookup", () => {
-  const lookup = tmdbLookup(fjordFilm);
+  const lookup = tmdbLookup(fjordTarget);
   expect({
     known: lookup.known,
     titles: lookup.titles,
-    year: lookup.year,
+    consider: [2023, 2024].map((year) => lookup.consider({ id: "1", year })),
     fjord: lookup.accept(tmdbFjord),
     doraemon: lookup.accept(tmdbDoraemon),
   }).toMatchInlineSnapshot(`
     {
+      "consider": [
+        false,
+        true,
+      ],
       "doraemon": false,
       "fjord": true,
       "known": [
@@ -176,13 +180,12 @@ test("TMDB lookup", () => {
       "titles": [
         "Fjord",
       ],
-      "year": 2026,
     }
   `);
 });
 
 test("Letterboxd lookup", () => {
-  const lookup = letterboxdLookup(fjordFilm, tmdbFjord);
+  const lookup = letterboxdLookup(fjordTarget, tmdbFjord);
   const letterboxd = parseLetterboxdFilm(fixture("letterboxd/fjord.html"));
   if (letterboxd == null) {
     throw new Error("letterboxd/fjord.html");
@@ -205,7 +208,7 @@ test("Letterboxd lookup", () => {
 });
 
 test("Rotten Tomatoes lookups", () => {
-  const [withCritics, any] = rottenTomatoesLookups(belovedFilm, tmdbBeloved);
+  const [withCritics, any] = rottenTomatoesLookups(belovedTarget, tmdbBeloved);
   const pages = ["the_beloved_2026", "the_beloved_2"].map((slug) => {
     const page = parseRottenTomatoesFilm(
       `https://www.rottentomatoes.com/m/${slug}`,
@@ -256,7 +259,7 @@ test("Rotten Tomatoes lookups", () => {
 });
 
 test("SensCritique lookup", () => {
-  const lookup = sensCritiqueLookup(akiraFilm);
+  const lookup = sensCritiqueLookup(akiraTarget);
   expect({
     known: lookup.known,
     titles: lookup.titles,

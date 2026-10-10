@@ -1,5 +1,12 @@
 ---
-import Listing from "../components/Listing.astro";
+import { CITIES } from "../../shared/cities.ts";
+import CityPicker from "../components/CityPicker.astro";
+import Page from "../layouts/Page.astro";
 ---
 
-<Listing oldies={false} />
+<Page
+  tagline="séances de cinéma ville par ville"
+  description={`Toutes les séances de cinéma de ${String(CITIES.length)} villes, jour par jour, d'aujourd'hui à mardi.`}
+>
+  <CityPicker />
+</Page>

@@ -1,90 +1,52 @@
-import { isOld } from "../data.ts";
-import type { External, Movie, Screening, Theater } from "../data.ts";
+import type { External, Movie } from "../../shared/schema.ts";
 import {
   backdropSources,
   formatDayLong,
   formatTime,
   formatTitle,
   mapsUrl,
-  relativeDay,
   scores,
   versionLabel,
+  wikipediaLinks,
 } from "../format.ts";
+import type { Day, Showing, Venue } from "../programme.ts";
 
 interface Props {
-  date: string;
-  today: string;
-  movies: readonly Movie[];
-  theaters: ReadonlyMap<string, Theater>;
-  external: ReadonlyMap<number, External>;
+  day: Day;
   /** Shown when the day has no film left. */
   empty: string;
 }
 
-/** One day: its films in alphabetical order, each with its theaters and times. */
-export function DaySection({
-  date,
-  today,
-  movies,
-  theaters,
-  external,
-  empty,
-}: Props) {
-  const showing = movies
-    .flatMap((movie) => {
-      const screenings = movie.screenings.filter((screening) =>
-        screening.startsAt.startsWith(date),
-      );
-      return screenings.length === 0 ? [] : [{ movie, screenings }];
-    })
-    .toSorted((a, b) => a.movie.title.localeCompare(b.movie.title, "fr"));
-  const relative = relativeDay(date, today);
-  const long = formatDayLong(date);
+/** One day: its films, each with its theaters and times. */
+export function DaySection({ day, empty }: Props) {
+  const long = formatDayLong(day.date);
 
   return (
-    <section class="day" id={`jour-${date}`} aria-labelledby={`titre-${date}`}>
-      <h2 class="day-head" id={`titre-${date}`}>
-        <span
-          class="day-name"
-          aria-hidden={relative == null ? "true" : undefined}
-        >
-          {relative ?? long.split(" ")[0]}
+    <section
+      class="day"
+      id={`jour-${day.date}`}
+      aria-labelledby={`titre-${day.date}`}
+    >
+      <h2 class="day-head" id={`titre-${day.date}`}>
+        <span class="day-name" aria-hidden="true">
+          {long.split(" ")[0]}
         </span>{" "}
         <span class="day-date">{long}</span>
       </h2>
-      {showing.length === 0 ? (
+      {day.showings.length === 0 ? (
         <p class="empty">{empty}</p>
       ) : (
-        showing.map(({ movie, screenings }) => (
-          <FilmEntry
-            date={date}
-            today={today}
-            movie={movie}
-            screenings={screenings}
-            theaters={theaters}
-            external={external.get(movie.id)}
-          />
+        day.showings.map((showing) => (
+          <FilmEntry date={day.date} showing={showing} />
         ))
       )}
     </section>
   );
 }
 
-function FilmEntry({
-  date,
-  today,
-  movie,
-  screenings,
-  theaters,
-  external,
-}: {
-  date: string;
-  today: string;
-  movie: Movie;
-  screenings: readonly Screening[];
-  theaters: ReadonlyMap<string, Theater>;
-  external: External | undefined;
-}) {
+function FilmEntry({ date, showing }: { date: string; showing: Showing }) {
+  const { movie, external, synopsis, old, venues } = showing;
+  const wikipedia = wikipediaLinks(external);
   const meta = [
     movie.productionYear,
     movie.countries.join(", "),
@@ -94,7 +56,6 @@ function FilmEntry({
     movie.genres.join(", "),
   ].filter((part) => part != null && part !== "");
   const backdrop = external?.tmdb?.backdrop;
-  const ratings = scores(movie, external);
   // A film shows once per day: the date keeps the IDs unique on the page.
   const cardId = `fiche-${date}-${movie.id}`;
   const cardTitleId = `${cardId}-titre`;
@@ -106,9 +67,7 @@ function FilmEntry({
         <button class="film-open" type="button" popovertarget={cardId}>
           <span>
             {title}
-            {isOld(movie, today) && (
-              <span class="film-year"> ({movie.productionYear})</span>
-            )}
+            {old && <span class="film-year"> ({movie.productionYear})</span>}
           </span>
           <span class="film-cue i i-info" aria-hidden="true" />
         </button>
@@ -146,81 +105,106 @@ function FilmEntry({
             <p class="film-original">{movie.originalTitle}</p>
           )}
           <p class="film-meta">{meta.join(" / ")}</p>
-          <ul class="scores" aria-label="Notes">
-            {ratings.map((score) => (
-              <li>
-                <a class="score" href={score.url} target="_blank">
-                  <span class="sr-only">
-                    {score.search ? "Chercher " : ""}
-                    {movie.title} sur{" "}
-                  </span>
-                  <span class="score-site">{score.site}</span>
-                  {score.search && (
-                    <span class="score-search i i-external" aria-hidden="true">
-                      chercher
-                    </span>
-                  )}
-                  <span class="score-values">
-                    {score.values.map(({ value, scale, label }) => (
-                      <span class="score-value">
-                        {value == null ? (
-                          <span class="score-figure score-none">
-                            <span aria-hidden="true">–</span>
-                            <span class="sr-only">pas de note</span>
-                          </span>
-                        ) : (
-                          <span class="score-figure">
-                            <b>{value}</b>
-                            {scale}
-                          </span>
-                        )}
-                        {label != null && (
-                          <span class="score-label">{label}</span>
-                        )}
-                      </span>
-                    ))}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
+          {synopsis != null && <p class="film-synopsis">{synopsis}</p>}
+          <Scores movie={movie} external={external} />
+          {wikipedia.length > 0 && (
+            <ul class="film-links" aria-label="Encyclopédie">
+              {wikipedia.map(({ label, url }) => (
+                <li>
+                  <a class="film-link i i-external" href={url} target="_blank">
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
-      <ul class="venues">
-        {byTheater(screenings, theaters).map(({ theater, list }) => (
-          <li class="venue">
-            <a
-              class="venue-name i i-map"
-              href={mapsUrl(theater)}
-              target="_blank"
-            >
-              <TheaterName name={theater.name} />
-              <span class="sr-only">, sur Google Maps</span>
-            </a>
-            <div class="times">
-              <ul class="times-row">
-                {list.map((screening) => {
-                  const version = versionLabel(screening);
-                  return (
-                    <li class="time">
-                      {formatTime(screening.startsAt)}
-                      {version != null && (
-                        <>
-                          <small class="ver" aria-hidden="true">
-                            {version.label}
-                          </small>
-                          <span class="sr-only">, {version.spoken}</span>
-                        </>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <Venues venues={venues} />
     </article>
+  );
+}
+
+/** Each site's rating, or a search link when the enrich pass found no page. */
+function Scores({
+  movie,
+  external,
+}: {
+  movie: Movie;
+  external: External | undefined;
+}) {
+  return (
+    <ul class="scores" aria-label="Notes">
+      {scores(movie, external).map((score) => (
+        <li>
+          <a class="score" href={score.url} target="_blank">
+            <span class="sr-only">
+              {score.search ? "Chercher " : ""}
+              {movie.title} sur{" "}
+            </span>
+            <span class="score-site">{score.site}</span>
+            {score.search && (
+              <span class="score-search i i-external" aria-hidden="true">
+                chercher
+              </span>
+            )}
+            <span class="score-values">
+              {score.values.map(({ value, scale, label }) => (
+                <span class="score-value">
+                  {value == null ? (
+                    <span class="score-figure score-none">
+                      <span aria-hidden="true">–</span>
+                      <span class="sr-only">pas de note</span>
+                    </span>
+                  ) : (
+                    <span class="score-figure">
+                      <b>{value}</b>
+                      {scale}
+                    </span>
+                  )}
+                  {label != null && <span class="score-label">{label}</span>}
+                </span>
+              ))}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Venues({ venues }: { venues: readonly Venue[] }) {
+  return (
+    <ul class="venues">
+      {venues.map(({ theater, screenings }) => (
+        <li class="venue">
+          <a class="venue-name i i-map" href={mapsUrl(theater)} target="_blank">
+            <TheaterName name={theater.name} />
+            <span class="sr-only">, sur Google Maps</span>
+          </a>
+          <div class="times">
+            <ul class="times-row">
+              {screenings.map((screening) => {
+                const version = versionLabel(screening);
+                return (
+                  <li class="time">
+                    {formatTime(screening.startsAt)}
+                    {version != null && (
+                      <>
+                        <small class="ver" aria-hidden="true">
+                          {version.label}
+                        </small>
+                        <span class="sr-only">, {version.spoken}</span>
+                      </>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -237,17 +221,4 @@ function TheaterName({ name }: { name: string }) {
       <span class="nowrap">{name.slice(dash + 3)}</span>
     </>
   );
-}
-
-/** Theaters in alphabetical order. */
-function byTheater(
-  screenings: readonly Screening[],
-  theaters: ReadonlyMap<string, Theater>,
-): { theater: Theater; list: Screening[] }[] {
-  return [...Map.groupBy(screenings, (screening) => screening.theaterId)]
-    .flatMap(([theaterId, list]) => {
-      const theater = theaters.get(theaterId);
-      return theater == null ? [] : [{ theater, list }];
-    })
-    .toSorted((a, b) => a.theater.name.localeCompare(b.theater.name, "fr"));
 }

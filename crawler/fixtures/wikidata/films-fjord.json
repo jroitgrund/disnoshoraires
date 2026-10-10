@@ -1,0 +1,210 @@
+{
+  "head" : {
+    "vars" : [ "item", "allocineIds", "labels", "originalTitles", "directors", "year", "tmdb", "rt", "sc", "enwiki", "frwiki" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1304876"
+      },
+      "allocineIds" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "labels" : {
+        "type" : "literal",
+        "value" : "Ein Mann, ein Fjord!"
+      },
+      "originalTitles" : {
+        "type" : "literal",
+        "value" : "Ein Mann, ein Fjord!"
+      },
+      "directors" : {
+        "type" : "literal",
+        "value" : "Angelo Colagrossi\u001FAngelo Colagrossi\u001FAngela Colagrossi"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2009"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "16336"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "sc" : {
+        "type" : "literal",
+        "value" : ""
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q10729081"
+      },
+      "allocineIds" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "labels" : {
+        "type" : "literal",
+        "value" : "Kurt Josef Wagle and the Legend of the Fjord Witch\u001FKurt Josef Wagle og legenden om Fjordheksa"
+      },
+      "originalTitles" : {
+        "type" : "literal",
+        "value" : "Kurt Josef Wagle og legenden om fjordheksa"
+      },
+      "directors" : {
+        "type" : "literal",
+        "value" : "Tommy Wirkola\u001FTommy Wirkola"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2010"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "50324"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "sc" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "enwiki" : {
+        "type" : "uri",
+        "value" : "https://en.wikipedia.org/wiki/Kurt_Josef_Wagle_and_the_Legend_of_the_Fjord_Witch"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q56490266"
+      },
+      "allocineIds" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "labels" : {
+        "type" : "literal",
+        "value" : "Pierre Radisson: Fjord and Gulf\u001FPierre Radisson: Fjord and Gulf"
+      },
+      "originalTitles" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "directors" : {
+        "type" : "literal",
+        "value" : "Ben Donoghue\u001FBen Donoghue"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2017"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "453987"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "sc" : {
+        "type" : "literal",
+        "value" : ""
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q78824237"
+      },
+      "allocineIds" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "labels" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "originalTitles" : {
+        "type" : "literal",
+        "value" : "Abschied von Hannah"
+      },
+      "directors" : {
+        "type" : "literal",
+        "value" : "Jörg Grünler\u001FJörg Grünler"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2012"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "430184"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "sc" : {
+        "type" : "literal",
+        "value" : ""
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q137652478"
+      },
+      "allocineIds" : {
+        "type" : "literal",
+        "value" : "188280"
+      },
+      "labels" : {
+        "type" : "literal",
+        "value" : "Fjord\u001FFjord"
+      },
+      "originalTitles" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "directors" : {
+        "type" : "literal",
+        "value" : "Cristian Mungiu\u001FCristian Mungiu\u001FCristian Mungiu"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2026"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "1401459"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : "m/fjord"
+      },
+      "sc" : {
+        "type" : "literal",
+        "value" : "112471227"
+      },
+      "enwiki" : {
+        "type" : "uri",
+        "value" : "https://en.wikipedia.org/wiki/Fjord_(film)"
+      },
+      "frwiki" : {
+        "type" : "uri",
+        "value" : "https://fr.wikipedia.org/wiki/Fjord_(film)"
+      }
+    } ]
+  }
+}

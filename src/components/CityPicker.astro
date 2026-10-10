@@ -1,0 +1,144 @@
+---
+import { CITIES } from "../../shared/cities.ts";
+---
+
+<main class="picker">
+  <form class="seek" role="search">
+    <h2 class="seek-label" id="villes">
+      Ville ?
+    </h2>
+    <input
+      class="seek-input"
+      type="search"
+      aria-label="Chercher une ville"
+      aria-describedby="seek-status"
+      autocomplete="off"
+      autocapitalize="off"
+      spellcheck="false"
+      enterkeyhint="go"
+      hidden
+    />
+    <a class="seek-go" hidden>
+      <span class="seek-go-name"></span>
+      <span class="i i-arrow-right" aria-hidden="true"></span>
+    </a>
+  </form>
+  <p class="sr-only" id="seek-status" role="status"></p>
+  <nav aria-labelledby="villes">
+    <ul class="wall">
+      {CITIES.map((city) => (
+        <li>
+          <a href={`/${city.slug}/`}>{city.name}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</main>
+
+<script>
+  // Without this script the page is a list of links. With it, typing filters the list: the
+  // cities stay in place, the others fade, and Enter opens the first match.
+  const form = document.querySelector<HTMLFormElement>(".seek");
+  const input = document.querySelector<HTMLInputElement>(".seek-input");
+  const go = document.querySelector<HTMLAnchorElement>(".seek-go");
+  const goName = document.querySelector<HTMLElement>(".seek-go-name");
+  const status = document.querySelector<HTMLElement>("#seek-status");
+  const links = [...document.querySelectorAll<HTMLAnchorElement>(".wall a")];
+
+  /** One character in, one out, so a match in the folded name is a match in the name. */
+  const fold = (text: string) =>
+    [...text]
+      .map((char) =>
+        char
+          .normalize("NFD")
+          .replace(/\p{M}/gu, "")
+          .toLowerCase()
+          .replace(/[-'’]/, " "),
+      )
+      .join("");
+
+  const cities = links.map((link) => {
+    const name = link.textContent ?? "";
+    const folded = fold(name);
+    // "mans" finds Le Mans, "ferrand" Clermont-Ferrand.
+    const wordStarts = [
+      0,
+      ...[...folded].flatMap((char, i) => (char === " " ? [i + 1] : [])),
+    ];
+    return { link, name, folded, wordStarts };
+  });
+
+  /** Where the query starts a word of the city, -1 when it starts none. */
+  const matchAt = (city: (typeof cities)[number], query: string): number =>
+    query === ""
+      ? -1
+      : (city.wordStarts.find((i) => city.folded.startsWith(query, i)) ?? -1);
+
+  function render(query: string) {
+    const folded = fold(query).trim();
+    const found = cities
+      .map((city) => ({ city, at: matchAt(city, folded) }))
+      .filter(({ at }) => at !== -1);
+    // A city whose name starts with the query goes before one where a later word does.
+    const matches = found
+      .toSorted((a, b) => Number(a.at !== 0) - Number(b.at !== 0))
+      .map(({ city }) => city);
+    cities.forEach((city) => {
+      const { link, name } = city;
+      const at = matchAt(city, folded);
+      link.classList.toggle("is-out", folded !== "" && at === -1);
+      link.classList.toggle(
+        "is-first",
+        folded !== "" && link === matches[0]?.link,
+      );
+      if (at === -1) {
+        link.replaceChildren(name);
+        return;
+      }
+      const mark = document.createElement("mark");
+      mark.textContent = name.slice(at, at + folded.length);
+      link.replaceChildren(
+        name.slice(0, at),
+        mark,
+        name.slice(at + folded.length),
+      );
+    });
+    const first = folded === "" ? undefined : matches[0];
+    if (go != null && goName != null) {
+      go.hidden = first == null;
+      go.href = first?.link.href ?? "";
+      goName.textContent = first?.name ?? "";
+    }
+    if (status != null) {
+      status.textContent =
+        matches.length === 0
+          ? ""
+          : `${String(matches.length)} ville${matches.length > 1 ? "s" : ""}`;
+    }
+  }
+
+  if (form != null && input != null) {
+    input.hidden = false;
+    form.classList.add("is-live");
+    input.addEventListener("input", () => render(input.value));
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (go != null && !go.hidden) {
+        go.click();
+      }
+    });
+    // Typing anywhere on the page types in the search.
+    document.addEventListener("keydown", (event) => {
+      if (
+        event.key.length === 1 &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.altKey &&
+        document.activeElement !== input
+      ) {
+        input.focus();
+      }
+    });
+    render(input.value);
+  }
+</script>

@@ -1,40 +1,47 @@
 # crawler
 
-Two passes. Each pass writes its own file with its own schema (`schema.ts`), and parses its output with that schema before it writes the file.
+Two passes. Each pass writes its own file with its own schema (`shared/schema.ts`), and parses its output with that schema before it writes the file.
 
-| Pass             | Reads                 | Writes                | Schema             |
-| ---------------- | --------------------- | --------------------- | ------------------ |
-| `npm run crawl`  | AlloCiné              | `data/showtimes.json` | `CrawlSchema`      |
-| `npm run enrich` | `data/showtimes.json` | `data/external.json`  | `EnrichmentSchema` |
+| Pass             | Reads             | Writes                       | Schema             |
+| ---------------- | ----------------- | ---------------------------- | ------------------ |
+| `npm run crawl`  | AlloCiné          | `data/showtimes/<city>.json` | `CrawlSchema`      |
+| `npm run enrich` | `data/showtimes/` | `data/external.json`         | `EnrichmentSchema` |
 
 ## Enrich pass
 
-For each movie of the crawl, `data/external.json` has, by AlloCiné ID:
+For each movie of all cities, `data/external.json` has, by AlloCiné ID (a movie on in several cities is looked up once):
 
 | Site            | Data                                                                                |
 | --------------- | ----------------------------------------------------------------------------------- |
-| TMDB            | URL, rating /10, rating count, one backdrop                                         |
+| TMDB            | URL, rating /10, rating count, one backdrop, French synopsis                        |
 | Letterboxd      | URL, rating /5, rating count                                                        |
 | Rotten Tomatoes | URL, Tomatometer % (critics), Popcornmeter % (audience), each `null` when not shown |
 | SensCritique    | URL, rating /10, rating count                                                       |
+| Wikipedia       | English and French article, from the Wikidata item                                  |
 
 A site is `null` when no film on it passes the identity check. A wrong film is worse than none.
 
+The French synopsis comes from AlloCiné, in `data/showtimes/<city>.json`. TMDB's French overview is the fallback. On a page in French, TMDB shows the English overview when it has no French one: an overview that is the same on both pages is not French.
+
 ### Transport
 
-| Site                        | How                                | Why                                                                         |
-| --------------------------- | ---------------------------------- | --------------------------------------------------------------------------- |
-| Wikidata, TMDB              | Plain HTTP (`http.ts`)             | They serve a script as they serve a browser.                                |
-| SensCritique                | Plain HTTP to its GraphQL API      | `apollo.senscritique.com`, the API that the site calls. No key, no cookies. |
-| Letterboxd, Rotten Tomatoes | The pantomime session (`fetch.ts`) | Cloudflare (Letterboxd) and rate limits are likely at crawl volume.         |
+| Site                        | How                               | Why                                                                         |
+| --------------------------- | --------------------------------- | --------------------------------------------------------------------------- |
+| Wikidata, TMDB              | Plain HTTP (`http.ts`)            | They serve a script as they serve a browser.                                |
+| SensCritique                | Plain HTTP to its GraphQL API     | `apollo.senscritique.com`, the API that the site calls. No key, no cookies. |
+| Letterboxd, Rotten Tomatoes | The pantomime session (`http.ts`) | Cloudflare (Letterboxd) and rate limits are likely at crawl volume.         |
 
-`http.ts` sends one request per host every 600 ms, and doubles the gap on a 429 or 5xx. The plain HTTP sites run in parallel with the session.
+`pacedHttp` (`http.ts`) sends one request per host every 600 ms, and doubles the gap on a 429 or 5xx. The plain HTTP sites run in parallel with the session.
 The session sites run one site after the other (all Letterboxd, then all Rotten Tomatoes): the session loads a page of the site each time the site changes.
 
 ### Where the IDs come from
 
-1. **Wikidata.** One SPARQL query maps the AlloCiné ID (P1265) of every film to its TMDB (P4947), Rotten Tomatoes (P1258) and SensCritique (P10100) IDs.
-   This finds most films, also recent ones. Wikidata can be wrong, so its IDs go through the same check as search results.
+1. **Wikidata.** The item gives the TMDB (P4947), Rotten Tomatoes (P1258) and SensCritique (P10100) IDs, and the Wikipedia articles.
+   - One SPARQL query finds the items with the AlloCiné ID (P1265) of every film. This finds most films, also recent ones.
+   - For a film without such an item: a search by title, original title first, for items with a director (P57). One SPARQL query loads the results. The first one that passes the identity check is the item. An item with another AlloCiné ID is another film.
+
+   Wikidata can be wrong, so its IDs go through the same check as search results.
+
 2. **Search**, only when Wikidata has no ID, or none that passes the check:
    - TMDB: the search page. TMDB searches all translated titles.
    - Rotten Tomatoes: the search page, films only. The English title from TMDB goes first: Rotten Tomatoes knows most foreign films by it.

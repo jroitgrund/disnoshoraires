@@ -1,8 +1,11 @@
 import { parse } from "node-html-parser";
 import type { Session } from "pantomime";
 import { z } from "zod";
-import { fetchOrNull } from "./fetch.ts";
-import type { Identity } from "./match.ts";
+import { SITES } from "../shared/sites.ts";
+import type { Identity } from "./film.ts";
+import { sessionRequest } from "./http.ts";
+import type { Site } from "./lookup.ts";
+import { parseJsonLd } from "./parse.ts";
 
 export interface LetterboxdFilm extends Identity {
   readonly url: string;
@@ -21,14 +24,22 @@ const LdSchema = z.object({
     .optional(),
 });
 
-/** Letterboxd takes its catalogue from TMDB and redirects `/tmdb/<id>/` to the film. */
-export async function letterboxdFilm(
+/** Letterboxd takes its catalogue from TMDB: IDs are TMDB IDs, and there is no search. */
+export function letterboxdSite(session: Session): Site<LetterboxdFilm> {
+  return {
+    load: (tmdbId) => letterboxdFilm(session, tmdbId),
+    search: () => Promise.resolve([]),
+  };
+}
+
+/** Letterboxd redirects `/tmdb/<id>/` to the film. */
+async function letterboxdFilm(
   session: Session,
   tmdbId: string,
 ): Promise<LetterboxdFilm | null> {
-  const response = await fetchOrNull(
+  const response = await sessionRequest(
     session,
-    `https://letterboxd.com/tmdb/${tmdbId}/`,
+    `${SITES.letterboxd.origin}/tmdb/${tmdbId}/`,
   );
   return response == null ? null : parseLetterboxdFilm(response.text);
 }
@@ -40,11 +51,7 @@ export function parseLetterboxdFilm(html: string): LetterboxdFilm | null {
   if (json == null) {
     return null;
   }
-  const ld = LdSchema.parse(
-    JSON.parse(
-      json.replace("/* <![CDATA[ */", "").replace("/* ]]> */", ""),
-    ) as unknown,
-  );
+  const ld = LdSchema.parse(parseJsonLd(json));
   const ogTitle =
     root.querySelector('meta[property="og:title"]')?.getAttribute("content") ??
     "";

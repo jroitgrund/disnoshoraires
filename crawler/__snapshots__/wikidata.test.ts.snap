@@ -1,10 +1,72 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`known IDs 1`] = `
+exports[`films by AlloCiné ID 1`] = `
 [
-  [
-    188280,
-    {
+  {
+    "allocineIds": [
+      "6429",
+    ],
+    "directors": [
+      "Katsuhiro Otomo",
+      "Katsuhiro Ōtomo",
+    ],
+    "id": "Q1905968",
+    "known": {
+      "rottenTomatoes": [
+        "m/akira",
+      ],
+      "sensCritique": [],
+      "tmdb": [
+        "149",
+      ],
+    },
+    "titles": [
+      "アキラ",
+      "Akira",
+    ],
+    "wikipedia": {
+      "en": "https://en.wikipedia.org/wiki/Akira_(1988_film)",
+      "fr": "https://fr.wikipedia.org/wiki/Akira_(film_d%27animation)",
+    },
+    "year": 1988,
+  },
+  {
+    "allocineIds": [
+      "325965",
+    ],
+    "directors": [
+      "Rodrigo Sorogoyen",
+    ],
+    "id": "Q132240260",
+    "known": {
+      "rottenTomatoes": [
+        "m/the_beloved_2026",
+      ],
+      "sensCritique": [],
+      "tmdb": [
+        "1074074",
+      ],
+    },
+    "titles": [
+      "El ser querido",
+      "L'Être Aimé",
+      "The Beloved",
+    ],
+    "wikipedia": {
+      "en": "https://en.wikipedia.org/wiki/The_Beloved_(2026_film)",
+      "fr": "https://fr.wikipedia.org/wiki/L%27%C3%8Atre_aim%C3%A9",
+    },
+    "year": 2026,
+  },
+  {
+    "allocineIds": [
+      "188280",
+    ],
+    "directors": [
+      "Cristian Mungiu",
+    ],
+    "id": "Q137652478",
+    "known": {
       "rottenTomatoes": [
         "m/fjord",
       ],
@@ -15,56 +77,82 @@ exports[`known IDs 1`] = `
         "1401459",
       ],
     },
-  ],
-  [
-    325965,
-    {
-      "rottenTomatoes": [
-        "m/the_beloved_2026",
-      ],
-      "sensCritique": [],
-      "tmdb": [
-        "1074074",
-      ],
+    "titles": [
+      "Fjord",
+    ],
+    "wikipedia": {
+      "en": "https://en.wikipedia.org/wiki/Fjord_(film)",
+      "fr": "https://fr.wikipedia.org/wiki/Fjord_(film)",
     },
-  ],
-  [
-    6429,
-    {
-      "rottenTomatoes": [
-        "m/akira",
-      ],
-      "sensCritique": [],
-      "tmdb": [
-        "149",
-      ],
-    },
-  ],
-  [
-    1000036867,
-    {
+    "year": 2026,
+  },
+  {
+    "allocineIds": [
+      "318226",
+    ],
+    "directors": [
+      "Christophe Dimitri Réveille",
+    ],
+    "id": "Q139585205",
+    "known": {
       "rottenTomatoes": [],
       "sensCritique": [],
-      "tmdb": [],
+      "tmdb": [
+        "1666700",
+      ],
     },
-  ],
-  [
-    35275,
-    {
-      "rottenTomatoes": [],
-      "sensCritique": [],
-      "tmdb": [],
+    "titles": [
+      "Che Guevara: The Last Companions",
+      "Les Survivants du Che",
+    ],
+    "wikipedia": {
+      "en": null,
+      "fr": "https://fr.wikipedia.org/wiki/Les_Survivants_du_Che",
     },
-  ],
+    "year": null,
+  },
 ]
 `;
 
-exports[`query 1`] = `
-"SELECT ?allocine ?tmdb ?rt ?sc WHERE {
-    VALUES ?allocine { "188280" "6429" }
-    ?item wdt:P1265 ?allocine.
-    OPTIONAL { ?item wdt:P4947 ?tmdb }
-    OPTIONAL { ?item wdt:P1258 ?rt }
-    OPTIONAL { ?item wdt:P10100 ?sc }
-  }"
+exports[`query by AlloCiné ID 1`] = `
+"SELECT ?item (GROUP_CONCAT(DISTINCT ?allocine; separator="\\u001F") AS ?allocineIds) (GROUP_CONCAT(DISTINCT ?label; separator="\\u001F") AS ?labels)
+    (GROUP_CONCAT(DISTINCT ?original; separator="\\u001F") AS ?originalTitles) (GROUP_CONCAT(DISTINCT ?director; separator="\\u001F") AS ?directors)
+    (MIN(YEAR(?date)) AS ?year) (GROUP_CONCAT(DISTINCT ?tmdbId; separator="\\u001F") AS ?tmdb) (GROUP_CONCAT(DISTINCT ?rtId; separator="\\u001F") AS ?rt) (GROUP_CONCAT(DISTINCT ?scId; separator="\\u001F") AS ?sc)
+    (SAMPLE(?en) AS ?enwiki) (SAMPLE(?fr) AS ?frwiki)
+  WHERE {
+    VALUES ?wanted { "188280" "6429" }
+    ?item wdt:P1265 ?wanted.
+    OPTIONAL { ?item wdt:P1265 ?allocine }
+    OPTIONAL { ?item rdfs:label ?label. FILTER(LANG(?label) IN ("fr", "en", "mul")) }
+    OPTIONAL { ?item wdt:P1476 ?original }
+    OPTIONAL { ?item wdt:P57/rdfs:label ?director. FILTER(LANG(?director) IN ("fr", "en", "mul")) }
+    OPTIONAL { ?item wdt:P577 ?date }
+    OPTIONAL { ?item wdt:P4947 ?tmdbId }
+    OPTIONAL { ?item wdt:P1258 ?rtId }
+    OPTIONAL { ?item wdt:P10100 ?scId }
+    OPTIONAL { ?en schema:about ?item; schema:isPartOf <https://en.wikipedia.org/> }
+    OPTIONAL { ?fr schema:about ?item; schema:isPartOf <https://fr.wikipedia.org/> }
+  }
+  GROUP BY ?item"
+`;
+
+exports[`query by item 1`] = `
+"SELECT ?item (GROUP_CONCAT(DISTINCT ?allocine; separator="\\u001F") AS ?allocineIds) (GROUP_CONCAT(DISTINCT ?label; separator="\\u001F") AS ?labels)
+    (GROUP_CONCAT(DISTINCT ?original; separator="\\u001F") AS ?originalTitles) (GROUP_CONCAT(DISTINCT ?director; separator="\\u001F") AS ?directors)
+    (MIN(YEAR(?date)) AS ?year) (GROUP_CONCAT(DISTINCT ?tmdbId; separator="\\u001F") AS ?tmdb) (GROUP_CONCAT(DISTINCT ?rtId; separator="\\u001F") AS ?rt) (GROUP_CONCAT(DISTINCT ?scId; separator="\\u001F") AS ?sc)
+    (SAMPLE(?en) AS ?enwiki) (SAMPLE(?fr) AS ?frwiki)
+  WHERE {
+    VALUES ?item { wd:Q137652478 wd:Q1304876 }
+    OPTIONAL { ?item wdt:P1265 ?allocine }
+    OPTIONAL { ?item rdfs:label ?label. FILTER(LANG(?label) IN ("fr", "en", "mul")) }
+    OPTIONAL { ?item wdt:P1476 ?original }
+    OPTIONAL { ?item wdt:P57/rdfs:label ?director. FILTER(LANG(?director) IN ("fr", "en", "mul")) }
+    OPTIONAL { ?item wdt:P577 ?date }
+    OPTIONAL { ?item wdt:P4947 ?tmdbId }
+    OPTIONAL { ?item wdt:P1258 ?rtId }
+    OPTIONAL { ?item wdt:P10100 ?scId }
+    OPTIONAL { ?en schema:about ?item; schema:isPartOf <https://en.wikipedia.org/> }
+    OPTIONAL { ?fr schema:about ?item; schema:isPartOf <https://fr.wikipedia.org/> }
+  }
+  GROUP BY ?item"
 `;

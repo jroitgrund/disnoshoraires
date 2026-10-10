@@ -8,14 +8,15 @@
   "cornerRadius": 0,
   "padding": 2,
   "opticalBalance": true,
-  "iconCount": 6,
+  "iconCount": 7,
   "icons": [
     "map-pin",
     "play",
     "external-link",
     "image",
     "close",
-    "info"
+    "info",
+    "arrow-right"
   ],
   "generated": "2026-10-09"
 }

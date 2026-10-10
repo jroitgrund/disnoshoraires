@@ -1,0 +1,183 @@
+{
+  "head" : {
+    "vars" : [ "item", "allocineIds", "labels", "originalTitles", "directors", "year", "tmdb", "rt", "sc", "enwiki", "frwiki" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1905968"
+      },
+      "allocineIds" : {
+        "type" : "literal",
+        "value" : "6429"
+      },
+      "labels" : {
+        "type" : "literal",
+        "value" : "Akira\u001FAkira"
+      },
+      "originalTitles" : {
+        "type" : "literal",
+        "value" : "アキラ"
+      },
+      "directors" : {
+        "type" : "literal",
+        "value" : "Katsuhiro Otomo\u001FKatsuhiro Otomo\u001FKatsuhiro Ōtomo"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "1988"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "149"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : "m/akira"
+      },
+      "sc" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "enwiki" : {
+        "type" : "uri",
+        "value" : "https://en.wikipedia.org/wiki/Akira_(1988_film)"
+      },
+      "frwiki" : {
+        "type" : "uri",
+        "value" : "https://fr.wikipedia.org/wiki/Akira_(film_d%27animation)"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q132240260"
+      },
+      "allocineIds" : {
+        "type" : "literal",
+        "value" : "325965"
+      },
+      "labels" : {
+        "type" : "literal",
+        "value" : "L'Être Aimé\u001FThe Beloved"
+      },
+      "originalTitles" : {
+        "type" : "literal",
+        "value" : "El ser querido"
+      },
+      "directors" : {
+        "type" : "literal",
+        "value" : "Rodrigo Sorogoyen\u001FRodrigo Sorogoyen\u001FRodrigo Sorogoyen"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2026"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "1074074"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : "m/the_beloved_2026"
+      },
+      "sc" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "enwiki" : {
+        "type" : "uri",
+        "value" : "https://en.wikipedia.org/wiki/The_Beloved_(2026_film)"
+      },
+      "frwiki" : {
+        "type" : "uri",
+        "value" : "https://fr.wikipedia.org/wiki/L%27%C3%8Atre_aim%C3%A9"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q137652478"
+      },
+      "allocineIds" : {
+        "type" : "literal",
+        "value" : "188280"
+      },
+      "labels" : {
+        "type" : "literal",
+        "value" : "Fjord\u001FFjord"
+      },
+      "originalTitles" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "directors" : {
+        "type" : "literal",
+        "value" : "Cristian Mungiu\u001FCristian Mungiu\u001FCristian Mungiu"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "2026"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "1401459"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : "m/fjord"
+      },
+      "sc" : {
+        "type" : "literal",
+        "value" : "112471227"
+      },
+      "enwiki" : {
+        "type" : "uri",
+        "value" : "https://en.wikipedia.org/wiki/Fjord_(film)"
+      },
+      "frwiki" : {
+        "type" : "uri",
+        "value" : "https://fr.wikipedia.org/wiki/Fjord_(film)"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q139585205"
+      },
+      "allocineIds" : {
+        "type" : "literal",
+        "value" : "318226"
+      },
+      "labels" : {
+        "type" : "literal",
+        "value" : "Che Guevara: The Last Companions\u001FLes Survivants du Che"
+      },
+      "originalTitles" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "directors" : {
+        "type" : "literal",
+        "value" : "Christophe Dimitri Réveille\u001FChristophe Dimitri Réveille"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "1666700"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "sc" : {
+        "type" : "literal",
+        "value" : ""
+      },
+      "frwiki" : {
+        "type" : "uri",
+        "value" : "https://fr.wikipedia.org/wiki/Les_Survivants_du_Che"
+      }
+    } ]
+  }
+}

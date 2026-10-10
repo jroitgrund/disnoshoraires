@@ -1,0 +1,42 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`external 1`] = `
+{
+  "letterboxd": {
+    "rating": 3.79,
+    "ratingCount": 70452,
+    "url": "https://letterboxd.com/film/fjord-2026/",
+  },
+  "rottenTomatoes": {
+    "audience": null,
+    "critics": 83,
+    "url": "https://www.rottentomatoes.com/m/the_beloved_2026",
+  },
+  "sensCritique": {
+    "rating": 7.9,
+    "ratingCount": 36971,
+    "url": "https://www.senscritique.com/film/akira/418144",
+  },
+  "tmdb": {
+    "backdrop": "https://image.tmdb.org/t/p/original/fjord.jpg",
+    "rating": 7.2,
+    "ratingCount": 85,
+    "synopsis": null,
+    "url": "https://www.themoviedb.org/movie/1401459-fjord",
+  },
+  "wikipedia": {
+    "en": "https://en.wikipedia.org/wiki/Fjord_(film)",
+    "fr": "https://fr.wikipedia.org/wiki/Fjord_(film)",
+  },
+}
+`;
+
+exports[`external without matches 1`] = `
+{
+  "letterboxd": null,
+  "rottenTomatoes": null,
+  "sensCritique": null,
+  "tmdb": null,
+  "wikipedia": null,
+}
+`;

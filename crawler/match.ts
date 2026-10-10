@@ -1,10 +1,4 @@
-/** What a site tells about a film, to compare with AlloCiné. */
-export interface Identity {
-  /** Every title the site gives: translated and original. */
-  readonly titles: readonly string[];
-  readonly year: number | null;
-  readonly directors: readonly string[];
-}
+import type { Identity } from "./film.ts";
 
 /** The production year on AlloCiné and the release year on another site often differ by one. */
 const YEAR_TOLERANCE = 1;

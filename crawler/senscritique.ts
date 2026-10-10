@@ -1,11 +1,12 @@
 import { z } from "zod";
-import { request } from "./http.ts";
-import type { SearchResult } from "./lookup.ts";
-import type { Identity } from "./match.ts";
+import { SITES } from "../shared/sites.ts";
+import type { Identity } from "./film.ts";
+import type { Http } from "./http.ts";
+import type { SearchResult, Site } from "./lookup.ts";
+import { yearIn } from "./parse.ts";
 
 /** The GraphQL API that senscritique.com calls. */
 const API = "https://apollo.senscritique.com/";
-const ORIGIN = "https://www.senscritique.com";
 /** `universe` of a film. Search also returns series, books, games… */
 const FILM = 1;
 
@@ -45,14 +46,23 @@ const ProductResponseSchema = z.object({
   data: z.object({ product: ProductSchema.nullable() }),
 });
 
+export function sensCritiqueSite(http: Http): Site<SensCritiqueFilm> {
+  return {
+    load: (id) => sensCritiqueFilm(http, id),
+    search: (query) => searchSensCritique(http, query),
+  };
+}
+
 /**
  * Films only, in SensCritique's order. Results carry everything needed: no page to load.
  * `searchProductExplorer` is the search page. The autocomplete favours popular films over the exact title.
  */
-export async function searchSensCritique(
+async function searchSensCritique(
+  http: Http,
   query: string,
 ): Promise<SearchResult<SensCritiqueFilm>[]> {
   const response = await graphql(
+    http,
     `query Search($query: String!) {
       searchProductExplorer(query: $query, limit: 20) {
         items { ${PRODUCT_FIELDS} }
@@ -78,10 +88,12 @@ export function parseSensCritiqueSearch(
 }
 
 /** `null` when there is no such film. */
-export async function sensCritiqueFilm(
+async function sensCritiqueFilm(
+  http: Http,
   id: string,
 ): Promise<SensCritiqueFilm | null> {
   const response = await graphql(
+    http,
     `query Product($id: Int!) { product(id: $id) { ${PRODUCT_FIELDS} } }`,
     { id: Number(id) },
   );
@@ -97,10 +109,11 @@ export function parseSensCritiqueProduct(
 }
 
 async function graphql(
+  http: Http,
   query: string,
   variables: Record<string, unknown>,
 ): Promise<unknown> {
-  const response = await request(API, {
+  const response = await http.request(API, {
     json: { query, variables },
   });
   if (response == null) {
@@ -113,12 +126,12 @@ function film(product: z.infer<typeof ProductSchema>): SensCritiqueFilm {
   // `yearOfProduction` is often the year of the French release: 1991 for Akira (1988).
   const year =
     product.displayedYear ??
-    yearOf(product.dateReleaseOriginal) ??
-    yearOf(product.dateRelease) ??
+    yearIn(product.dateReleaseOriginal ?? "") ??
+    yearIn(product.dateRelease ?? "") ??
     product.yearOfProduction;
   return {
     id: String(product.id),
-    url: `${ORIGIN}${product.url}`,
+    url: `${SITES.sensCritique.origin}${product.url}`,
     titles: [
       product.title,
       ...(product.originalTitle == null ? [] : [product.originalTitle]),
@@ -128,8 +141,4 @@ function film(product: z.infer<typeof ProductSchema>): SensCritiqueFilm {
     rating: product.rating,
     ratingCount: product.stats?.ratingCount ?? 0,
   };
-}
-
-function yearOf(date: string | null): number | null {
-  return date == null ? null : Number(date.slice(0, 4));
 }
