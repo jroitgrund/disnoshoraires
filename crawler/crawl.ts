@@ -1,6 +1,11 @@
 import { Session } from "pantomime";
-import { listTheaters, mapSequential, theaterShowtimes } from "./allocine.ts";
-import type { Crawl } from "./schema.ts";
+import {
+  listTheaters,
+  mapSequential,
+  type ShowtimeRow,
+  theaterShowtimes,
+} from "./allocine.ts";
+import type { Crawl, Theater } from "./schema.ts";
 
 export const MARSEILLE = 87914;
 
@@ -12,8 +17,7 @@ export async function crawlCity(
   cityId: number,
   today: string = parisToday(),
 ): Promise<Crawl> {
-  // AlloCiné does not serve past days.
-  const dates = cinemaWeek(today).filter((date) => date >= today);
+  const dates = crawlDates(today);
   await using session = await Session.launch();
   const theaters = await listTheaters(session, cityId);
   const rows = (
@@ -23,11 +27,27 @@ export async function crawlCity(
       ),
     )
   ).flat(2);
+  return assembleCrawl(today, dates, new Date().toISOString(), theaters, rows);
+}
+
+/** The days of the cinema week from today on: AlloCiné does not serve past days. */
+export function crawlDates(today: string): string[] {
+  return cinemaWeek(today).filter((date) => date >= today);
+}
+
+/** Groups the rows by movie. */
+export function assembleCrawl(
+  today: string,
+  dates: readonly string[],
+  crawledAt: string,
+  theaters: readonly Theater[],
+  rows: readonly ShowtimeRow[],
+): Crawl {
   const byMovie = Map.groupBy(rows, (row) => row.movie.id);
   return {
     from: today,
     to: dates.at(-1) ?? today,
-    crawledAt: new Date().toISOString(),
+    crawledAt,
     theaters: theaters.toSorted((a, b) => a.name.localeCompare(b.name, "fr")),
     movies: [...byMovie.values()]
       .map((group) => {

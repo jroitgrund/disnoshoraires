@@ -1,0 +1,293 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`backdrop of fjord 1`] = `"https://image.tmdb.org/t/p/original/pVm69wGYKkqFgTGweqj3cM8oQHI.jpg"`;
+
+exports[`backdrop of the-odyssey 1`] = `"https://image.tmdb.org/t/p/original/4QOdPvWHLibeYnm9wwXCpIbtXa9.jpg"`;
+
+exports[`backdrops 1`] = `
+[
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/rCYzSP07jCA1HuFvrwgaEAPHitT.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/1on8a6DEzhBTjHOKyLWGyaG58jF.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/cwAX59yVTiH1bRQckdWcymVCrdp.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/qiiwyZucueR2xgbYoqATsBRUlBX.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/iPVAMaI0W4lr7Rl56m0H388eR5.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/mkzwS3ihBAyjrNZALu6cM7F1mHu.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "fpxjqkrtm",
+    "url": "https://image.tmdb.org/t/p/original/ronUH8vKXQI8hazM7FJvUZtMAY.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "bonesandall",
+    "url": "https://image.tmdb.org/t/p/original/kP3ozGrqzThV3wcdpUkyz2SdZky.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/oiLW8MorGKqHTOZLsnni0DiHZfO.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/6wMoHrnRJkOA6XFcq4V34z3RxkI.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "killingjoe",
+    "url": "https://image.tmdb.org/t/p/original/pVm69wGYKkqFgTGweqj3cM8oQHI.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "killingjoe",
+    "url": "https://image.tmdb.org/t/p/original/85EaXPVhX89bBnDlrGJT3YjItux.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "killingjoe",
+    "url": "https://image.tmdb.org/t/p/original/rMTBETqfYI4uGBOaQDHlslEjc61.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "killingjoe",
+    "url": "https://image.tmdb.org/t/p/original/qZ8OQ4LzNg3PgHcZxerpEpCDqiS.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "killingjoe",
+    "url": "https://image.tmdb.org/t/p/original/nAg6pwrKKynVhx6elfwP2BDC5GI.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "killingjoe",
+    "url": "https://image.tmdb.org/t/p/original/7bWWHPsAxEnOpjHx0uWPjiJY837.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "killingjoe",
+    "url": "https://image.tmdb.org/t/p/original/1RCZdSxyx3Ho8V6KtcAr0fLwa4d.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "bonesandall",
+    "url": "https://image.tmdb.org/t/p/original/cNhnYmXrhQJCiLtp3RItJSjdLiE.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "crazyc903",
+    "url": "https://image.tmdb.org/t/p/original/wZC5zp2i7ZrSH8BwyZFzmd8itE0.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "killingjoe",
+    "url": "https://image.tmdb.org/t/p/original/aD5jht7nBgyVh61cfnmuu22UnGU.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/tD76MSodcTb0bEVC1A4Lx4XSHSI.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/tIOPWhV01OuuYZDS2GH9cffwYQG.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "killingjoe",
+    "url": "https://image.tmdb.org/t/p/original/p2JQasyVUYTALmIbdl8RWcRb3uD.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "killingjoe",
+    "url": "https://image.tmdb.org/t/p/original/qCEpLiI8Nhwb2PvzeF9Z17362Fs.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/3gl3w3ReMKCWEfKtdZBpxls0IjZ.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "pLaCeB0",
+    "url": "https://image.tmdb.org/t/p/original/u08DQQGrHfdaqGGYB6AcF8Gp5VW.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "pLaCeB0",
+    "url": "https://image.tmdb.org/t/p/original/oL5kR7JEkPCkXdw0HudSrA4IsxU.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "bonesandall",
+    "url": "https://image.tmdb.org/t/p/original/oRBB9TJ3b2JNOcNIoanwzo9mdzu.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "bonesandall",
+    "url": "https://image.tmdb.org/t/p/original/hD0l6S3FeapSkbV5np0cKcG7tb1.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "tmdb01tmdb01",
+    "url": "https://image.tmdb.org/t/p/original/9SOdbtdx1AWFUpWlXJA2oazyaWf.jpg",
+  },
+  {
+    "language": "xx",
+    "uploader": "rogerius",
+    "url": "https://image.tmdb.org/t/p/original/aimzK5HFr01QV3P5tDvxYNAX3EG.jpg",
+  },
+]
+`;
+
+exports[`film page 1`] = `
+{
+  "directors": [
+    "Cristian Mungiu",
+  ],
+  "id": "1401459",
+  "rating": 7.2,
+  "ratingCount": 85,
+  "title": "Fjord",
+  "titles": [
+    "Fjord",
+  ],
+  "url": "https://www.themoviedb.org/movie/1401459-fjord",
+  "year": 2026,
+}
+`;
+
+exports[`film page that shares only the French title with AlloCiné 1`] = `
+{
+  "directors": [
+    "Tetsuo Yajima",
+  ],
+  "id": "1542261",
+  "rating": 7.1,
+  "ratingCount": 11,
+  "title": "Doraemon the Movie: New Nobita and the Castle of the Undersea Devil",
+  "titles": [
+    "Doraemon the Movie: New Nobita and the Castle of the Undersea Devil",
+    "映画ドラえもん 新・のび太の海底鬼岩城",
+    "Doraemon et le château sous-marin",
+  ],
+  "url": "https://www.themoviedb.org/movie/1542261",
+  "year": 2026,
+}
+`;
+
+exports[`film page without a French page 1`] = `
+[
+  "Doraemon the Movie: New Nobita and the Castle of the Undersea Devil",
+  "映画ドラえもん 新・のび太の海底鬼岩城",
+]
+`;
+
+exports[`search 1`] = `
+[
+  {
+    "id": "1401459",
+    "year": 2026,
+  },
+  {
+    "id": "16336",
+    "year": 2009,
+  },
+  {
+    "id": "345443",
+    "year": 2009,
+  },
+  {
+    "id": "962329",
+    "year": 2021,
+  },
+  {
+    "id": "1220624",
+    "year": 1993,
+  },
+  {
+    "id": "1241563",
+    "year": 2022,
+  },
+  {
+    "id": "1522915",
+    "year": 2025,
+  },
+  {
+    "id": "444112",
+    "year": 2010,
+  },
+  {
+    "id": "949075",
+    "year": 1987,
+  },
+  {
+    "id": "1512797",
+    "year": 1964,
+  },
+  {
+    "id": "431070",
+    "year": 2013,
+  },
+  {
+    "id": "1295015",
+    "year": 1984,
+  },
+  {
+    "id": "424659",
+    "year": 2015,
+  },
+  {
+    "id": "584314",
+    "year": 1959,
+  },
+  {
+    "id": "1351184",
+    "year": 2024,
+  },
+  {
+    "id": "430184",
+    "year": 2012,
+  },
+  {
+    "id": "447478",
+    "year": 2021,
+  },
+  {
+    "id": "308776",
+    "year": 2014,
+  },
+  {
+    "id": "453987",
+    "year": 2017,
+  },
+  {
+    "id": "429244",
+    "year": 2010,
+  },
+]
+`;

@@ -1,19 +1,21 @@
 import type { Session } from "pantomime";
 import { mapSequential } from "./allocine.ts";
-import { letterboxdFilm } from "./letterboxd.ts";
-import { closeYear, type Identity, sameFilm } from "./match.ts";
+import { type LetterboxdFilm, letterboxdFilm } from "./letterboxd.ts";
+import { type Lookup, runLookup, type Site } from "./lookup.ts";
+import { type Identity, sameFilm } from "./match.ts";
 import {
   type RottenTomatoesFilm,
   rottenTomatoesFilm,
   searchRottenTomatoes,
 } from "./rottentomatoes.ts";
-import type { External, MovieInfo } from "./schema.ts";
-import { searchSensCritique, sensCritiqueFilm } from "./senscritique.ts";
+import type { Crawl, Enrichment, External, MovieInfo } from "./schema.ts";
+import {
+  type SensCritiqueFilm,
+  searchSensCritique,
+  sensCritiqueFilm,
+} from "./senscritique.ts";
 import { searchTmdb, type TmdbFilm, tmdbBackdrop, tmdbFilm } from "./tmdb.ts";
 import { type KnownIds, knownIds } from "./wikidata.ts";
-
-/** Search results to load at most, per site and title, after the year filter. */
-const MAX_CANDIDATES = 5;
 
 const NOTHING: External = {
   tmdb: null,
@@ -22,12 +24,21 @@ const NOTHING: External = {
   sensCritique: null,
 };
 
-interface Film {
+export interface Film {
   readonly movie: MovieInfo;
   /** Original title first: most sites know a film by it. */
   readonly titles: readonly string[];
   readonly known: KnownIds;
   readonly identity: Identity;
+}
+
+/** The film on each site. */
+export interface Found {
+  readonly tmdb: TmdbFilm | null;
+  readonly backdrop: string | null;
+  readonly letterboxd: LetterboxdFilm | null;
+  readonly rottenTomatoes: RottenTomatoesFilm | null;
+  readonly sensCritique: SensCritiqueFilm | null;
 }
 
 /**
@@ -40,25 +51,10 @@ export async function enrich(
   session: Session,
   movies: readonly MovieInfo[],
 ): Promise<Map<number, External>> {
-  const known = await knownIds(movies.map((movie) => movie.id));
-  const films: Film[] = movies
-    // Without a year or a director, a film cannot be told apart from a namesake.
-    .filter(
-      (movie) => movie.productionYear != null && movie.directors.length > 0,
-    )
-    .map((movie) => {
-      const titles = unique([movie.originalTitle, movie.title]);
-      return {
-        movie,
-        titles,
-        known: known(movie.id),
-        identity: {
-          titles,
-          year: movie.productionYear,
-          directors: movie.directors,
-        },
-      };
-    });
+  const films = lookupFilms(
+    movies,
+    await knownIds(movies.map((movie) => movie.id)),
+  );
   const tmdbDone = progress("tmdb", films.length);
   const letterboxdDone = progress("letterboxd", films.length);
   const rottenTomatoesDone = progress("rottentomatoes", films.length);
@@ -76,11 +72,7 @@ export async function enrich(
           const letterboxd =
             film.tmdb == null
               ? null
-              : await findLetterboxd(
-                  session,
-                  film.tmdb.id,
-                  sameAs(withTitlesOf(film.identity, film.tmdb)),
-                );
+              : await findLetterboxd(session, film, film.tmdb);
           letterboxdDone(film.movie, letterboxd?.url);
           return { ...film, letterboxd };
         }),
@@ -104,43 +96,13 @@ export async function enrich(
     ).then((entries) => new Map(entries)),
   ]);
   const byId = new Map(
-    withSessionSites.map((film): [number, External] => {
-      const sc = sensCritique.get(film.movie.id) ?? null;
-      return [
-        film.movie.id,
-        {
-          tmdb:
-            film.tmdb == null
-              ? null
-              : {
-                  url: film.tmdb.url,
-                  rating: film.tmdb.rating,
-                  ratingCount: film.tmdb.ratingCount,
-                  backdrop: film.backdrop,
-                },
-          letterboxd:
-            film.letterboxd == null
-              ? null
-              : {
-                  url: film.letterboxd.url,
-                  rating: film.letterboxd.rating,
-                  ratingCount: film.letterboxd.ratingCount,
-                },
-          rottenTomatoes:
-            film.rottenTomatoes == null
-              ? null
-              : {
-                  url: film.rottenTomatoes.url,
-                  critics: film.rottenTomatoes.critics,
-                  audience: film.rottenTomatoes.audience,
-                },
-          sensCritique:
-            sc == null
-              ? null
-              : { url: sc.url, rating: sc.rating, ratingCount: sc.ratingCount },
-        },
-      ];
-    }),
+    withSessionSites.map((film): [number, External] => [
+      film.movie.id,
+      toExternal({
+        ...film,
+        sensCritique: sensCritique.get(film.movie.id) ?? null,
+      }),
+    ]),
   );
   movies.forEach((movie) => {
     console.error(report(movie, byId.get(movie.id) ?? NOTHING));
@@ -150,8 +112,158 @@ export async function enrich(
   );
 }
 
+/** Without a year or a director, a film cannot be told apart from a namesake: it is not looked up. */
+export function lookupFilms(
+  movies: readonly MovieInfo[],
+  known: (allocineId: number) => KnownIds,
+): Film[] {
+  return movies
+    .filter(
+      (movie) => movie.productionYear != null && movie.directors.length > 0,
+    )
+    .map((movie) => {
+      const titles = unique([movie.originalTitle, movie.title]);
+      return {
+        movie,
+        titles,
+        known: known(movie.id),
+        identity: {
+          titles,
+          year: movie.productionYear,
+          directors: movie.directors,
+        },
+      };
+    });
+}
+
+/** What the site shows of each film. */
+export function toExternal(found: Found): External {
+  const { tmdb, letterboxd, rottenTomatoes, sensCritique } = found;
+  return {
+    tmdb:
+      tmdb == null
+        ? null
+        : {
+            url: tmdb.url,
+            rating: tmdb.rating,
+            ratingCount: tmdb.ratingCount,
+            backdrop: found.backdrop,
+          },
+    letterboxd:
+      letterboxd == null
+        ? null
+        : {
+            url: letterboxd.url,
+            rating: letterboxd.rating,
+            ratingCount: letterboxd.ratingCount,
+          },
+    rottenTomatoes:
+      rottenTomatoes == null
+        ? null
+        : {
+            url: rottenTomatoes.url,
+            critics: rottenTomatoes.critics,
+            audience: rottenTomatoes.audience,
+          },
+    sensCritique:
+      sensCritique == null
+        ? null
+        : {
+            url: sensCritique.url,
+            rating: sensCritique.rating,
+            ratingCount: sensCritique.ratingCount,
+          },
+  };
+}
+
+/** The previous output only saves work: a movie still showing is not enriched again. */
+export function toEnrich(
+  movies: readonly MovieInfo[],
+  previous: Enrichment["movies"],
+): MovieInfo[] {
+  return movies.filter((movie) => previous[String(movie.id)] == null);
+}
+
+/** Every movie of the crawl, from the previous output or from this pass. */
+export function mergeEnrichment(
+  crawl: Crawl,
+  previous: Enrichment["movies"],
+  enriched: ReadonlyMap<number, External>,
+  enrichedAt: string,
+): Enrichment {
+  return {
+    crawledAt: crawl.crawledAt,
+    enrichedAt,
+    movies: Object.fromEntries(
+      crawl.movies.map((movie) => {
+        const external = previous[String(movie.id)] ?? enriched.get(movie.id);
+        if (external == null) {
+          throw new Error(`movie ${String(movie.id)} is not enriched`);
+        }
+        return [String(movie.id), external];
+      }),
+    ),
+  };
+}
+
+/** Wikidata's IDs first. Search only when Wikidata has none, or none that passes the check. */
+export function tmdbLookup(film: Film): Lookup<TmdbFilm> {
+  return {
+    known: film.known.tmdb,
+    titles: film.titles,
+    year: film.movie.productionYear,
+    accept: sameAs(film.identity),
+  };
+}
+
+/** Letterboxd takes its catalogue from TMDB: the TMDB ID leads to the film, the page confirms it. */
+export function letterboxdLookup(
+  film: Film,
+  tmdb: TmdbFilm,
+): Lookup<LetterboxdFilm> {
+  const same = sameAs(withTitlesOf(film.identity, tmdb));
+  return {
+    known: [tmdb.id],
+    titles: [],
+    year: film.movie.productionYear,
+    accept: (letterboxd) => letterboxd.tmdbId === tmdb.id && same(letterboxd),
+  };
+}
+
+/**
+ * Rotten Tomatoes can have several pages for one film: "m/the_beloved_2026" with the reviews, "m/the_beloved_2" without.
+ * The first lookup takes only a page with a Tomatometer, the second any page.
+ * Rotten Tomatoes knows most foreign films by their English title, which TMDB gives.
+ */
+export function rottenTomatoesLookups(
+  film: Film,
+  tmdb: TmdbFilm | null,
+): readonly [Lookup<RottenTomatoesFilm>, Lookup<RottenTomatoesFilm>] {
+  const same = sameAs(withTitlesOf(film.identity, tmdb));
+  const any: Lookup<RottenTomatoesFilm> = {
+    known: film.known.rottenTomatoes,
+    titles: unique([...(tmdb == null ? [] : [tmdb.title]), ...film.titles]),
+    year: film.movie.productionYear,
+    accept: same,
+  };
+  return [{ ...any, accept: (rt) => same(rt) && rt.critics != null }, any];
+}
+
+/** SensCritique search results carry the year and directors: the check needs no page load. */
+export function sensCritiqueLookup(film: Film): Lookup<SensCritiqueFilm> {
+  return {
+    known: film.known.sensCritique,
+    titles: film.titles,
+    year: film.movie.productionYear,
+    accept: sameAs(film.identity),
+  };
+}
+
 async function withTmdb(film: Film) {
-  const tmdb = await findTmdb(film);
+  const { film: tmdb } = await runLookup(tmdbLookup(film), {
+    load: tmdbFilm,
+    search: searchTmdb,
+  });
   return {
     ...film,
     tmdb,
@@ -159,90 +271,34 @@ async function withTmdb(film: Film) {
   };
 }
 
-/** Wikidata's IDs first. Search only when Wikidata has none, or none that passes the check. */
-async function findTmdb(film: Film): Promise<TmdbFilm | null> {
-  const same = sameAs(film.identity);
-  return (
-    (await findAsync(film.known.tmdb, tmdbFilm, same)) ??
-    findBySearch(film, film.titles, searchTmdb, tmdbFilm, same, film.known.tmdb)
-  );
+async function findLetterboxd(session: Session, film: Film, tmdb: TmdbFilm) {
+  const { film: letterboxd } = await runLookup(letterboxdLookup(film, tmdb), {
+    load: (id) => letterboxdFilm(session, id),
+    search: () => Promise.resolve([]),
+  });
+  return letterboxd;
 }
 
-/** Letterboxd takes its catalogue from TMDB: the TMDB ID leads to the film, the page confirms it. */
-async function findLetterboxd(
-  session: Session,
-  tmdbId: string,
-  same: (other: Identity) => boolean,
-) {
-  const film = await letterboxdFilm(session, tmdbId);
-  return film != null && film.tmdbId === tmdbId && same(film) ? film : null;
-}
-
-/**
- * Rotten Tomatoes can have several pages for one film: "m/the_beloved_2026" with the reviews, "m/the_beloved_2" without.
- * The page with a Tomatometer wins. The second pass, for a film without one, loads nothing new.
- */
 async function findRottenTomatoes(
   session: Session,
   film: Film,
   tmdb: TmdbFilm | null,
 ) {
-  const load = cached((id: string) => rottenTomatoesFilm(session, id));
-  const search = cached((query: string) =>
-    searchRottenTomatoes(session, query),
-  );
-  // Rotten Tomatoes knows most foreign films by their English title, which TMDB gives.
-  const same = sameAs(withTitlesOf(film.identity, tmdb));
-  const titles = unique([
-    ...(tmdb == null ? [] : [tmdb.title]),
-    ...film.titles,
-  ]);
-  const find = async (accept: (rt: RottenTomatoesFilm) => boolean) =>
-    (await findAsync(film.known.rottenTomatoes, load, accept)) ??
-    findBySearch(film, titles, search, load, accept, film.known.rottenTomatoes);
-  return (await find((rt) => same(rt) && rt.critics != null)) ?? find(same);
+  const site: Site<RottenTomatoesFilm> = {
+    load: (id) => rottenTomatoesFilm(session, id),
+    search: (title) => searchRottenTomatoes(session, title),
+  };
+  const [withCritics, any] = rottenTomatoesLookups(film, tmdb);
+  const first = await runLookup(withCritics, site);
+  return first.film ?? (await runLookup(any, site, first.history)).film;
 }
 
-/** SensCritique search results carry the year and directors: the check needs no page load. */
 async function findSensCritique(film: Film) {
-  const same = sameAs(film.identity);
-  return (
-    (await findAsync(film.known.sensCritique, sensCritiqueFilm, same)) ??
-    findAsync(
-      film.titles,
-      async (title) => (await searchSensCritique(title)).find(same) ?? null,
-      () => true,
-    )
-  );
-}
-
-/**
- * Searches one title at a time, and the next title only when no result of the previous one passes the check.
- * Results in the site's order, without far years or IDs already loaded.
- */
-async function findBySearch<T extends Identity>(
-  film: Film,
-  titles: readonly string[],
-  search: (query: string) => Promise<{ id: string; year: number | null }[]>,
-  load: (id: string) => Promise<T | null>,
-  same: (other: T) => boolean,
-  tried: readonly string[],
-): Promise<T | null> {
-  const [title, ...rest] = titles;
-  if (title == null) {
-    return null;
-  }
-  const ids = unique(
-    (await search(title))
-      .filter((result) => closeYear(film.movie.productionYear, result.year))
-      .map((result) => result.id),
-  )
-    .filter((id) => !tried.includes(id))
-    .slice(0, MAX_CANDIDATES);
-  return (
-    (await findAsync(ids, load, same)) ??
-    findBySearch(film, rest, search, load, same, [...tried, ...ids])
-  );
+  const { film: sensCritique } = await runLookup(sensCritiqueLookup(film), {
+    load: sensCritiqueFilm,
+    search: searchSensCritique,
+  });
+  return sensCritique;
 }
 
 function sameAs(identity: Identity): (other: Identity) => boolean {
@@ -254,22 +310,6 @@ function withTitlesOf(identity: Identity, tmdb: TmdbFilm | null): Identity {
   return tmdb == null
     ? identity
     : { ...identity, titles: unique([...identity.titles, ...tmdb.titles]) };
-}
-
-/** Loads the items one after the other and stops at the first result that passes `accept`. */
-async function findAsync<T>(
-  items: readonly string[],
-  load: (item: string) => Promise<T | null>,
-  accept: (result: T) => boolean,
-): Promise<T | null> {
-  const [first, ...rest] = items;
-  if (first == null) {
-    return null;
-  }
-  const result = await load(first);
-  return result != null && accept(result)
-    ? result
-    : findAsync(rest, load, accept);
 }
 
 /** Logs one line per film as a site finishes it: `tmdb 12/98 Fjord (2026): <url>`. */
@@ -286,23 +326,11 @@ function progress(
   };
 }
 
-/** Calls `load` once per key. */
-function cached<T>(
-  load: (key: string) => Promise<T>,
-): (key: string) => Promise<T> {
-  const results = new Map<string, Promise<T>>();
-  return (key) => {
-    const result = results.get(key) ?? load(key);
-    results.set(key, result);
-    return result;
-  };
-}
-
 function unique(values: readonly string[]): string[] {
   return [...new Set(values)];
 }
 
-function report(movie: MovieInfo, external: External): string {
+export function report(movie: MovieInfo, external: External): string {
   const mark = (found: boolean): string => (found ? "+" : "-");
   return [
     `${mark(external.tmdb != null)}tmdb`,

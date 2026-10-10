@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { request } from "./http.ts";
+import type { SearchResult } from "./lookup.ts";
 import type { Identity } from "./match.ts";
 
 /** The GraphQL API that senscritique.com calls. */
@@ -50,7 +51,7 @@ const ProductResponseSchema = z.object({
  */
 export async function searchSensCritique(
   query: string,
-): Promise<SensCritiqueFilm[]> {
+): Promise<SearchResult<SensCritiqueFilm>[]> {
   const response = await graphql(
     `query Search($query: String!) {
       searchProductExplorer(query: $query, limit: 20) {
@@ -59,11 +60,21 @@ export async function searchSensCritique(
     }`,
     { query },
   );
-  return SearchSchema.parse(response)
+  return parseSensCritiqueSearch(response);
+}
+
+/** `json` is the GraphQL response. */
+export function parseSensCritiqueSearch(
+  json: unknown,
+): SearchResult<SensCritiqueFilm>[] {
+  return SearchSchema.parse(json)
     .data.searchProductExplorer.items.filter(
       (product) => product.universe === FILM,
     )
-    .map(film);
+    .map((product) => {
+      const result = film(product);
+      return { id: result.id, year: result.year, film: result };
+    });
 }
 
 /** `null` when there is no such film. */
@@ -74,7 +85,14 @@ export async function sensCritiqueFilm(
     `query Product($id: Int!) { product(id: $id) { ${PRODUCT_FIELDS} } }`,
     { id: Number(id) },
   );
-  const product = ProductResponseSchema.parse(response).data.product;
+  return parseSensCritiqueProduct(response);
+}
+
+/** `json` is the GraphQL response. `null` when it has no film. */
+export function parseSensCritiqueProduct(
+  json: unknown,
+): SensCritiqueFilm | null {
+  const product = ProductResponseSchema.parse(json).data.product;
   return product == null || product.universe !== FILM ? null : film(product);
 }
 

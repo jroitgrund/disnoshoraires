@@ -30,10 +30,12 @@ export async function letterboxdFilm(
     session,
     `https://letterboxd.com/tmdb/${tmdbId}/`,
   );
-  if (response == null) {
-    return null;
-  }
-  const root = parse(response.text);
+  return response == null ? null : parseLetterboxdFilm(response.text);
+}
+
+/** A film page. `null` when it has no JSON-LD. */
+export function parseLetterboxdFilm(html: string): LetterboxdFilm | null {
+  const root = parse(html);
   const json = root.querySelector('script[type="application/ld+json"]')?.text;
   if (json == null) {
     return null;
@@ -50,7 +52,7 @@ export async function letterboxdFilm(
   return {
     url: ld.url,
     titles: [ld.name],
-    tmdbId: /data-tmdb-id="(\d+)"/.exec(response.text)?.[1] ?? null,
+    tmdbId: /data-tmdb-id="(\d+)"/.exec(html)?.[1] ?? null,
     year: year == null ? null : Number(year),
     directors: ld.director.map((director) => director.name),
     rating: ld.aggregateRating?.ratingValue ?? null,

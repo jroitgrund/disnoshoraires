@@ -1,0 +1,91 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`film page with a Tomatometer 1`] = `
+{
+  "audience": null,
+  "critics": 83,
+  "directors": [
+    "Rodrigo Sorogoyen",
+  ],
+  "titles": [
+    "The Beloved (2026)",
+  ],
+  "url": "https://www.rottentomatoes.com/m/the_beloved_2026",
+  "year": 2026,
+}
+`;
+
+exports[`film page without reviews 1`] = `
+{
+  "audience": null,
+  "critics": null,
+  "directors": [
+    "Rodrigo Sorogoyen",
+  ],
+  "titles": [
+    "The Beloved",
+  ],
+  "url": "https://www.rottentomatoes.com/m/the_beloved_2",
+  "year": 2026,
+}
+`;
+
+exports[`old film page 1`] = `
+{
+  "audience": 90,
+  "critics": 88,
+  "directors": [
+    "Katsuhiro Ohtomo",
+  ],
+  "titles": [
+    "Akira",
+  ],
+  "url": "https://www.rottentomatoes.com/m/akira",
+  "year": 1989,
+}
+`;
+
+exports[`search 1`] = `
+[
+  {
+    "id": "m/the_beloved_2026",
+    "year": 2026,
+  },
+  {
+    "id": "m/the_beloved_2",
+    "year": 2026,
+  },
+  {
+    "id": "m/cry_the_beloved_country",
+    "year": 1952,
+  },
+  {
+    "id": "m/1068781-cry_the_beloved_country",
+    "year": 1995,
+  },
+  {
+    "id": "m/the_beloved",
+    "year": 1970,
+  },
+  {
+    "id": "m/beloved_rogue",
+    "year": 1927,
+  },
+  {
+    "id": "m/humanite_the_beloved_community",
+    "year": 2019,
+  },
+  {
+    "id": "m/the_beloved_bachelor",
+    "year": 1931,
+  },
+  {
+    "id": "m/beloved_2012",
+    "year": 2011,
+  },
+  {
+    "id": "m/rcheyli",
+    "year": 1991,
+  },
+]
+`;

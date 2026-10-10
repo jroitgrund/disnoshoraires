@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" >
+  <head>
+    <title>Fjord &#8212; The Movie Database (TMDB)</title>
+    <meta http-equiv="cleartype" content="on">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Movies, TV Shows, Streaming, Reviews, API, Actors, Actresses, Photos, User Ratings, Synopsis, Trailers, Teasers, Credits, Cast">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="description" content="The Movie Database (TMDB) is a popular, user editable database for movies and TV shows.">
+    <meta name="msapplication-TileImage" content="/assets/v4/icons/mstile-144x144-30e7905a8315a080978ad6aeb71c69222b72c2f75d26dab1224173a96fecc962.png">
+<meta name="msapplication-TileColor" content="#032541">
+<meta name="theme-color" content="#032541">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon-57ed4b3b0450fd5e9a0c20f34e814b82adaa1085c79bdde2f00ca8787b63d2c4.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32-543a21832c8931d3494a68881f6afcafc58e96c5d324345377f3197a37b367b5.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16-b362d267873ce9c5a39f686a11fe67fec2a72ed25fa8396c11b71aa43c938b11.png">
+<link rel="manifest" href="/manifest.json">
+
+    <link rel="canonical" href="https://www.themoviedb.org/search/movie">
+    <link rel="search" type="application/opensearchdescription+xml" title="TMDB Search" href="/opensearch.xml">
+    <link rel="preload" href="/assets/source-sans-pro-v14-vietnamese_latin-ext_latin_greek-ext_greek_cyrillic-ext_cyrillic-regular-f38472b9e378b8c936f55a92677f575ab69e414d7cc3706ecfefeacd994b7975.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/jquery-ecffbdd65659ea563af89bab1b717a2cfa2c4435763b8dff34275d48e29ee8ba.js" as="script">
+    <link rel="preload" href="/assets/application-1cbbaa6fd14944accc97a7b605174c0f65df601c4c0fed782ea0b3a6a32950b8.js" as="script">
+    <link rel="modulepreload" href="/assets/kendo-global-60d35ba141d4265f129e076fba251f5de23c1d3b56f8d55a617521ef5854eec9.js">
+    <link rel="stylesheet" href="/assets/tailwind-1c51584cc4025762441256c53fc504320f57ae5153d46ad49d0bc0eaff4f5aec.css" media="screen">
+    <link rel="stylesheet" href="/assets/fonts-24a3ac19b05f22f98d8d8ae3fb2f6971dc269c2330b3f57ed5bc96c7d5dcabe7.css" media="screen">
+    <link rel="stylesheet" href="/assets/application-d509532350761a5bf0d8a813e2bf649f5c51e11e7675a05d823976e34cfb83f5.css" media="screen">
+    <link rel="stylesheet" href="/assets/kendo-ff12a3d3b4d091b1dc609d15c0fdb9447b9c543a403fb75e61544794bb3bbbb6.css" media="screen">
+    
+    <link rel="stylesheet" href="/assets/pages/auth_card-6524f776171efb3438b363c5c79e9e940043de0fd7ad500383b9fdcc1d27f044.css" media="screen">
+      <link rel="stylesheet" href="/assets/pages/media-cfb890a50c77ec7022cb435b82a3cfb6e9725bb056d82aee9f5c56d5c2a783ff.css" media="screen">
+      
+      <link rel="stylesheet" href="/assets/pages/account-73bb610abc59fed07b66d2a0f407c9ade8ba8e328eae037d0888e12b51f2fd91.css" media="screen">
+      
+    <link rel="alternate" hreflang="x-default" href="https://www.themoviedb.org/search/movie">
+    <link rel="alternate" hreflang="af-ZA" href="https://www.themoviedb.org/search/movie?language=af-ZA">
+    <link rel="alternate" hreflang="ar-SA" href="https://www.themoviedb.org/search/movie?language=ar-SA">
+    <link rel="alternate" hreflang="be-BY" href="https://www.themoviedb.org/search/movie?language=be-BY">
+    <link rel="alternate" hreflang="bg-BG" href="https://www.themoviedb.org/search/movie?language=bg-BG">
+    <link rel="alternate" hreflang="bn-BD" href="https://www.themoviedb.org/search/movie?language=bn-BD">
+    <link rel="alternate" hreflang="br-FR" href="https://www.themoviedb.org/search/movie?language=br-FR">
+    <link rel="alternate" hreflang="ca-ES" href="https://www.themoviedb.org/search/movie?language=ca-ES">
+    <link rel="alternate" hreflang="ch-GU" href="https://www.themoviedb.org/search/movie?language=ch-GU">
+    <link rel="alternate" hreflang="cs-CZ" href="https://www.themoviedb.org/search/movie?language=cs-CZ">
+    <link rel="alternate" hreflang="cy-GB" href="https://www.themoviedb.org/search/movie?language=cy-GB">
+    <link rel="alternate" hreflang="da-DK" href="https://www.themoviedb.org/search/movie?language=da-DK">
+    <link rel="alternate" hreflang="de-DE" href="https://www.themoviedb.org/search/movie?language=de-DE">
+    <link rel="alternate" hreflang="el-GR" href="https://www.themoviedb.org/search/movie?language=el-GR">
+    <link rel="alternate" hreflang="en-US" href="https://www.themoviedb.org/search/movie?language=en-US">
+    <link rel="alternate" hreflang="eo-EO" href="https://www.themoviedb.org/search/movie?language=eo-EO">
+    <link rel="alternate" hreflang="es-ES" href="https://www.themoviedb.org/search/movie?language=es-ES">
+    <link rel="alternate" hreflang="et-EE" href="https://www.themoviedb.org/search/movie?language=et-EE">
+    <link rel="alternate" hreflang="eu-ES" href="https://www.themoviedb.org/search/movie?language=eu-ES">
+    <link rel="alternate" hreflang="fa-IR" href="https://www.themoviedb.org/search/movie?language=fa-IR">
+    <link rel="alternate" hreflang="fi-FI" href="https://www.themoviedb.org/search/movie?language=fi-FI">
+    <link rel="alternate" hreflang="fr-FR" href="https://www.themoviedb.org/search/movie?language=fr-FR">
+    <link rel="alternate" hreflang="ga-IE" href="https://www.themoviedb.org/search/movie?language=ga-IE">
+    <link rel="alternate" hreflang="gd-GB" href="https://www.themoviedb.org/search/movie?language=gd-GB">
+    <link rel="alternate" hreflang="gl-ES" href="https://www.themoviedb.org/search/movie?language=gl-ES">
+    <link rel="alternate" hreflang="he-IL" href="https://www.themoviedb.org/search/movie?language=he-IL">
+    <link rel="alternate" hreflang="hi-IN" href="https://www.themoviedb.org/search/movie?language=hi-IN">
+    <link rel="alternate" hreflang="hr-HR" href="https://www.themoviedb.org/search/movie?language=hr-HR">
+    <link rel="alternate" hreflang="hu-HU" href="https://www.themoviedb.org/search/movie?language=hu-HU">
+    <link rel="alternate" hreflang="hy-AM" href="https://www.themoviedb.org/search/movie?language=hy-AM">
+    <link rel="alternate" hreflang="id-ID" href="https://www.themoviedb.org/search/movie?language=id-ID">
+    <link rel="alternate" hreflang="it-IT" href="https://www.themoviedb.org/search/movie?language=it-IT">
+    <link rel="alternate" hreflang="ja-JP" href="https://www.themoviedb.org/search/movie?language=ja-JP">
+    <link rel="alternate" hreflang="ka-GE" href="https://www.themoviedb.org/search/movie?language=ka-GE">
+    <link rel="alternate" hreflang="kk-KZ" href="https://www.themoviedb.org/search/movie?language=kk-KZ">
+    <link rel="alternate" hreflang="kn-IN" href="https://www.themoviedb.org/search/movie?language=kn-IN">
+    <link rel="alternate" hreflang="ko-KR" href="https://www.themoviedb.org/search/movie?language=ko-KR">
+    <link rel="alternate" hreflang="ku-TR" href="https://www.themoviedb.org/search/movie?language=ku-TR">
+    <link rel="alternate" hreflang="ky-KG" href="https://www.themoviedb.org/search/movie?language=ky-KG">
+    <link rel="alternate" hreflang="lt-LT" href="https://www.themoviedb.org/search/movie?language=lt-LT">
+    <link rel="alternate" hreflang="lv-LV" href="https://www.themoviedb.org/search/movie?language=lv-LV">
+    <link rel="alternate" hreflang="ml-IN" href="https://www.themoviedb.org/search/movie?language=ml-IN">
+    <link rel="alternate" hreflang="mr-IN" href="https://www.themoviedb.org/search/movie?language=mr-IN">
+    <link rel="alternate" hreflang="ms-MY" href="https://www.themoviedb.org/search/movie?language=ms-MY">
+    <link rel="alternate" hreflang="nb-NO" href="https://www.themoviedb.org/search/movie?language=nb-NO">
+    <link rel="alternate" hreflang="ne-NP" href="https://www.themoviedb.org/search/movie?language=ne-NP">
+    <link rel="alternate" hreflang="nl-NL" href="https://www.themoviedb.org/search/movie?language=nl-NL">
+    <link rel="alternate" hreflang="no-NO" href="https://www.themoviedb.org/search/movie?language=no-NO">
+    <link rel="alternate" hreflang="oc-FR" href="https://www.themoviedb.org/search/movie?language=oc-FR">
+    <link rel="alternate" hreflang="pa-IN" href="https://www.themoviedb.org/search/movie?language=pa-IN">
+    <link rel="alternate" hreflang="pl-PL" href="https://www.themoviedb.org/search/movie?language=pl-PL">
+    <link rel="alternate" hreflang="pt-PT" href="https://www.themoviedb.org/search/movie?language=pt-PT">
+    <link rel="alternate" hreflang="ro-RO" href="https://www.themoviedb.org/search/movie?language=ro-RO">
+    <link rel="alternate" hreflang="ru-RU" href="https://www.themoviedb.org/search/movie?language=ru-RU">
+    <link rel="alternate" hreflang="si-LK" href="https://www.themoviedb.org/search/movie?language=si-LK">
+    <link rel="alternate" hreflang="sk-SK" href="https://www.themoviedb.org/search/movie?language=sk-SK">
+    <link rel="alternate" hreflang="sl-SI" href="https://www.themoviedb.org/search/movie?language=sl-SI">
+    <link rel="alternate" hreflang="so-SO" href="https://www.themoviedb.org/search/movie?language=so-SO">
+    <link rel="alternate" hreflang="sq-AL" href="https://www.themoviedb.org/search/movie?language=sq-AL">
+    <link rel="alternate" hreflang="sr-RS" href="https://www.themoviedb.org/search/movie?language=sr-RS">
+    <link rel="alternate" hreflang="sv-SE" href="https://www.themoviedb.org/search/movie?language=sv-SE">
+    <link rel="alternate" hreflang="sw-TZ" href="https://www.themoviedb.org/search/movie?language=sw-TZ">
+    <link rel="alternate" hreflang="ta-IN" href="https://www.themoviedb.org/search/movie?language=ta-IN">
+    <link rel="alternate" hreflang="te-IN" href="https://www.themoviedb.org/search/movie?language=te-IN">
+    <link rel="alternate" hreflang="tl-PH" href="https://www.themoviedb.org/search/movie?language=tl-PH">
+    <link rel="alternate" hreflang="th-TH" href="https://www.themoviedb.org/search/movie?language=th-TH">
+    <link rel="alternate" hreflang="tr-TR" href="https://www.themoviedb.org/search/movie?language=tr-TR">
+    <link rel="alternate" hreflang="uk-UA" href="https://www.themoviedb.org/search/movie?language=uk-UA">
+    <link rel="alternate" hreflang="ur-PK" href="https://www.themoviedb.org/search/movie?language=ur-PK">
+    <link rel="alternate" hreflang="uz-UZ" href="https://www.themoviedb.org/search/movie?language=uz-UZ">
+    <link rel="alternate" hreflang="vi-VN" href="https://www.themoviedb.org/search/movie?language=vi-VN">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.themoviedb.org/search/movie?language=zh-CN">
+    <link rel="alternate" hreflang="zu-ZA" href="https://www.themoviedb.org/search/movie?language=zu-ZA">
+    <link rel="alternate" hreflang="ar-AE" href="https://www.themoviedb.org/search/movie?language=ar-AE">
+    <link rel="alternate" hreflang="ar-BH" href="https://www.themoviedb.org/search/movie?language=ar-BH">
+    <link rel="alternate" hreflang="ar-EG" href="https://www.themoviedb.org/search/movie?language=ar-EG">
+    <link rel="alternate" hreflang="ar-IQ" href="https://www.themoviedb.org/search/movie?language=ar-IQ">
+    <link rel="alternate" hreflang="ar-JO" href="https://www.themoviedb.org/search/movie?language=ar-JO">
+    <link rel="alternate" hreflang="ar-LY" href="https://www.themoviedb.org/search/movie?language=ar-LY">
+    <link rel="alternate" hreflang="ar-MA" href="https://www.themoviedb.org/search/movie?language=ar-MA">
+    <link rel="alternate" hreflang="ar-QA" href="https://www.themoviedb.org/search/movie?language=ar-QA">
+    <link rel="alternate" hreflang="ar-YE" href="https://www.themoviedb.org/search/movie?language=ar-YE">
+    <link rel="alternate" hreflang="ar-TD" href="https://www.themoviedb.org/search/movie?language=ar-TD">
+    <link rel="alternate" hreflang="bn-IN" href="https://www.themoviedb.org/search/movie?language=bn-IN">
+    <link rel="alternate" hreflang="ca-AD" href="https://www.themoviedb.org/search/movie?language=ca-AD">
+    <link rel="alternate" hreflang="de-AT" href="https://www.themoviedb.org/search/movie?language=de-AT">
+    <link rel="alternate" hreflang="de-CH" href="https://www.themoviedb.org/search/movie?language=de-CH">
+    <link rel="alternate" hreflang="el-CY" href="https://www.themoviedb.org/search/movie?language=el-CY">
+    <link rel="alternate" hreflang="en-AG" href="https://www.themoviedb.org/search/movie?language=en-AG">
+    <link rel="alternate" hreflang="en-AU" href="https://www.themoviedb.org/search/movie?language=en-AU">
+    <link rel="alternate" hreflang="en-BB" href="https://www.themoviedb.org/search/movie?language=en-BB">
+    <link rel="alternate" hreflang="en-BZ" href="https://www.themoviedb.org/search/movie?language=en-BZ">
+    <link rel="alternate" hreflang="en-CA" href="https://www.themoviedb.org/search/movie?language=en-CA">
+    <link rel="alternate" hreflang="en-CM" href="https://www.themoviedb.org/search/movie?language=en-CM">
+    <link rel="alternate" hreflang="en-GB" href="https://www.themoviedb.org/search/movie?language=en-GB">
+    <link rel="alternate" hreflang="en-GG" href="https://www.themoviedb.org/search/movie?language=en-GG">
+    <link rel="alternate" hreflang="en-GH" href="https://www.themoviedb.org/search/movie?language=en-GH">
+    <link rel="alternate" hreflang="en-GI" href="https://www.themoviedb.org/search/movie?language=en-GI">
+    <link rel="alternate" hreflang="en-GY" href="https://www.themoviedb.org/search/movie?language=en-GY">
+    <link rel="alternate" hreflang="en-IE" href="https://www.themoviedb.org/search/movie?language=en-IE">
+    <link rel="alternate" hreflang="en-JM" href="https://www.themoviedb.org/search/movie?language=en-JM">
+    <link rel="alternate" hreflang="en-KE" href="https://www.themoviedb.org/search/movie?language=en-KE">
+    <link rel="alternate" hreflang="en-LC" href="https://www.themoviedb.org/search/movie?language=en-LC">
+    <link rel="alternate" hreflang="en-MW" href="https://www.themoviedb.org/search/movie?language=en-MW">
+    <link rel="alternate" hreflang="en-NZ" href="https://www.themoviedb.org/search/movie?language=en-NZ">
+    <link rel="alternate" hreflang="en-PG" href="https://www.themoviedb.org/search/movie?language=en-PG">
+    <link rel="alternate" hreflang="en-TC" href="https://www.themoviedb.org/search/movie?language=en-TC">
+    <link rel="alternate" hreflang="en-ZM" href="https://www.themoviedb.org/search/movie?language=en-ZM">
+    <link rel="alternate" hreflang="en-ZW" href="https://www.themoviedb.org/search/movie?language=en-ZW">
+    <link rel="alternate" hreflang="es-AR" href="https://www.themoviedb.org/search/movie?language=es-AR">
+    <link rel="alternate" hreflang="es-CL" href="https://www.themoviedb.org/search/movie?language=es-CL">
+    <link rel="alternate" hreflang="es-DO" href="https://www.themoviedb.org/search/movie?language=es-DO">
+    <link rel="alternate" hreflang="es-EC" href="https://www.themoviedb.org/search/movie?language=es-EC">
+    <link rel="alternate" hreflang="es-GT" href="https://www.themoviedb.org/search/movie?language=es-GT">
+    <link rel="alternate" hreflang="es-GQ" href="https://www.themoviedb.org/search/movie?language=es-GQ">
+    <link rel="alternate" hreflang="es-HN" href="https://www.themoviedb.org/search/movie?language=es-HN">
+    <link rel="alternate" hreflang="es-MX" href="https://www.themoviedb.org/search/movie?language=es-MX">
+    <link rel="alternate" hreflang="es-NI" href="https://www.themoviedb.org/search/movie?language=es-NI">
+    <link rel="alternate" hreflang="es-PA" href="https://www.themoviedb.org/search/movie?language=es-PA">
+    <link rel="alternate" hreflang="es-PE" href="https://www.themoviedb.org/search/movie?language=es-PE">
+    <link rel="alternate" hreflang="es-PY" href="https://www.themoviedb.org/search/movie?language=es-PY">
+    <link rel="alternate" hreflang="es-SV" href="https://www.themoviedb.org/search/movie?language=es-SV">
+    <link rel="alternate" hreflang="es-UY" href="https://www.themoviedb.org/search/movie?language=es-UY">
+    <link rel="alternate" hreflang="fr-BF" href="https://www.themoviedb.org/search/movie?language=fr-BF">
+    <link rel="alternate" hreflang="fr-CA" href="https://www.themoviedb.org/search/movie?language=fr-CA">
+    <link rel="alternate" hreflang="fr-CD" href="https://www.themoviedb.org/search/movie?language=fr-CD">
+    <link rel="alternate" hreflang="fr-CI" href="https://www.themoviedb.org/search/movie?language=fr-CI">
+    <link rel="alternate" hreflang="fr-GF" href="https://www.themoviedb.org/search/movie?language=fr-GF">
+    <link rel="alternate" hreflang="fr-GP" href="https://www.themoviedb.org/search/movie?language=fr-GP">
+    <link rel="alternate" hreflang="fr-MC" href="https://www.themoviedb.org/search/movie?language=fr-MC">
+    <link rel="alternate" hreflang="fr-ML" href="https://www.themoviedb.org/search/movie?language=fr-ML">
+    <link rel="alternate" hreflang="fr-MU" href="https://www.themoviedb.org/search/movie?language=fr-MU">
+    <link rel="alternate" hreflang="fr-PF" href="https://www.themoviedb.org/search/movie?language=fr-PF">
+    <link rel="alternate" hreflang="it-VA" href="https://www.themoviedb.org/search/movie?language=it-VA">
+    <link rel="alternate" hreflang="ms-SG" href="https://www.themoviedb.org/search/movie?language=ms-SG">
+    <link rel="alternate" hreflang="nl-BE" href="https://www.themoviedb.org/search/movie?language=nl-BE">
+    <link rel="alternate" hreflang="pt-AO" href="https://www.themoviedb.org/search/movie?language=pt-AO">
+    <link rel="alternate" hreflang="pt-BR" href="https://www.themoviedb.org/search/movie?language=pt-BR">
+    <link rel="alternate" hreflang="pt-MZ" href="https://www.themoviedb.org/search/movie?language=pt-MZ">
+    <link rel="alternate" hreflang="ro-MD" href="https://www.themoviedb.org/search/movie?language=ro-MD">
+    <link rel="alternate" hreflang="sr-ME" href="https://www.themoviedb.org/search/movie?language=sr-ME">
+    <link rel="alternate" hreflang="sq-XK" href="https://www.themoviedb.org/search/movie?language=sq-XK">
+    <link rel="alternate" hreflang="zh-HK" href="https://www.themoviedb.org/search/movie?language=zh-HK">
+    <link rel="alternate" hreflang="zh-SG" href="https://www.themoviedb.org/search/movie?language=zh-SG">
+    <link rel="alternate" hreflang="zh-TW" href="https://www.themoviedb.org/search/movie?language=zh-TW">
+
+    <script src="/assets/jquery-ecffbdd65659ea563af89bab1b717a2cfa2c4435763b8dff34275d48e29ee8ba.js"></script>
+    <script src="/assets/kendo-global-60d35ba141d4265f129e076fba251f5de23c1d3b56f8d55a617521ef5854eec9.js" type="module"></script>
+    <script src="/assets/application-1cbbaa6fd14944accc97a7b605174c0f65df601c4c0fed782ea0b3a6a32950b8.js"></script>
+      <script src="/privacy/7399d694/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="23223fbb-5c84-48df-836d-0a83fb7b2c03" async></script>
+        <script type="text/javascript" src="https://0692f8bdd7b5.edge.sdk.awswaf.com/0692f8bdd7b5/994f483f0d69/challenge.js" defer></script>
+  <script type="text/javascript" src="https://0692f8bdd7b5.edge.captcha-sdk.awswaf.com/0692f8bdd7b5/jsapi.js" async></script>
+<script type="text/javascript">
+  window.withWafToken = function(callback) {
+    if (typeof AwsWafIntegration === "undefined" || AwsWafIntegration.hasToken()) {
+      callback();
+      return;
+    }
+    AwsWafIntegration.getToken().then(callback, function(err) {
+      console.log("WAF token error: " + err);
+      callback();
+    });
+  };
+
+  setInterval(function() {
+    if (typeof AwsWafIntegration !== "undefined") {
+      AwsWafIntegration.getToken().catch(function() {});
+    }
+  }, 4 * 60 * 1000);
+
+  document.addEventListener("submit", function(e) {
+    var form = e.target;
+    if (form._wafSubmitting) return;
+    if (!form.method || form.method.toLowerCase() !== "post") return;
+    if (typeof AwsWafIntegration === "undefined" || AwsWafIntegration.hasToken()) return;
+
+    e.preventDefault();
+    form._wafSubmitting = true;
+    withWafToken(function() {
+      form._wafSubmitting = false;
+      form.submit();
+    });
+  }, true);
+</script>
+
+    <script >
+      window.mobileDevice = false;
+      window.loggedIn = false;
+      detected_timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        timezone = detected_timezone;
+    </script>
+      <script >
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+
+        function OptanonWrapper() {
+          var activeGroups = window.OnetrustActiveGroups || '';
+          var analyticsConsent = activeGroups.indexOf('C0002') !== -1;
+          var adConsent = activeGroups.indexOf('C0004') !== -1;
+
+          gtag('consent', 'update', {
+            'analytics_storage': analyticsConsent ? 'granted' : 'denied',
+            'ad_storage': adConsent ? 'granted' : 'denied',
+            'ad_user_data': adConsent ? 'granted' : 'denied',
+            'ad_personalization': adConsent ? 'granted' : 'denied'
+          });
+
+          if (!analyticsConsent) {
+            document.cookie.split(';').forEach(function(c) {
+              var name = c.trim().split('=')[0];
+              if (name === '_ga' || name === '_gid' || name === '_gat' || name.indexOf('_ga_') === 0 || name === '_gcl_au') {
+                var domain = window.location.hostname.split('.').slice(-2).join('.');
+                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + domain;
+                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+              }
+            });
+          }
+        }
+      </script>
+      <script >
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5QWVXV');
+      </script>
+      <script src="https://srv.tunefindforfans.com/fruits/mangos.js" async></script>
+      <script type="text/javascript" >
+        window.amplified = window.amplified || { init: [] };
+        amplified.init.push(function() {
+          amplified.pushAdUnit(100006536);
+            amplified.pushAdUnit(100007099);
+            amplified.pushExitAdUnit(100007119);
+          amplified.run();
+        });
+      </script>
+  </head>
+  <body class="en v4 ">
+    <div id="page_loader"><div class="bar"><div class="peg"></div></div></div>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5QWVXV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script type="text/javascript" charset="utf-8" >
+
+      window.kendoLocaleConfig = {
+        mobileScrollerPath: "/assets/builds/kendo/kendo.mobile.scroller.js?v=cb06fa3dab94",
+        messagesPath: "/assets/builds/kendo/messages/kendo.messages.en-US.js?v=cb06fa3dab94",
+        culturePath: "/assets/builds/kendo/cultures/kendo.culture.en-US.js?v=cb06fa3dab94",
+        localeCode: "en-US",
+        languageCode: "en"
+      };
+
+      window.JqueryReady().then(function($) {
+          var tonefuse_loaded = function() {
+            $("#amplified_100006536.min-width div.tvbttntf").css("min-width", "0");
+          };
+          waitForElement("#amplified_100006536 div.tvbttntf", tonefuse_loaded, 10);
+      });
+    </script>
+
+    <div class="page_wrap _wrap">
+
+
+
+<header class="main-header normal smaller no_animation smaller subtle show_search_true">
+  <div class="content">
+    <div class="sub_media">
+      <div class="nav_wrapper">
+          <a href="/?language=en-US" class="logo" aria-label="Home">
+            <img alt="The Movie Database (TMDB)" width="154" height="20" src="/assets/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" />
+</a>
+          <nav class="dropdown-menu navigation" role="menubar"><div class="dropdown-menu-item" role="none"><a href="/movie?language=en-US" class="dropdown-menu-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">Movies</a><ul class="dropdown-menu-popup" role="menu"><li role="none"><a href="/movie?language=en-US" role="menuitem" tabindex="-1">Popular</a></li><li role="none"><a href="/movie/now-playing?language=en-US&view=calendar" role="menuitem" tabindex="-1">Now Playing</a></li><li role="none"><a href="/movie/upcoming?language=en-US&view=calendar" role="menuitem" tabindex="-1">Upcoming</a></li><li role="none"><a href="/movie/top-rated?language=en-US" role="menuitem" tabindex="-1">Top Rated</a></li></ul></div><div class="dropdown-menu-item" role="none"><a href="/tv?language=en-US" class="dropdown-menu-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">TV Shows</a><ul class="dropdown-menu-popup" role="menu"><li role="none"><a href="/tv?language=en-US" role="menuitem" tabindex="-1">Popular</a></li><li role="none"><a href="/tv/airing-today?language=en-US" role="menuitem" tabindex="-1">Airing Today</a></li><li role="none"><a href="/tv/on-the-air?language=en-US" role="menuitem" tabindex="-1">On TV</a></li><li role="none"><a href="/tv/upcoming?language=en-US&view=calendar" role="menuitem" tabindex="-1">Upcoming</a></li><li role="none"><a href="/tv/top-rated?language=en-US" role="menuitem" tabindex="-1">Top Rated</a></li></ul></div><div class="dropdown-menu-item" role="none"><a href="/person?language=en-US" class="dropdown-menu-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">People</a><ul class="dropdown-menu-popup" role="menu"><li role="none"><a href="/person?language=en-US" role="menuitem" tabindex="-1">Popular</a></li></ul></div><div class="dropdown-menu-item" role="none"><a href="/award?language=en-US" class="dropdown-menu-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">Awards</a><ul class="dropdown-menu-popup" role="menu"><li role="none"><a href="/award?language=en-US" role="menuitem" tabindex="-1">Popular</a></li><li role="none"><a href="/award/upcoming?language=en-US" role="menuitem" tabindex="-1">Upcoming</a></li></ul></div><div class="dropdown-menu-item" role="none"><a href="#" class="dropdown-menu-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">More</a><ul class="dropdown-menu-popup" role="menu"><li role="none"><a href="/discuss?language=en-US" role="menuitem" tabindex="-1">Discussions</a></li><li role="none"><a href="/leaderboard?language=en-US" role="menuitem" tabindex="-1">Leaderboard</a></li><li role="none"><a href="/talk?language=en-US" role="menuitem" tabindex="-1">Support</a></li><li role="none"><a href="https://developer.themoviedb.org/docs" role="menuitem" tabindex="-1" target="_blank" rel="noopener noreferrer">API Documentation</a></li><li role="none"><a href="/api-for-business?language=en-US" role="menuitem" tabindex="-1">API for Business</a></li></ul></div></nav>
+      </div>
+
+        <div class="flex">
+          <ul class="primary">
+            <li class="glyph new_buttons">
+              <a href="?language=en-US" class="new_icon no_click" aria-label="Create New Movie or TV Show">
+                <span class="glyphicons plus white" aria-hidden="true"></span>
+</a>            </li>
+            <li class="translate">
+              <div>en</div>
+            </li>
+              <li><a href="/login?language=en-US" data-auth-modal="login">Login</a></li>
+              <li><a href="/signup?language=en-US" data-auth-modal="signup">Join TMDB</a></li>
+
+            <li class="glyph search_buttons">
+              <a href="/search?language=en-US" class="search" aria-label="Search">
+                <span class="glyphicons search blue" aria-hidden="true"></span>
+</a>              <a href="/search?language=en-US" class="close hide" aria-label="Search">
+                <span class="glyphicons menu-close invert svg" aria-hidden="true"></span>
+</a>            </li>
+          </ul>
+        </div>
+    </div>
+  </div>
+  <div class="search_bar">
+    <section class="search show_search_true">
+      <div class="sub_media">
+        <form id="search_form" action="/search?language=en-US" method="get" accept-charset="utf-8">
+            <input type="hidden" name="language" value="en-US">
+          <label>
+            <input dir="auto" id="search_v4" name="query" type="text" autocorrect="off" autofill="off" autocomplete="off" spellcheck="false" placeholder="Search for a movie, TV show, person..." value="Fjord">
+          </label>
+          <input type="submit" disabled>
+        </form>
+      </div>
+    </section>
+  </div>
+</header>
+
+
+<main id="main" class="smaller  subtle show_search_true">
+
+  <script>
+  window.PageReady().then(function(ready) {
+    initializeScroller(mobileDevice, '#search_menu_scroller');
+    active_nav_item = 'movie';
+    var currentPage = 1;
+
+    window.addEventListener('popstate', function(e) {
+      if (e.state && e.state.media_type) {
+        changeSearchTabs(e.state.media_type);
+      }
+    });
+
+    $('a.search_tab').on('click', function(e) {
+      if (currentPage > 1) return;
+      e.preventDefault();
+
+      var selected_media_type = $(this).prop('id');
+      changeSearchTabs(selected_media_type);
+      active_nav_item = selected_media_type;
+
+      $('ul.with_counts li').removeClass('selected');
+      $(this).parent().addClass('selected');
+
+      var href = $(this).data('href');
+      history.pushState({ media_type: selected_media_type }, document.title, href);
+
+      window.scrollTo(0, 0);
+    });
+
+  });
+</script>
+
+<section class="main_content search_results">
+  <div class="column_wrapper reverse">
+    <div class="content_wrapper">
+      <div class="grey_column">
+        <div class="settings_panel no_margin">
+          <h3 class="background_color light_blue">Search Results</h3>
+          <div id="search_menu_scroller" class="">
+            <ul class="settings panel with_counts scroller">
+                <li class="selected">
+                  <a id="movie" href="javascript:void(0)" data-href="/search/movie?language=en-US&query=Fjord" class="search_tab active" title="Movies" alt="Movies">Movies</a>
+                    <span>59</span>
+                </li>
+                <li class="">
+                  <a id="person" href="javascript:void(0)" data-href="/search/person?language=en-US&query=Fjord" class="search_tab " title="People" alt="People">People</a>
+                    <span>22</span>
+                </li>
+                <li class="">
+                  <a id="tv" href="javascript:void(0)" data-href="/search/tv?language=en-US&query=Fjord" class="search_tab " title="TV Shows" alt="TV Shows">TV Shows</a>
+                    <span>7</span>
+                </li>
+                <li class="">
+                  <a id="keyword" href="javascript:void(0)" data-href="/search/keyword?language=en-US&query=Fjord" class="search_tab " title="Keywords" alt="Keywords">Keywords</a>
+                    <span>3</span>
+                </li>
+                <li class="">
+                  <a id="company" href="javascript:void(0)" data-href="/search/company?language=en-US&query=Fjord" class="search_tab " title="Companies" alt="Companies">Companies</a>
+                    <span>9</span>
+                </li>
+                <li class="">
+                  <a id="collection" href="javascript:void(0)" data-href="/search/collection?language=en-US&query=Fjord" class="search_tab " title="Collections" alt="Collections">Collections</a>
+                    <span>0</span>
+                </li>
+                <li class="">
+                  <a id="network" href="javascript:void(0)" data-href="/search/network?language=en-US&query=Fjord" class="search_tab " title="Networks" alt="Networks">Networks</a>
+                    <span>0</span>
+                </li>
+                <li class="">
+                  <a id="award" href="javascript:void(0)" data-href="/search/award?language=en-US&query=Fjord" class="search_tab " title="Awards" alt="Awards">Awards</a>
+                    <span>0</span>
+                </li>
+            </ul>
+          </div>
+        </div>
+        <p class="search_tip"><span class="glyphicons circle-info"></span> Tip: You can use the 'y:' filter to narrow your results by year. Example: 'star wars y:1977'.</p>
+
+          <div id="amplified_100006536" class="search min-width false"></div>
+      </div>
+
+      <div class="white_column">
+        <section class="panel">
+
+            <div id="movie_results" class="search_results movie " style="scroll-margin-top: 130px;">
+              <div class="results flex">
+    <div id="cmp-f864ad8a" class="media-card-list w-full flex flex-wrap gap-4"><div id="675ba9367f927d934f00cec0" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="675ba9367f927d934f00cec0"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="675ba9367f927d934f00cec0" data-media-type="movie" data-media-adult="false" href="/movie/1401459-fjord?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Fjord" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/rhKlzjAJCEKUjxEk1qwr4bgbXlG.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/rhKlzjAJCEKUjxEk1qwr4bgbXlG.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/rhKlzjAJCEKUjxEk1qwr4bgbXlG.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="675ba9367f927d934f00cec0" data-media-type="movie" data-media-adult="false" href="/movie/1401459-fjord?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Fjord</span></h2></a><span class="release_date w-full font-light">August 19, 2026</span></div></div><div class="mt-4 **:m-0"><p>Following the deaths of Mihai's parents, Mihai and Lisbeth Gheorghiu leave their life behind in Romania and move with their children to a remote village in Norway, hoping to rebuild their lives near Lisbeth's family. There, they grow close to their neighbors, the Halbergs, whose warmth gives them hope for a fresh start. But the fragile peace begins to unravel when the Gheorghiu family’s young daughter, Elia, arrives at school covered in bruises.</p></div></div></div></div><div id="4bc8bc5b017a3c122d071205" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="4bc8bc5b017a3c122d071205"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="4bc8bc5b017a3c122d071205" data-media-type="movie" data-media-adult="false" href="/movie/16336-ein-mann-ein-fjord?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="A man, a fjord!" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/iDvB4OX67f1BNTWQXA1QqkxtqMc.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/iDvB4OX67f1BNTWQXA1QqkxtqMc.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/iDvB4OX67f1BNTWQXA1QqkxtqMc.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="4bc8bc5b017a3c122d071205" data-media-type="movie" data-media-adult="false" href="/movie/16336-ein-mann-ein-fjord?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>A man, a fjord!</span><span class="font-light"> (Ein Mann, ein Fjord!)</span></h2></a><span class="release_date w-full font-light">January 21, 2009</span></div></div><div class="mt-4 **:m-0"><p>A fast-paced comedy full of misunderstandings: Norbert Krabbe from pan, unemployed Bürokaufmann and passionate contest participant wins a fjord in Lofoten. But how to get only to Norway - for "Norbert Crab Fjord" including his own cabin - when you're broke and one is already driving poor at S-Bahn? What Norbert lack of money, he makes through original ideas betting: Disguised as a cleaning crew, he makes his way to his daughter by train to Copenhagen, on we go as a hitchhiker and with ill-gotten ship tickets. Many abstruse encounters later, among others with Horst Schlämmer, Uschi Blum and the strong-smelling Norwegians Lars, who predicts the future based on a Dog Quartet, Norbert expects the next surprise at its destination ...</p></div></div></div></div><div id="558576cdc3a3685037002bdb" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="558576cdc3a3685037002bdb"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="558576cdc3a3685037002bdb" data-media-type="movie" data-media-adult="false" href="/movie/345443-fjord?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="558576cdc3a3685037002bdb" data-media-type="movie" data-media-adult="false" href="/movie/345443-fjord?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Fjord</span></h2></a><span class="release_date w-full font-light">July  1, 2009</span></div></div><div class="mt-4 **:m-0"><p>Nærøyfjorden, one of the most unspoiled and narrow fjords of Western Norway was placed on UNESCOs world heritage list in 2005. Fjord is filmmaker Skule Eriksens interpretation of this unique landscape.</p></div></div></div></div><div id="62572ccaa0b6900068259927" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="62572ccaa0b6900068259927"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="62572ccaa0b6900068259927" data-media-type="movie" data-media-adult="false" href="/movie/962329-kralj-fjord?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="King Fjord!" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/mKDPPMArs0v49FACeKf5ADqQ7UG.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/mKDPPMArs0v49FACeKf5ADqQ7UG.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/mKDPPMArs0v49FACeKf5ADqQ7UG.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="62572ccaa0b6900068259927" data-media-type="movie" data-media-adult="false" href="/movie/962329-kralj-fjord?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>King Fjord!</span><span class="font-light"> (Kralj Fjord!)</span></h2></a><span class="release_date w-full font-light">April 13, 2021</span></div></div><div class="mt-4 **:m-0"><p>Death saves the little king in a strange world.</p></div></div></div></div><div id="6583391a858678552ef68a1b" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="6583391a858678552ef68a1b"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="6583391a858678552ef68a1b" data-media-type="movie" data-media-adult="false" href="/movie/1220624-fjord-pony?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="6583391a858678552ef68a1b" data-media-type="movie" data-media-adult="false" href="/movie/1220624-fjord-pony?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Fjord pony</span></h2></a><span class="release_date w-full font-light">January  1, 1993</span></div></div><div class="mt-4 **:m-0"><p>Short movie</p></div></div></div></div><div id="65c2b47f3fe7970183fda1d7" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="65c2b47f3fe7970183fda1d7"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="65c2b47f3fe7970183fda1d7" data-media-type="movie" data-media-adult="false" href="/movie/1241563-a-redde-en-fjord?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="65c2b47f3fe7970183fda1d7" data-media-type="movie" data-media-adult="false" href="/movie/1241563-a-redde-en-fjord?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>To Save a Fjord</span><span class="font-light"> (Å redde en fjord)</span></h2></a><span class="release_date w-full font-light">October 21, 2022</span></div></div><div class="mt-4 **:m-0"><p>A group of young activists engage in civil disobedience for one of Norway's most debated fjords, which is planned to become a mining landfill. They meet the consequences while they teach eachother worker protest songs.</p></div></div></div></div><div id="688b3540906707f05ead2ae1" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="688b3540906707f05ead2ae1"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="688b3540906707f05ead2ae1" data-media-type="movie" data-media-adult="false" href="/movie/1522915-fjord-time?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Fjord Time" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/v65mTk3oYkvdVreMVq84K9Y1tJZ.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/v65mTk3oYkvdVreMVq84K9Y1tJZ.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/v65mTk3oYkvdVreMVq84K9Y1tJZ.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="688b3540906707f05ead2ae1" data-media-type="movie" data-media-adult="false" href="/movie/1522915-fjord-time?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Fjord Time</span></h2></a><span class="release_date w-full font-light">August  6, 2025</span></div></div><div class="mt-4 **:m-0"><p>Two young sisters guide us through a meditation on time, play, and nature—using the present moment as a spell against acceleration.</p></div></div></div></div><div id="58b44d2dc3a3685285017d15" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="58b44d2dc3a3685285017d15"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="58b44d2dc3a3685285017d15" data-media-type="movie" data-media-adult="false" href="/movie/444112-liebe-am-fjord-sommersturm?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Liebe am Fjord - Sommersturm" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/kP68ieF97klauhegtz4ezlBYGHi.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/kP68ieF97klauhegtz4ezlBYGHi.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/kP68ieF97klauhegtz4ezlBYGHi.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="58b44d2dc3a3685285017d15" data-media-type="movie" data-media-adult="false" href="/movie/444112-liebe-am-fjord-sommersturm?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Liebe am Fjord - Sommersturm</span></h2></a><span class="release_date w-full font-light">April 16, 2010</span></div></div><div class="mt-4 **:m-0"></div></div></div></div><div id="622dfb01afe224007483efb2" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="622dfb01afe224007483efb2"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="622dfb01afe224007483efb2" data-media-type="movie" data-media-adult="false" href="/movie/949075-nebel-im-fjord?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="622dfb01afe224007483efb2" data-media-type="movie" data-media-adult="false" href="/movie/949075-nebel-im-fjord?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Yeah, Right...</span><span class="font-light"> (Nebel im Fjord)</span></h2></a><span class="release_date w-full font-light">January  1, 1987</span></div></div><div class="mt-4 **:m-0"><p>Following the trend for dangdut musicals, such as the successful ones starring Rhoma Irama, Elvy Sukaesih, and A. Rafiq, this film even features a lead actor who looks like Rhoma Irama, and the character also uses a similar name. Herry Irama has always wanted to be a singer. He is fired because he is considered undisciplined. His hard luck worsens when his father kicks him out of the house. Then his first effort to apply for a job in a recording company is rejected and he ends up being a gardene</p></div></div></div></div><div id="68741796634d719bbb6eabe2" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="68741796634d719bbb6eabe2"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="68741796634d719bbb6eabe2" data-media-type="movie" data-media-adult="false" href="/movie/1512797-vikingeskibene-i-roskilde-fjord?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="68741796634d719bbb6eabe2" data-media-type="movie" data-media-adult="false" href="/movie/1512797-vikingeskibene-i-roskilde-fjord?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>The Viking Ships of Roskilde</span><span class="font-light"> (Vikingeskibene i Roskilde Fjord)</span></h2></a><span class="release_date w-full font-light">October 30, 1964</span></div></div><div class="mt-4 **:m-0"><p>The extensive excavation work that followed the discovery of five Viking ships in Roskilde Fjord. Many problems had to be solved before the wreckage of the ships could be taken away for final conservation.</p></div></div></div></div><div id="585989a9c3a3682dfe070610" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="585989a9c3a3682dfe070610"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="585989a9c3a3682dfe070610" data-media-type="movie" data-media-adult="false" href="/movie/431070-liebe-am-fjord-zwei-sommer?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Liebe am Fjord - Zwei Sommer" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/emvkDoBOaHlwo5vTZXHKsjkgrWl.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/emvkDoBOaHlwo5vTZXHKsjkgrWl.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/emvkDoBOaHlwo5vTZXHKsjkgrWl.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="585989a9c3a3682dfe070610" data-media-type="movie" data-media-adult="false" href="/movie/431070-liebe-am-fjord-zwei-sommer?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Liebe am Fjord - Zwei Sommer</span></h2></a><span class="release_date w-full font-light">October 25, 2013</span></div></div><div class="mt-4 **:m-0"></div></div></div></div><div id="66506acf05b667e3ed0687a3" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="66506acf05b667e3ed0687a3"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="66506acf05b667e3ed0687a3" data-media-type="movie" data-media-adult="false" href="/movie/1295015-i-gullmarsfjorden?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="66506acf05b667e3ed0687a3" data-media-type="movie" data-media-adult="false" href="/movie/1295015-i-gullmarsfjorden?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>In the Gullmarn Fjord</span><span class="font-light"> (I Gullmarsfjorden)</span></h2></a><span class="release_date w-full font-light">January  1, 1984</span></div></div><div class="mt-4 **:m-0"><p>Underwater diving in Sweden's only real fjord.</p></div></div></div></div><div id="581ee5e1c3a3685fe6000dd7" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="581ee5e1c3a3685fe6000dd7"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="581ee5e1c3a3685fe6000dd7" data-media-type="movie" data-media-adult="false" href="/movie/424659-liebe-am-fjord-unterm-eis?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Liebe am Fjord - Unterm Eis" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/xNLuUkUSR4s3oRaMjD3EWMejsYV.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/xNLuUkUSR4s3oRaMjD3EWMejsYV.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/xNLuUkUSR4s3oRaMjD3EWMejsYV.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="581ee5e1c3a3685fe6000dd7" data-media-type="movie" data-media-adult="false" href="/movie/424659-liebe-am-fjord-unterm-eis?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Liebe am Fjord - Unterm Eis</span></h2></a><span class="release_date w-full font-light">February  6, 2015</span></div></div><div class="mt-4 **:m-0"></div></div></div></div><div id="5c71edfdc3a3685a441457b5" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="5c71edfdc3a3685a441457b5"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="5c71edfdc3a3685a441457b5" data-media-type="movie" data-media-adult="false" href="/movie/584314-mond-uber-dem-fjord?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="5c71edfdc3a3685a441457b5" data-media-type="movie" data-media-adult="false" href="/movie/584314-mond-uber-dem-fjord?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Mond über dem Fjord</span></h2></a><span class="release_date w-full font-light">April  2, 1959</span></div></div><div class="mt-4 **:m-0"></div></div></div></div><div id="66d71d0e8a7b5177c2f711e7" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="66d71d0e8a7b5177c2f711e7"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="66d71d0e8a7b5177c2f711e7" data-media-type="movie" data-media-adult="false" href="/movie/1351184-det-var-en-gang-en-fjord?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Det var en gang en fjord" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/6o1JDd085sHUW0o2pzF5J1UwvqR.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/6o1JDd085sHUW0o2pzF5J1UwvqR.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/6o1JDd085sHUW0o2pzF5J1UwvqR.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="66d71d0e8a7b5177c2f711e7" data-media-type="movie" data-media-adult="false" href="/movie/1351184-det-var-en-gang-en-fjord?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Det var en gang en fjord</span></h2></a><span class="release_date w-full font-light">September 17, 2024</span></div></div><div class="mt-4 **:m-0"></div></div></div></div><div id="58516fd2c3a368258c00cd50" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="58516fd2c3a368258c00cd50"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="58516fd2c3a368258c00cd50" data-media-type="movie" data-media-adult="false" href="/movie/430184-liebe-am-fjord-abschied-von-hannah?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Liebe am Fjord - Abschied von Hannah" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/gaLszsozz8tb9Ph8zriRBGlD8KN.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/gaLszsozz8tb9Ph8zriRBGlD8KN.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/gaLszsozz8tb9Ph8zriRBGlD8KN.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="58516fd2c3a368258c00cd50" data-media-type="movie" data-media-adult="false" href="/movie/430184-liebe-am-fjord-abschied-von-hannah?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Liebe am Fjord - Abschied von Hannah</span></h2></a><span class="release_date w-full font-light">October 19, 2012</span></div></div><div class="mt-4 **:m-0"><p>After the death of his wife, respected writer Henrik Agdestein won't let anyone get close to him, neither the kind-hearted teacher Sonja nor the feisty policewoman Laura. And certainly not top politician Leif, whose homosexuality he disapproves of.</p></div></div></div></div><div id="58cc59249251417447001dbd" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="58cc59249251417447001dbd"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="58cc59249251417447001dbd" data-media-type="movie" data-media-adult="false" href="/movie/447478-liebe-am-fjord-sog-der-gezeiten?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Liebe am Fjord - Sog der Gezeiten" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/ub4rtx9Rg5JWAWBhhDQR1YeEnsJ.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/ub4rtx9Rg5JWAWBhhDQR1YeEnsJ.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/ub4rtx9Rg5JWAWBhhDQR1YeEnsJ.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="58cc59249251417447001dbd" data-media-type="movie" data-media-adult="false" href="/movie/447478-liebe-am-fjord-sog-der-gezeiten?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Liebe am Fjord - Sog der Gezeiten</span></h2></a><span class="release_date w-full font-light">April 28, 2021</span></div></div><div class="mt-4 **:m-0"><p>The construction of the new community center for a town on the Sognefjord could inspire Agnes' career. Shortly after arriving, the architect meets unexpectedly her long-time childhood sweetheart Kristian again. Although he is now married to the mayor Luisa, flare up between the two old feelings. Why only Luisa selected among many architects just Agnes for this job? It all looks like Luisa has threaded the clash together from a long way. But what is she aiming for?</p></div></div></div></div><div id="5483aaf89251416e6c008a53" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="5483aaf89251416e6c008a53"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="5483aaf89251416e6c008a53" data-media-type="movie" data-media-adult="false" href="/movie/308776-liebe-am-fjord-die-frau-am-strand?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="The Tears of the Sea" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/wkTYTWqssffCrgijJj0CivrP5rK.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/wkTYTWqssffCrgijJj0CivrP5rK.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/wkTYTWqssffCrgijJj0CivrP5rK.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="5483aaf89251416e6c008a53" data-media-type="movie" data-media-adult="false" href="/movie/308776-liebe-am-fjord-die-frau-am-strand?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>The Tears of the Sea</span><span class="font-light"> (Liebe am Fjord - Die Frau am Strand)</span></h2></a><span class="release_date w-full font-light">April 25, 2014</span></div></div><div class="mt-4 **:m-0"><p>Brigitta Nielebeck suffered a serious car accident in which miraculously escape unscathed. However, she has lost his memory. Doctors recommend her to spend time with family members. Therefore, make contact with Marie, her 16 year old daughter, who for two years living with a host family.</p></div></div></div></div><div id="58fd84469251416428029ad1" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="58fd84469251416428029ad1"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="58fd84469251416428029ad1" data-media-type="movie" data-media-adult="false" href="/movie/453987-pierre-radisson-fjord-and-gulf?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Pierre Radisson: Fjord and Gulf" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/yjTyKo9PkI973Qv8ayFKctA5WLX.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/yjTyKo9PkI973Qv8ayFKctA5WLX.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/yjTyKo9PkI973Qv8ayFKctA5WLX.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="58fd84469251416428029ad1" data-media-type="movie" data-media-adult="false" href="/movie/453987-pierre-radisson-fjord-and-gulf?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Pierre Radisson: Fjord and Gulf</span></h2></a><span class="release_date w-full font-light">April 23, 2017</span></div></div><div class="mt-4 **:m-0"><p>Pierre Radisson: Fjord and Gulf presents the daily activity and environment of its eponymous Canadian Coast Guard Icebreaker. Shot during the Pierre Radisson's work on the Saguenay Fjord and Gulf of St. Lawrence in Quebec during February 2016, the film provides a window into a portion of the invisible labour underpinning the Canadian economy.</p></div></div></div></div><div id="5847d8f892514119b3006aed" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="5847d8f892514119b3006aed"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="5847d8f892514119b3006aed" data-media-type="movie" data-media-adult="false" href="/movie/429244-liebe-am-fjord-das-meer-der-frauen?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Liebe am Fjord - Das Meer der Frauen" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/clCWQWuCQtMS9QecWsSgUNwmFZh.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/clCWQWuCQtMS9QecWsSgUNwmFZh.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/clCWQWuCQtMS9QecWsSgUNwmFZh.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="5847d8f892514119b3006aed" data-media-type="movie" data-media-adult="false" href="/movie/429244-liebe-am-fjord-das-meer-der-frauen?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Liebe am Fjord - Das Meer der Frauen</span></h2></a><span class="release_date w-full font-light">April  1, 2010</span></div></div><div class="mt-4 **:m-0"><p>Down-to-earth Kristin is used to holding all the strings in her hand. This applies to her business as well as to the rebellious approaches of her pubescent daughter Ida. With the appearance of her younger sister Marit, this well-ordered world is in danger. Kristin never told Ida that Marit is Ida's birth mother. Almost a child at birth, she had left her daughter with Kristin - and then disappeared. With Marit's return, the old competition between the sisters breaks out again.</p></div></div></div></div><script type="text/javascript">window.PageReady().then(function(ready) {
+  var $ = ready.$;
+  $('#cmp-f864ad8a .user_score_chart').each(function(i) {
+    var item = $(this);
+    if (item.data("easyPieChart")) return;
+    item.easyPieChart({
+      lineCap: parseFloat(item.data("percent")) == 0.0 ? "butt" : "round",
+      lineWidth: 2,
+      scaleColor: false,
+      size: 40,
+      animate: { enabled: false }
+    });
+  });
+});
+</script></div>
+
+    <div class="pagination_wrapper">
+  <nav class="pagy series-nav" aria-label="Pages"><a role="link" aria-disabled="true" aria-label="Previous">&lt;</a><a role="link" aria-disabled="true" aria-current="page">1</a><a href="/search/movie?language=en-US&amp;query=Fjord&amp;page=2" rel="next">2</a><a href="/search/movie?language=en-US&amp;query=Fjord&amp;page=3">3</a><a href="/search/movie?language=en-US&amp;query=Fjord&amp;page=2" rel="next" aria-label="Next">Next &#8594;</a></nav>
+</div>
+
+</div>
+
+            </div>
+            <div id="person_results" class="search_results person hide" style="scroll-margin-top: 130px;">
+              <div class="results flex">
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder two">
+      <a id="person_1385109" data-id="54648b210e0a26294600192e" data-media-type="person" data-media-adult="false" class="result" href="/person/1385109-kristian-fjord?language=en-US" title="Kristian Fjord" alt="Kristian Fjord">
+              <img loading="lazy" decoding="async" fetchpriority="low" class="profile w-full" src="https://media.themoviedb.org/t/p/w90_and_h90_face/uYP67fz8vp0eagQiRY09HsHE4EP.jpg" srcset="https://media.themoviedb.org/t/p/w90_and_h90_face/uYP67fz8vp0eagQiRY09HsHE4EP.jpg 1x, https://media.themoviedb.org/t/p/w180_and_h180_face/uYP67fz8vp0eagQiRY09HsHE4EP.jpg 2x" alt="Kristian Fjord">
+
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_1385109" data-id="54648b210e0a26294600192e" data-media-type="person" data-media-adult="false" class="result" href="/person/1385109-kristian-fjord?language=en-US" title="Kristian Fjord" alt="Kristian Fjord">Kristian Fjord</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/movie/302797-encounters?language=en-US" alt="Encounters" title="Encounters">Encounters</a>, <a href="/movie/88273-en-kongelig-affaere?language=en-US" alt="A Royal Affair" title="A Royal Affair">A Royal Affair</a>, <a href="/movie/458300-den-bedste-mand?language=en-US" alt="Pound for Pound" title="Pound for Pound">Pound for Pound</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder two">
+      <a id="person_1300936" data-id="53230ad19251411f8c004889" data-media-type="person" data-media-adult="false" class="result" href="/person/1300936-olaf-fjord?language=en-US" title="Olaf Fjord" alt="Olaf Fjord">
+              <img loading="lazy" decoding="async" fetchpriority="low" class="profile w-full" src="https://media.themoviedb.org/t/p/w90_and_h90_face/6VWXWvllREyB34ZqyBj7XRLoPqH.jpg" srcset="https://media.themoviedb.org/t/p/w90_and_h90_face/6VWXWvllREyB34ZqyBj7XRLoPqH.jpg 1x, https://media.themoviedb.org/t/p/w180_and_h180_face/6VWXWvllREyB34ZqyBj7XRLoPqH.jpg 2x" alt="Olaf Fjord">
+
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_1300936" data-id="53230ad19251411f8c004889" data-media-type="person" data-media-adult="false" class="result" href="/person/1300936-olaf-fjord?language=en-US" title="Olaf Fjord" alt="Olaf Fjord">Olaf Fjord</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/movie/190091-erotikon?language=en-US" alt="Erotikon" title="Erotikon">Erotikon</a>, <a href="/movie/42536-napoleon?language=en-US" alt="Napoleon" title="Napoleon">Napoleon</a>, <a href="/movie/259182-tarakanova?language=en-US" alt="Tarakanova" title="Tarakanova">Tarakanova</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_4191342" data-id="64c8e913d5191f00acd588a4" data-media-type="person" data-media-adult="false" class="result" href="/person/4191342-mathias-fjord?language=en-US" title="Mathias Fjord" alt="Mathias Fjord">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_4191342" data-id="64c8e913d5191f00acd588a4" data-media-type="person" data-media-adult="false" class="result" href="/person/4191342-mathias-fjord?language=en-US" title="Mathias Fjord" alt="Mathias Fjord">Mathias Fjord</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/movie/1158894-exsecratus?language=en-US" alt="Exsecratus" title="Exsecratus">Exsecratus</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_3342478" data-id="61b2fbaa6e3deb00424c42a1" data-media-type="person" data-media-adult="false" class="result" href="/person/3342478-fjord-mceuen?language=en-US" title="Fjord McEuen" alt="Fjord McEuen">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_3342478" data-id="61b2fbaa6e3deb00424c42a1" data-media-type="person" data-media-adult="false" class="result" href="/person/3342478-fjord-mceuen?language=en-US" title="Fjord McEuen" alt="Fjord McEuen">Fjord McEuen</a></p>
+      <p class="sub"><span>Camera</span> &bull; <a href="/tv/93749-dr-death?language=en-US" alt="Dr. Death" title="Dr. Death">Dr. Death</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_4174982" data-id="64bbff41af85de0100193cc0" data-media-type="person" data-media-adult="false" class="result" href="/person/4174982-martin-fjord?language=en-US" title="Martin Fjord" alt="Martin Fjord">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_4174982" data-id="64bbff41af85de0100193cc0" data-media-type="person" data-media-adult="false" class="result" href="/person/4174982-martin-fjord?language=en-US" title="Martin Fjord" alt="Martin Fjord">Martin Fjord</a></p>
+      <p class="sub"><span>Art</span> &bull; <a href="/movie/1155063-katarakt?language=en-US" alt="Cataract" title="Cataract">Cataract</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder two">
+      <a id="person_3943842" data-id="63fef7b09f1be7008ebd8191" data-media-type="person" data-media-adult="false" class="result" href="/person/3943842-niclas-fjord-bentsen?language=en-US" title="Niclas Fjord Bentsen" alt="Niclas Fjord Bentsen">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_3943842" data-id="63fef7b09f1be7008ebd8191" data-media-type="person" data-media-adult="false" class="result" href="/person/3943842-niclas-fjord-bentsen?language=en-US" title="Niclas Fjord Bentsen" alt="Niclas Fjord Bentsen">Niclas Fjord Bentsen</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/tv/74824-klassen?language=en-US" alt="Klassen" title="Klassen">Klassen</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_5303827" data-id="67d41f66e9e5846a3f0279c5" data-media-type="person" data-media-adult="false" class="result" href="/person/5303827-jesper-fjord?language=en-US" title="Jesper Fjord" alt="Jesper Fjord">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_5303827" data-id="67d41f66e9e5846a3f0279c5" data-media-type="person" data-media-adult="false" class="result" href="/person/5303827-jesper-fjord?language=en-US" title="Jesper Fjord" alt="Jesper Fjord">Jesper Fjord</a></p>
+      <p class="sub"><span>Camera</span> &bull; <a href="/movie/1548258-natasha-brock-ponydatter?language=en-US" alt="Natasha Brock: Ponydatter" title="Natasha Brock: Ponydatter">Natasha Brock: Ponydatter</a>, <a href="/movie/1196851-anders-grau-vamos-a-la-playa?language=en-US" alt="Anders Grau: Vamos a La Playa" title="Anders Grau: Vamos a La Playa">Anders Grau: Vamos a La Playa</a>, <a href="/movie/1454977-orkenens-sonner-fingeren-pa-polsen?language=en-US" alt="Ørkenens Sønner: Fingeren på pølsen" title="Ørkenens Sønner: Fingeren på pølsen">Ørkenens Sønner: Fingeren på pølsen</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder two">
+      <a id="person_5276799" data-id="67c3005579656ddf5a6de934" data-media-type="person" data-media-adult="false" class="result" href="/person/5276799-flemming-fjord?language=en-US" title="Flemming Fjord" alt="Flemming Fjord">
+              <img loading="lazy" decoding="async" fetchpriority="low" class="profile w-full" src="https://media.themoviedb.org/t/p/w90_and_h90_face/mfP1lWQxoeCXLRTh3k4OChYDyzp.jpg" srcset="https://media.themoviedb.org/t/p/w90_and_h90_face/mfP1lWQxoeCXLRTh3k4OChYDyzp.jpg 1x, https://media.themoviedb.org/t/p/w180_and_h180_face/mfP1lWQxoeCXLRTh3k4OChYDyzp.jpg 2x" alt="Flemming Fjord">
+
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_5276799" data-id="67c3005579656ddf5a6de934" data-media-type="person" data-media-adult="false" class="result" href="/person/5276799-flemming-fjord?language=en-US" title="Flemming Fjord" alt="Flemming Fjord">Flemming Fjord</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/tv/116657-jaget-vildt-kendte-pa-flugt?language=en-US" alt="Hunted wild - Celebrities on the run" title="Hunted wild - Celebrities on the run">Hunted wild - Celebrities on the run</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_5918299" data-id="695b139b2f6fd97c8ac3ad45" data-media-type="person" data-media-adult="false" class="result" href="/person/5918299-hera-fjord?language=en-US" title="Hera Fjord" alt="Hera Fjord">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_5918299" data-id="695b139b2f6fd97c8ac3ad45" data-media-type="person" data-media-adult="false" class="result" href="/person/5918299-hera-fjord?language=en-US" title="Hera Fjord" alt="Hera Fjord">Hera Fjord</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/movie/698936-aramotaskaup-2016?language=en-US" alt="Áramótaskaup: 2016" title="Áramótaskaup: 2016">Áramótaskaup: 2016</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_5424557" data-id="681c5f0812a488995663b6e7" data-media-type="person" data-media-adult="false" class="result" href="/person/5424557-jeppe-fjord?language=en-US" title="Jeppe Fjord" alt="Jeppe Fjord">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_5424557" data-id="681c5f0812a488995663b6e7" data-media-type="person" data-media-adult="false" class="result" href="/person/5424557-jeppe-fjord?language=en-US" title="Jeppe Fjord" alt="Jeppe Fjord">Jeppe Fjord</a></p>
+      <p class="sub"><span>Camera</span> &bull; <a href="/tv/253197-jarls-quizshow?language=en-US" alt="Jarls Quizshow" title="Jarls Quizshow">Jarls Quizshow</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_1755438" data-id="589e9f56925141171b00666c" data-media-type="person" data-media-adult="false" class="result" href="/person/1755438-madame-fjorde?language=en-US" title="Madame Fjorde" alt="Madame Fjorde">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_1755438" data-id="589e9f56925141171b00666c" data-media-type="person" data-media-adult="false" class="result" href="/person/1755438-madame-fjorde?language=en-US" title="Madame Fjorde" alt="Madame Fjorde">Madame Fjorde</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/movie/440950-how-molly-malone-made-good?language=en-US" alt="How Molly Malone Made Good" title="How Molly Malone Made Good">How Molly Malone Made Good</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_1443346" data-id="550da437c3a3684872006575" data-media-type="person" data-media-adult="false" class="result" href="/person/1443346-finn-h-fjording?language=en-US" title="Finn H. Fjording" alt="Finn H. Fjording">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_1443346" data-id="550da437c3a3684872006575" data-media-type="person" data-media-adult="false" class="result" href="/person/1443346-finn-h-fjording?language=en-US" title="Finn H. Fjording" alt="Finn H. Fjording">Finn H. Fjording</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/movie/33411-ledsaget-udgang?language=en-US" alt="Temporary Release" title="Temporary Release">Temporary Release</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_6539521" data-id="6aca2d0357f7ba9b12224eaa" data-media-type="person" data-media-adult="false" class="result" href="/person/6539521-ford?language=en-US" title="Ford" alt="Ford">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_6539521" data-id="6aca2d0357f7ba9b12224eaa" data-media-type="person" data-media-adult="false" class="result" href="/person/6539521-ford?language=en-US" title="Ford" alt="Ford">Ford</a></p>
+      <p class="sub"><span>Crew</span> &bull; <a href="/tv/338034-caguei-lore-a-serie?language=en-US" alt="Caguei Lore: A Série" title="Caguei Lore: A Série">Caguei Lore: A Série</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder two">
+      <a id="person_1488096" data-id="55a99a2ac3a3682ff60044df" data-media-type="person" data-media-adult="false" class="result" href="/person/1488096-michael-fjordbak?language=en-US" title="Michael Fjordbak" alt="Michael Fjordbak">
+              <img loading="lazy" decoding="async" fetchpriority="low" class="profile w-full" src="https://media.themoviedb.org/t/p/w90_and_h90_face/AKDLLfaC9bxQt03TvP2XR3xWCY.jpg" srcset="https://media.themoviedb.org/t/p/w90_and_h90_face/AKDLLfaC9bxQt03TvP2XR3xWCY.jpg 1x, https://media.themoviedb.org/t/p/w180_and_h180_face/AKDLLfaC9bxQt03TvP2XR3xWCY.jpg 2x" alt="Michael Fjordbak">
+
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_1488096" data-id="55a99a2ac3a3682ff60044df" data-media-type="person" data-media-adult="false" class="result" href="/person/1488096-michael-fjordbak?language=en-US" title="Michael Fjordbak" alt="Michael Fjordbak">Michael Fjordbak</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/tv/34524-teen-wolf?language=en-US" alt="Teen Wolf" title="Teen Wolf">Teen Wolf</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_2282040" data-id="5ca7be74c3a3683f545dbae1" data-media-type="person" data-media-adult="false" class="result" href="/person/2282040-annette-stenson-fjordefalk?language=en-US" title="Annette Stenson-Fjordefalk" alt="Annette Stenson-Fjordefalk">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_2282040" data-id="5ca7be74c3a3683f545dbae1" data-media-type="person" data-media-adult="false" class="result" href="/person/2282040-annette-stenson-fjordefalk?language=en-US" title="Annette Stenson-Fjordefalk" alt="Annette Stenson-Fjordefalk">Annette Stenson-Fjordefalk</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/movie/30252-sommaren-med-goran?language=en-US" alt="A Midsummer of Love" title="A Midsummer of Love">A Midsummer of Love</a>, <a href="/tv/126209-julkalendern?language=en-US" alt="Julkalendern" title="Julkalendern">Julkalendern</a>, <a href="/tv/239512-lassemajas-detektivbyra?language=en-US" alt="LasseMajas detektivbyrå" title="LasseMajas detektivbyrå">LasseMajas detektivbyrå</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_2516673" data-id="5e2703d9c68b6900193da89e" data-media-type="person" data-media-adult="false" class="result" href="/person/2516673-helga-fjordholm?language=en-US" title="Helga Fjordholm" alt="Helga Fjordholm">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_2516673" data-id="5e2703d9c68b6900193da89e" data-media-type="person" data-media-adult="false" class="result" href="/person/2516673-helga-fjordholm?language=en-US" title="Helga Fjordholm" alt="Helga Fjordholm">Helga Fjordholm</a></p>
+      <p class="sub"><span>Editing</span> &bull; <a href="/movie/665740-la-meg-vaere-ung?language=en-US" alt="La meg være ung!" title="La meg være ung!">La meg være ung!</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_1071175" data-id="500223b0760ee36e870027fa" data-media-type="person" data-media-adult="false" class="result" href="/person/1071175-borge-fjordheim?language=en-US" title="Børge Fjordheim" alt="Børge Fjordheim">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_1071175" data-id="500223b0760ee36e870027fa" data-media-type="person" data-media-adult="false" class="result" href="/person/1071175-borge-fjordheim?language=en-US" title="Børge Fjordheim" alt="Børge Fjordheim">Børge Fjordheim</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/movie/119607-kaada-patton-live?language=en-US" alt="Kaada/Patton Live" title="Kaada/Patton Live">Kaada/Patton Live</a>, <a href="/movie/490437-sivert-hoyem-live-at-acropolis?language=en-US" alt="Sivert Høyem - Live At Acropolis" title="Sivert Høyem - Live At Acropolis">Sivert Høyem - Live At Acropolis</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_2776888" data-id="5f5eef0fd8cc4a003af683ed" data-media-type="person" data-media-adult="false" class="result" href="/person/2776888-fjordi-spahiu?language=en-US" title="Fjordi Spahiu" alt="Fjordi Spahiu">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_2776888" data-id="5f5eef0fd8cc4a003af683ed" data-media-type="person" data-media-adult="false" class="result" href="/person/2776888-fjordi-spahiu?language=en-US" title="Fjordi Spahiu" alt="Fjordi Spahiu">Fjordi Spahiu</a></p>
+      <p class="sub"><span>Editing</span> &bull; <a href="/movie/742547-bad-shagun?language=en-US" alt="Bad Omen" title="Bad Omen">Bad Omen</a>, <a href="/movie/1166747-children-of-war?language=en-US" alt="Children of War" title="Children of War">Children of War</a>, <a href="/movie/1529989-i-fear-blue-skies?language=en-US" alt="I Fear Blue Skies" title="I Fear Blue Skies">I Fear Blue Skies</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_2378852" data-id="5d473271a0be280810a16b0c" data-media-type="person" data-media-adult="false" class="result" href="/person/2378852-tom-fjordefalk?language=en-US" title="Tom Fjordefalk" alt="Tom Fjordefalk">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_2378852" data-id="5d473271a0be280810a16b0c" data-media-type="person" data-media-adult="false" class="result" href="/person/2378852-tom-fjordefalk?language=en-US" title="Tom Fjordefalk" alt="Tom Fjordefalk">Tom Fjordefalk</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/movie/136240-pariserhjulet?language=en-US" alt="Pariserhjulet" title="Pariserhjulet">Pariserhjulet</a>, <a href="/movie/416736-bara-du-jag?language=en-US" alt="Just You and Me" title="Just You and Me">Just You and Me</a>, <a href="/tv/34034-c-o-segemyhr?language=en-US" alt="C/o Segemyhr" title="C/o Segemyhr">C/o Segemyhr</a></p>
+    </div>
+  </div>
+</div>
+
+      <div class="item profile list_item">
+  <div class="flex">
+    <div class="image_content profile glyphicons picture grey no_image_holder zero">
+      <a id="person_4300485" data-id="6519a33fc50ad2010bfe4b6d" data-media-type="person" data-media-adult="false" class="result" href="/person/4300485-charlotte-fjordvig?language=en-US" title="Charlotte Fjordvig" alt="Charlotte Fjordvig">
+        
+      </a>
+    </div>
+
+    <div class="content">
+      <p class="name"><a id="person_4300485" data-id="6519a33fc50ad2010bfe4b6d" data-media-type="person" data-media-adult="false" class="result" href="/person/4300485-charlotte-fjordvig?language=en-US" title="Charlotte Fjordvig" alt="Charlotte Fjordvig">Charlotte Fjordvig</a></p>
+      <p class="sub"><span>Acting</span> &bull; <a href="/tv/54102-krigsdotre?language=en-US" alt="Krigsdøtre" title="Krigsdøtre">Krigsdøtre</a></p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="pagination_wrapper">
+  <nav class="pagy series-nav" aria-label="Pages"><a role="link" aria-disabled="true" aria-label="Previous">&lt;</a><a role="link" aria-disabled="true" aria-current="page">1</a><a href="/search/person?language=en-US&amp;query=Fjord&amp;page=2" rel="next">2</a><a href="/search/person?language=en-US&amp;query=Fjord&amp;page=2" rel="next" aria-label="Next">Next &#8594;</a></nav>
+</div>
+
+</div>
+
+            </div>
+            <div id="tv_results" class="search_results tv hide" style="scroll-margin-top: 130px;">
+              <div class="results flex">
+    <div id="cmp-dbe6367e" class="media-card-list w-full flex flex-wrap gap-4"><div id="5892f4e09251416ee5002d46" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="5892f4e09251416ee5002d46"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="5892f4e09251416ee5002d46" data-media-type="tv" data-media-adult="false" href="/tv/70013-fjorden-cowboys?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="The Fjord Cowboys" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/lPDMUdQbuOpOlc8BaRRsOB41N36.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/lPDMUdQbuOpOlc8BaRRsOB41N36.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/lPDMUdQbuOpOlc8BaRRsOB41N36.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="5892f4e09251416ee5002d46" data-media-type="tv" data-media-adult="false" href="/tv/70013-fjorden-cowboys?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>The Fjord Cowboys</span><span class="font-light"> (Fjorden Cowboys)</span></h2></a><span class="release_date w-full font-light">February  5, 2014</span></div></div><div class="mt-4 **:m-0"><p>The Fjord Cowboys follows Lothepus, the hard working expert on explosives, and Joar, his hedonistic apprentice and their lives on the shores of the world famous Hardanger Fjord. Behind their somewhat rough appearance, they are in fact a pair of astute entreprenour businessmen with no fear of authority who play by their own rules. Together they work hard, and party even harder. But they have children to raise, projects to execute and loved ones to deal with, and their particular zest for life does not always match other peoples’ expectations.</p></div></div></div></div><div id="52599cd0760ee34661b632f8" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="52599cd0760ee34661b632f8"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="52599cd0760ee34661b632f8" data-media-type="tv" data-media-adult="false" href="/tv/60151-floyd-s-fjord-fiesta?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Floyd&#39;s Fjord Fiesta" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/iMaukfb5Rds5MB1LOyHLURc0wjc.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/iMaukfb5Rds5MB1LOyHLURc0wjc.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/iMaukfb5Rds5MB1LOyHLURc0wjc.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="52599cd0760ee34661b632f8" data-media-type="tv" data-media-adult="false" href="/tv/60151-floyd-s-fjord-fiesta?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Floyd&#39;s Fjord Fiesta</span></h2></a><span class="release_date w-full font-light">October 31, 2001</span></div></div><div class="mt-4 **:m-0"><p>Join Keith Floyd as he embarks on an exciting culinary adventure! In this seven-part series, Floyd traverses the frozen arctic wastelands of Lapland, crosses Sweden and Denmark, visits Norway's majestic fjords, and finally takes in the sights of Greenland, cooking tasty gourmet delicacies along the way. From Herring Fillets with Dill and Parsley; to Smoked Loin of Pork in Cherry Sauce; Scandinavian cuisine is brought vividly to life. The recipes are simple to follow and as always, Floyd shares his trademark witticisms and entertaining travelogue anecdotes.</p></div></div></div></div><div id="52578e67760ee36aaa6ae462" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="52578e67760ee36aaa6ae462"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="52578e67760ee36aaa6ae462" data-media-type="tv" data-media-adult="false" href="/tv/7814-patrik-pacard?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Patrik Pacard" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/4CFEtrQGi9719KZNIS45i5sWruj.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/4CFEtrQGi9719KZNIS45i5sWruj.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/4CFEtrQGi9719KZNIS45i5sWruj.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="52578e67760ee36aaa6ae462" data-media-type="tv" data-media-adult="false" href="/tv/7814-patrik-pacard?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Patrik Pacard</span></h2></a><span class="release_date w-full font-light">December 25, 1984</span></div></div><div class="mt-4 **:m-0"><p>Patrik Pacard was the sixth ZDF-Weihnachtsserie, and aired in 1984. The series was broadcast in Germany on ZDF, and consisted of 6 episodes. Broadcasting in Germany began on December 25, 1984. The series was also broadcast in Switzerland, and constisted of 12 episodes. Broadcasting in Switzerland began on December 4, 1984.</p><p>An English-language version of this series was shown by the BBC in the United Kingdom in 1992, and repeated in 1995, though with a revised plot to reflect the end of the Cold War. A French-language version of this series was broadcast as well.</p><p>The shows titular character and theme song are incorporated in an internet meme on YTMND in relation to an alter-ego of Star Trek's Jean-Luc Picard.</p></div></div></div></div><div id="60540958f48e0d00281a61d9" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="60540958f48e0d00281a61d9"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="60540958f48e0d00281a61d9" data-media-type="tv" data-media-adult="false" href="/tv/121143-huss?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Huss" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/qWXqp0qIJDC1IcCSMkl9pc3UtpG.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/qWXqp0qIJDC1IcCSMkl9pc3UtpG.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/qWXqp0qIJDC1IcCSMkl9pc3UtpG.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="60540958f48e0d00281a61d9" data-media-type="tv" data-media-adult="false" href="/tv/121143-huss?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Huss</span></h2></a><span class="release_date w-full font-light">March 19, 2021</span></div></div><div class="mt-4 **:m-0"><p>When Katarina Huss starts as a police officer, she must learn to cope with the hard everyday life on the streets of Gothenburg. At the same time, her colleagues seem to be hiding something and soon she is drawn into a tangle of corruption and betrayal.</p></div></div></div></div><div id="5f1d2a4c0bb0760036f14c53" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="5f1d2a4c0bb0760036f14c53"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="5f1d2a4c0bb0760036f14c53" data-media-type="tv" data-media-adult="false" href="/tv/106485-magical-fjords?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Magical Fjords" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/1nPzpaKsOvnuvVLM0lclVioc58O.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/1nPzpaKsOvnuvVLM0lclVioc58O.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/1nPzpaKsOvnuvVLM0lclVioc58O.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="5f1d2a4c0bb0760036f14c53" data-media-type="tv" data-media-adult="false" href="/tv/106485-magical-fjords?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Magical Fjords</span></h2></a><span class="release_date w-full font-light">July  1, 2020</span></div></div><div class="mt-4 **:m-0"><p>Fjords' majestic and dramatic landscapes are just the tip of the iceberg. Fjords stand witness to the greatest wonders of the animal kingdom. Whether just below the surface, at the depths of the sea floor, or on dry land, the fjords offer an incredible bounty of wildlife.</p></div></div></div></div><div id="629cd6165507e93225b5a13f" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="629cd6165507e93225b5a13f"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="629cd6165507e93225b5a13f" data-media-type="tv" data-media-adult="false" href="/tv/203477-trolle-fjorde-und-ein-postschiff?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="629cd6165507e93225b5a13f" data-media-type="tv" data-media-adult="false" href="/tv/203477-trolle-fjorde-und-ein-postschiff?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Trolle, Fjorde und ein Postschiff</span></h2></a><span class="release_date w-full font-light">July  3, 2007</span></div></div><div class="mt-4 **:m-0"></div></div></div></div><div id="697ccc1d19e5c916af909c3e" class="comp:media-card w-full bg-white border border-light-grey hover:border-gray-300 rounded-lg shadow-sm overflow-hidden tight" data-object-id="697ccc1d19e5c916af909c3e"><div class="flex flex-nowrap"><div class="relative border-r border-light-grey min-w-[94px] w-[94px]"><a class="flex w-full" data-id="697ccc1d19e5c916af909c3e" data-media-type="tv" data-media-adult="false" href="/tv/312781-mord-i-sogn?language=en-US"><div class="image aspect-poster glyphicons picture no_image_holder bg-light-grey! grey rounded-none! overflow-hidden"><img alt="Sogn Murders" class="poster w-full block" loading="lazy" decoding="async" fetchpriority="low" srcset="https://media.themoviedb.org/t/p/w94_and_h141_face/kRocZjeLcsYh7NSsZY1nMkOH3uM.jpg 1x, https://media.themoviedb.org/t/p/w188_and_h282_face/kRocZjeLcsYh7NSsZY1nMkOH3uM.jpg 2x" src="https://media.themoviedb.org/t/p/w94_and_h141_face/kRocZjeLcsYh7NSsZY1nMkOH3uM.jpg" /></div></a></div><div class="flex flex-wrap items-center content-center w-full p-3"><div class="w-full flex items-center"><div class="flex flex-wrap w-full flex-wrap"><a class="font-normal hover:underline hover:underline-offset-2 hover:decoration-current hover:text-tmdb-light-blue" data-id="697ccc1d19e5c916af909c3e" data-media-type="tv" data-media-adult="false" href="/tv/312781-mord-i-sogn?language=en-US"><h2 class="font-semibold text-base/6 m-0 whitespace-normal"><span>Sogn Murders</span><span class="font-light"> (Mord i Sogn)</span></h2></a><span class="release_date w-full font-light">March 19, 2026</span></div></div><div class="mt-4 **:m-0"><p>In a fjord community facing the closure of its only police station, detective Ole Vik gets an oddly timed new trainee whose arrival coincides with something far darker than small-town life should ever see.</p></div></div></div></div><script type="text/javascript">window.PageReady().then(function(ready) {
+  var $ = ready.$;
+  $('#cmp-dbe6367e .user_score_chart').each(function(i) {
+    var item = $(this);
+    if (item.data("easyPieChart")) return;
+    item.easyPieChart({
+      lineCap: parseFloat(item.data("percent")) == 0.0 ? "butt" : "round",
+      lineWidth: 2,
+      scaleColor: false,
+      size: 40,
+      animate: { enabled: false }
+    });
+  });
+});
+</script></div>
+
+    <div class="pagination_wrapper">
+  
+</div>
+
+</div>
+
+            </div>
+            <div id="keyword_results" class="search_results keyword hide" style="scroll-margin-top: 130px;">
+              <div class="results">
+      <ul class="results">
+      <li><a href="/keyword/5747-fjord?language=en-US">fjord</a></li>
+      <li><a href="/keyword/206201-ford?language=en-US">ford</a></li>
+      <li><a href="/keyword/221989-west-fjords?language=en-US">west fjords</a></li>
+  </ul>
+
+
+    <div class="pagination_wrapper">
+  
+</div>
+
+</div>
+
+            </div>
+            <div id="company_results" class="search_results company hide" style="scroll-margin-top: 130px;">
+              <div class="results">
+      <ul class="results">
+      <li>
+        <a href="/company/169265-fjord-films?language=en-US">
+          <div>
+              <img src="https://media.themoviedb.org/t/p/h30/ff7BwnT6Y4bad9UuDzGnGUNY4eu.png" srcset="https://media.themoviedb.org/t/p/h30/ff7BwnT6Y4bad9UuDzGnGUNY4eu.png 1x, https://media.themoviedb.org/t/p/h60/ff7BwnT6Y4bad9UuDzGnGUNY4eu.png 2x">
+            <span>CA</span>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="/company/298899-fjord-productions?language=en-US">
+          <div>
+              Fjord Productions
+            
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="/company/305320-fox-fjord-studios?language=en-US">
+          <div>
+              Fox & Fjord Studios
+            
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="/company/296864-olf-fjord-film?language=en-US">
+          <div>
+              Olf Fjord-Film
+            
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="/company/243131-fjords?language=en-US">
+          <div>
+              Fjords
+            
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="/company/105983-studio-fjordholm?language=en-US">
+          <div>
+              Studio Fjordholm
+            
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="/company/108536-fjordfrakt?language=en-US">
+          <div>
+              Fjordfrakt
+            
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="/company/146254-fjordic-film?language=en-US">
+          <div>
+              Fjordic Film
+            
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="/company/71134-fjordholm-filmproduksjon?language=en-US">
+          <div>
+              Fjordholm Filmproduksjon
+            
+          </div>
+        </a>
+      </li>
+  </ul>
+
+
+    <div class="pagination_wrapper">
+  
+</div>
+
+</div>
+            </div>
+            <div id="collection_results" class="search_results collection hide" style="scroll-margin-top: 130px;">
+              <div class="results flex">
+    <p>There are no collections that matched your query.</p>
+</div>
+
+            </div>
+            <div id="network_results" class="search_results network hide" style="scroll-margin-top: 130px;">
+              <div class="results">
+    <p>There are no networks that matched your query.</p>
+</div>
+            </div>
+            <div id="award_results" class="search_results award hide" style="scroll-margin-top: 130px;">
+              <div class="results flex">
+    <p>Translation missing: en-US.no_award_search_results</p>
+</div>
+
+            </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+    </div> <!-- page_wrap opened in html_head -->
+
+    <footer class="main-footer single_column  ">
+      <nav aria-label="Footer navigation">
+        <div class="join">
+          <a href="/?language=en-US" class="logo">
+            <img alt="The Movie Database (TMDB)" width="130" height="94" src="/assets/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" />
+</a>
+            <a href="/signup?language=en-US" class="rounded" title="Join the Community">Join the Community</a>
+        </div>
+
+        <div>
+          <h3>The Basics</h3>
+          <ul>
+            <li><a href="/about?language=en-US" title="About TMDB">About TMDB</a></li>
+            <li><a href="/about/staying-in-touch?language=en-US" title="Contact Us">Contact Us</a></li>
+              <li><a href="https://developer.themoviedb.org/docs" target="_blank" rel="noopener noreferrer" title="API Documentation">API Documentation</a></li>
+            <li><a href="/api-for-business?language=en-US" title="API for Business">API for Business</a></li>
+            <li><a href="https://status.themoviedb.org/" target="_blank" rel="noopener noreferrer" title="System Status">System Status</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Get Involved</h3>
+          <ul>
+            <li><a href="/bible?language=en-US" title="Contribution Bible">Contribution Bible</a></li>
+            <li><a href="/movie/new?language=en-US" title="Add New Movie">Add New Movie</a></li>
+            <li><a href="/tv/new?language=en-US" title="Add New TV Show">Add New TV Show</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li><a href="/bible/general?language=en-US#674f287930fc85cab62597b4" title="Guidelines">Guidelines</a></li>
+            <li><a href="/discuss?language=en-US" title="Discussions">Discussions</a></li>
+            <li><a href="/leaderboard?language=en-US" title="Leaderboard">Leaderboard</a></li>
+            <li><a href="/talk?language=en-US" title="Support Forums">Support Forums</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="/terms-of-use?language=en-US" title="Terms of Use">Terms of Use</a></li>
+            <li><a href="/api-terms-of-use?language=en-US" title="API Terms of Use">API Terms of Use</a></li>
+            <li><a href="/privacy-policy?language=en-US" title="Privacy Policy">Privacy Policy</a></li>
+            <li><a href="/dmca-policy?language=en-US" title="DMCA Policy">DMCA Policy</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <section class="privacy_choices">
+        <p>
+          <a href="?language=en-US" onclick="OneTrust.ToggleInfoDisplay(); return false;">
+            <img alt="Your Privacy Choices" width="30" src="/images/privacy-options.svg" />&nbsp;&nbsp;<span>Your Privacy Choices</span>
+</a>        </p>
+      </section>
+
+      <section class="language_selector mt-4">
+        <p>
+          <span class="glyphicons world-west"></span>
+          <input id="footer_language" class="k-dropdownlist tmdb_theme" value="en-US">
+          <a id="footer_language_save" class="rounded hide" href="#">Save</a>
+        </p>
+      </section>
+
+      <section class="build">Build eaef293 (11184)</section>
+    </footer>
+
+      <div id="new_media_template" class="hide">
+        <div class="settings_content">
+          <p>Can't find a movie or TV show? Login to create it.</p>
+        </div>
+      </div>
+
+      <div id="settings_tooltip" class="hide">
+        <div class="settings_content">
+          <div class="group no_pad">
+            <p><a href="/login?language=en-US" title="Login">Login</a></p>
+          </div>
+          <div class="group">
+            <p><a href="/signup?language=en-US" title="Sign Up">Sign Up</a></p>
+          </div>
+        </div>
+      </div>
+
+    <div id="keyboard_shortcuts_popup" class="hide">
+      <div class="content k-flex-col">
+        <div class="keyboard_shortcuts">
+          <div class="column">
+            <h3>Global</h3>
+            <div><span>s</span> focus the search bar</div>
+            <div><span>p</span> open profile menu</div>
+            <div><span>esc</span> close an open window</div>
+            <div><span>?</span> open keyboard shortcut window</div>
+
+            <h3>On media pages</h3>
+            <div><span>b</span> go back (or to parent when applicable)</div>
+            <div><span>e</span> go to edit page</div>
+
+            <h3>On TV season pages</h3>
+            <div><span>&#8594;</span> (right arrow) go to next season</div>
+            <div><span>&#8592;</span> (left arrow) go to previous season</div>
+
+            <h3>On TV episode pages</h3>
+            <div><span>&#8594;</span> (right arrow) go to next episode</div>
+            <div><span>&#8592;</span> (left arrow) go to previous episode</div>
+
+            <h3>On all image pages</h3>
+            <div><span>a</span> open add image window</div>
+          </div>
+
+          <div class="column">
+            <h3>On all edit pages</h3>
+            <div><span>t</span> open translation selector</div>
+            <div><span>ctrl</span>+ <span>s</span> submit form</div>
+
+            <h3>On discussion pages</h3>
+            <div><span>n</span> create new discussion</div>
+            <div><span>w</span> toggle watching status</div>
+            <div><span>p</span> toggle public/private</div>
+            <div><span>c</span> toggle close/open</div>
+            <div><span>a</span> open activity</div>
+            <div><span>r</span> reply to discussion</div>
+            <div><span>l</span> go to last reply</div>
+            <div><span>ctrl</span>+ <span>enter</span> submit your message</div>
+            <div><span>&#8594;</span> (right arrow) next page</div>
+            <div><span>&#8592;</span> (left arrow) previous page</div>
+          </div>
+        </div>
+
+        <div class="keyboard_shortcuts k-flex-col k-mt-6 k-mb-3">
+          <h3 class="k-pb-1 k-font-weight-bold settings_label">Settings</h3>
+          <label class="k-display-flex k-align-items-center k-cursor-pointer k-pt-1 k-pl-1" for="toggle_keyboard_shortcuts" style="width: fit-content">
+            <input type="checkbox" id="toggle_keyboard_shortcuts" class="k-mr-2 k-cursor-pointer" name="toggle_keyboard_shortcuts" />
+            Enable Keyboard Shortcuts
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="hide"><div id="tooltip_content"></div></div>
+
+    <div class="hide">
+      <div id="options_tooltip">
+        <div class="settings_content">
+            <div class="group no_pad">
+              <p class="no_hover pad">Want to rate or add this item to a list?</p>
+              <p>
+                <a href="/login?language=en-US">
+                  Login <span class="glyphicons chevron-right blue pad_left"></span>
+</a>              </p>
+            </div>
+            <div class="group">
+              <p class="no_hover pad">Not a member?</p>
+              <p>
+                <a href="/signup?language=en-US">
+                  Sign up and join the community <span class="glyphicons chevron-right blue pad_left"></span>
+</a>              </p>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hide">
+      <div id="list_form"></div>
+    </div>
+
+    <div class="hide">
+      <div id="video_popup"></div>
+    </div>
+
+    <div class="hide">
+      <div id="report_window"></div>
+    </div>
+
+
+      <div id="amplified_100007099"></div>
+      <div id="amplified_100007119"></div>
+
+    <script type="text/javascript" charset="utf-8" >
+      window.PageReady().then(function(ready) {
+
+        window.showSearch = function(state) {
+          if (state) {
+            $('header').removeClass('nav-up').addClass('nav-down');
+            $('li.search_buttons a.close').removeClass('hide');
+            $('li.search_buttons a.search').addClass('hide');
+            $('div.search_bar').removeClass('hide');
+            $("#search_v4").data("kendoAutoComplete").focus();
+          } else {
+            $('li.search_buttons a.close').addClass('hide');
+            $('li.search_buttons a.search').removeClass('hide');
+            $('div.search_bar').addClass('hide');
+          }
+        };
+
+        renderTimeago();
+
+        var didScroll;
+        var lastScrollTop = 0;
+        var delta = 10;
+        var navbarHeight = $('header').outerHeight();
+
+        $(window).scroll(function(event){
+          didScroll = true;
+        });
+
+        setInterval(function() {
+          if (didScroll) {
+            hasScrolled();
+            didScroll = false;
+          }
+        }, 250);
+
+        function hasScrolled() {
+          var st = $(this).scrollTop();
+
+          if ( Math.abs(lastScrollTop - st) <= delta )
+            return;
+
+          if ( st > lastScrollTop && st > navbarHeight ) {
+            $('header').removeClass('nav-down').addClass('nav-up');
+          } else {
+            if ( st + $(window).height() < $(document).height() ) {
+              $('header').removeClass('nav-up').addClass('nav-down');
+            }
+          }
+
+          lastScrollTop = st;
+        }
+
+        var hover_tooltip = $('li.user a.no_click.tooltip_hover').tmdbTooltip({
+          themeClass: "tmdb_theme_white nowrap",
+          position: 'bottom',
+          show: function(e) {
+            this.element.removeClass('keyboard');
+          }
+        }).data("kendoTooltip");
+
+        $('button').on('click', function(e) {
+            var redirect_url = $(this).data('redirect-url');
+            if (redirect_url === undefined) {
+              return
+            }
+
+            window.location = redirect_url;
+          });
+
+        $('li.user a.no_click').tmdbTooltip({
+          themeClass: "tmdb_theme_white no_pad",
+          autoHide: false,
+          showOn: 'click',
+          width: 180,
+          position: 'bottom',
+          content: function() {
+            return $("#settings_tooltip").html();
+          },
+          show: function(e) {
+            hover_tooltip.hide();
+            if (this.element.hasClass('keyboard')) {
+              this.popup.element.find('p a')[0].focus();
+            }
+          }
+        });
+
+        var translateUrl = '/translation-popup?language=en-US&media_type=&media_id=&referral=%252Fsearch%252Fmovie';
+
+        $("li.translate").on("click", function(e) {
+          e.preventDefault();
+          var li = $(this);
+          var tooltip = li.data("kendoTooltip");
+
+          if (tooltip && tooltip.popup.visible()) {
+            tooltip.hide();
+            return;
+          }
+
+          if (li.find(".translate-loading-spinner").length) return;
+
+          var spinner = $('<span class="translate-loading-spinner"></span>');
+          li.append(spinner);
+
+          $.ajax({
+            url: translateUrl
+          }).done(function(response) {
+            spinner.remove();
+
+            if (tooltip) {
+              tooltip.destroy();
+            }
+
+            li.tmdbTooltip({
+              themeClass: "tmdb_theme_white flex",
+              autoHide: false,
+              content: response,
+              showOn: "click",
+              width: 300,
+              position: "bottom"
+            });
+
+            li.data("kendoTooltip").show(li);
+          }).fail(function() {
+            spinner.remove();
+          });
+        });
+
+        $("li.new_buttons a").on("click", function(e) {
+          e.preventDefault();
+          var li = $(this).closest("li.new_buttons");
+          var tooltip = li.data("kendoTooltip");
+
+          if (tooltip && tooltip.popup.visible()) {
+            tooltip.hide();
+            return;
+          }
+
+          if (!tooltip) {
+            li.tmdbTooltip({
+              themeClass: "tmdb_theme_white",
+              autoHide: false,
+              content: $("#new_media_template").html(),
+              showOn: "click",
+              position: "bottom"
+            });
+            tooltip = li.data("kendoTooltip");
+          }
+
+          tooltip.show(li);
+        });
+
+        $("body").on('click', 'a.no_click', function(e) {
+          e.preventDefault();
+        });
+
+        $("ul > li").on("mouseenter", function() {
+          $(this).find("ul.sub_nav.hide").toggle();
+        }).on("mouseleave", function() {
+          $(this).find("ul.sub_nav.hide").toggle();
+        });
+
+
+        showSuccess = function(message, title) {
+          if (title === undefined) {
+            title = 'Success';
+          }
+
+          return notify().show({
+            title: title,
+            message: message
+          }, "success");
+        };
+
+        showError = function(message, title) {
+          if (!message || message === []) {
+            message = 'There was a problem.';
+          }
+
+          if (title === undefined) {
+            title = 'Error';
+          }
+
+          return notify().show({
+            title: title,
+            message: message
+          }, "error");
+        };
+
+        var keyboard_shortcut_popup = $('#keyboard_shortcuts_popup div.content').kendoWindow({
+          title: 'Keyboard Shortcuts',
+          width: mobileDevice ? "100%" : "90vw",
+          maxWidth: mobileDevice ? "100%" : "1400px",
+          actions: [ "Close" ],
+          modal: true,
+          draggable: false,
+          resizable: false,
+          visible: false,
+          pinned: true,
+          animation: {
+            open: {
+              effects: "fade:in"
+            },
+            close: {
+              effects: "fade:out"
+            }
+          },
+          open: function() {
+            $('body').addClass('monochrome');
+          },
+          close: function() {
+            $('body').removeClass('monochrome');
+          }
+        }).data("kendoWindow").center();
+
+        $('#keyboard_shortcuts').on('click', function() {
+          keyboard_shortcut_popup.open();
+        });
+
+          $("#toggle_keyboard_shortcuts").prop({'checked': true, 'disabled': true});
+          var keyboard_tooltip = $("label[for='toggle_keyboard_shortcuts']").kendoTooltip({
+            position: 'bottom',
+            content: "You can disable keyboard shortcuts by logging into your account."
+          }).data("kendoTooltip");
+
+        $("#toggle_keyboard_shortcuts").on('change', function (e) {
+          var checkboxState = $(this).prop('checked');
+          $.post({
+            url: '/settings/toggle-keyboard-shortcuts',
+            dataType: "json",
+            data: {
+              keyboard_shortcuts_enabled: checkboxState
+            }
+          }).fail(function () {
+            showError('There was a problem.');
+          }).done(function (response) {
+            if (response.failure) {
+              showError('There was a problem.');
+            }
+            if (response.success) {
+              showSuccess('');
+              window.location.reload();
+            }
+          });
+        });
+
+        var footerLanguageDataSource = new kendo.data.DataSource({
+          schema: { model: { id: "i18n_tag" } },
+          data: [{"folded_name":"English (en-US)","native_name":"English","english_name":"English (en-US)","i18n_tag":"en-US"},{"folded_name":"Afrikaans (af-ZA)","native_name":"Afrikaans","english_name":"Afrikaans (af-ZA)","i18n_tag":"af-ZA"},{"folded_name":"Arabic (ar-EG)","native_name":"Arabic","english_name":"Arabic (ar-EG)","i18n_tag":"ar-EG"},{"folded_name":"Arabic (ar-SA)","native_name":"Arabic","english_name":"Arabic (ar-SA)","i18n_tag":"ar-SA"},{"folded_name":"Belarusian (be-BY)","native_name":"Belarusian","english_name":"Belarusian (be-BY)","i18n_tag":"be-BY"},{"folded_name":"Bulgarian (bg-BG)","native_name":"Bulgarian","english_name":"Bulgarian (bg-BG)","i18n_tag":"bg-BG"},{"folded_name":"Bengali (bn-BD)","native_name":"Bengali","english_name":"Bengali (bn-BD)","i18n_tag":"bn-BD"},{"folded_name":"Bengali (bn-IN)","native_name":"Bengali","english_name":"Bengali (bn-IN)","i18n_tag":"bn-IN"},{"folded_name":"Catalan; Valencian (ca-AD)","native_name":"Catalan; Valencian","english_name":"Catalan (ca-AD)","i18n_tag":"ca-AD"},{"folded_name":"Catalan; Valencian (ca-ES)","native_name":"Catalan; Valencian","english_name":"Catalan (ca-ES)","i18n_tag":"ca-ES"},{"folded_name":"Czech (cs-CZ)","native_name":"Czech","english_name":"Czech (cs-CZ)","i18n_tag":"cs-CZ"},{"folded_name":"Danish (da-DK)","native_name":"Danish","english_name":"Danish (da-DK)","i18n_tag":"da-DK"},{"folded_name":"German (de-DE)","native_name":"German","english_name":"German (de-DE)","i18n_tag":"de-DE"},{"folded_name":"Greek (el-GR)","native_name":"Greek","english_name":"Greek (el-GR)","i18n_tag":"el-GR"},{"folded_name":"English (en-AU)","native_name":"English","english_name":"English (en-AU)","i18n_tag":"en-AU"},{"folded_name":"English (en-CA)","native_name":"English","english_name":"English (en-CA)","i18n_tag":"en-CA"},{"folded_name":"English (en-GB)","native_name":"English","english_name":"English (en-GB)","i18n_tag":"en-GB"},{"folded_name":"Spanish (es-AR)","native_name":"Spanish","english_name":"Spanish (es-AR)","i18n_tag":"es-AR"},{"folded_name":"Spanish (es-ES)","native_name":"Spanish","english_name":"Spanish (es-ES)","i18n_tag":"es-ES"},{"folded_name":"Spanish (es-MX)","native_name":"Spanish","english_name":"Spanish (es-MX)","i18n_tag":"es-MX"},{"folded_name":"Basque (eu-ES)","native_name":"Basque","english_name":"Basque (eu-ES)","i18n_tag":"eu-ES"},{"folded_name":"Persian (fa-IR)","native_name":"Persian","english_name":"Persian (fa-IR)","i18n_tag":"fa-IR"},{"folded_name":"Finnish (fi-FI)","native_name":"Finnish","english_name":"Finnish (fi-FI)","i18n_tag":"fi-FI"},{"folded_name":"French (fr-CA)","native_name":"French","english_name":"French (fr-CA)","i18n_tag":"fr-CA"},{"folded_name":"French (fr-FR)","native_name":"French","english_name":"French (fr-FR)","i18n_tag":"fr-FR"},{"folded_name":"Galician (gl-ES)","native_name":"Galician","english_name":"Galician (gl-ES)","i18n_tag":"gl-ES"},{"folded_name":"Hebrew (he-IL)","native_name":"Hebrew","english_name":"Hebrew (he-IL)","i18n_tag":"he-IL"},{"folded_name":"Hindi (hi-IN)","native_name":"Hindi","english_name":"Hindi (hi-IN)","i18n_tag":"hi-IN"},{"folded_name":"Croatian (hr-HR)","native_name":"Croatian","english_name":"Croatian (hr-HR)","i18n_tag":"hr-HR"},{"folded_name":"Hungarian (hu-HU)","native_name":"Hungarian","english_name":"Hungarian (hu-HU)","i18n_tag":"hu-HU"},{"folded_name":"Indonesian (id-ID)","native_name":"Indonesian","english_name":"Indonesian (id-ID)","i18n_tag":"id-ID"},{"folded_name":"Italian (it-IT)","native_name":"Italian","english_name":"Italian (it-IT)","i18n_tag":"it-IT"},{"folded_name":"Japanese (ja-JP)","native_name":"Japanese","english_name":"Japanese (ja-JP)","i18n_tag":"ja-JP"},{"folded_name":"Georgian (ka-GE)","native_name":"Georgian","english_name":"Georgian (ka-GE)","i18n_tag":"ka-GE"},{"folded_name":"Kazakh (kk-KZ)","native_name":"Kazakh","english_name":"Kazakh (kk-KZ)","i18n_tag":"kk-KZ"},{"folded_name":"Kannada (kn-IN)","native_name":"Kannada","english_name":"Kannada (kn-IN)","i18n_tag":"kn-IN"},{"folded_name":"Korean (ko-KR)","native_name":"Korean","english_name":"Korean (ko-KR)","i18n_tag":"ko-KR"},{"folded_name":"Kurdish (ku-TR)","native_name":"Kurdish","english_name":"Kurdish (ku-TR)","i18n_tag":"ku-TR"},{"folded_name":"Lithuanian (lt-LT)","native_name":"Lithuanian","english_name":"Lithuanian (lt-LT)","i18n_tag":"lt-LT"},{"folded_name":"Latvian (lv-LV)","native_name":"Latvian","english_name":"Latvian (lv-LV)","i18n_tag":"lv-LV"},{"folded_name":"Malayalam (ml-IN)","native_name":"Malayalam","english_name":"Malayalam (ml-IN)","i18n_tag":"ml-IN"},{"folded_name":"Norwegian Bokmal (nb-NO)","native_name":"Norwegian Bokmål","english_name":"Norwegian Bokmål (nb-NO)","i18n_tag":"nb-NO"},{"folded_name":"Dutch; Flemish (nl-BE)","native_name":"Dutch; Flemish","english_name":"Dutch (nl-BE)","i18n_tag":"nl-BE"},{"folded_name":"Dutch; Flemish (nl-NL)","native_name":"Dutch; Flemish","english_name":"Dutch (nl-NL)","i18n_tag":"nl-NL"},{"folded_name":"Norwegian (no-NO)","native_name":"Norwegian","english_name":"Norwegian (no-NO)","i18n_tag":"no-NO"},{"folded_name":"Polish (pl-PL)","native_name":"Polish","english_name":"Polish (pl-PL)","i18n_tag":"pl-PL"},{"folded_name":"Portuguese (pt-BR)","native_name":"Portuguese","english_name":"Portuguese (pt-BR)","i18n_tag":"pt-BR"},{"folded_name":"Portuguese (pt-PT)","native_name":"Portuguese","english_name":"Portuguese (pt-PT)","i18n_tag":"pt-PT"},{"folded_name":"Romanian (ro-RO)","native_name":"Romanian","english_name":"Romanian (ro-RO)","i18n_tag":"ro-RO"},{"folded_name":"Russian (ru-RU)","native_name":"Russian","english_name":"Russian (ru-RU)","i18n_tag":"ru-RU"},{"folded_name":"Slovak (sk-SK)","native_name":"Slovak","english_name":"Slovak (sk-SK)","i18n_tag":"sk-SK"},{"folded_name":"Slovenian (sl-SI)","native_name":"Slovenian","english_name":"Slovenian (sl-SI)","i18n_tag":"sl-SI"},{"folded_name":"Somali (so-SO)","native_name":"Somali","english_name":"Somali (so-SO)","i18n_tag":"so-SO"},{"folded_name":"Albanian (sq-AL)","native_name":"Albanian","english_name":"Albanian (sq-AL)","i18n_tag":"sq-AL"},{"folded_name":"Serbian (sr-RS)","native_name":"Serbian","english_name":"Serbian (sr-RS)","i18n_tag":"sr-RS"},{"folded_name":"Swedish (sv-SE)","native_name":"Swedish","english_name":"Swedish (sv-SE)","i18n_tag":"sv-SE"},{"folded_name":"Tamil (ta-IN)","native_name":"Tamil","english_name":"Tamil (ta-IN)","i18n_tag":"ta-IN"},{"folded_name":"Telugu (te-IN)","native_name":"Telugu","english_name":"Telugu (te-IN)","i18n_tag":"te-IN"},{"folded_name":"Thai (th-TH)","native_name":"Thai","english_name":"Thai (th-TH)","i18n_tag":"th-TH"},{"folded_name":"Turkish (tr-TR)","native_name":"Turkish","english_name":"Turkish (tr-TR)","i18n_tag":"tr-TR"},{"folded_name":"Ukrainian (uk-UA)","native_name":"Ukrainian","english_name":"Ukrainian (uk-UA)","i18n_tag":"uk-UA"},{"folded_name":"Uzbek (uz-UZ)","native_name":"Uzbek","english_name":"Uzbek (uz-UZ)","i18n_tag":"uz-UZ"},{"folded_name":"Vietnamese (vi-VN)","native_name":"Vietnamese","english_name":"Vietnamese (vi-VN)","i18n_tag":"vi-VN"},{"folded_name":"Chinese (zh-CN)","native_name":"Chinese","english_name":"Mandarin (zh-CN)","i18n_tag":"zh-CN"},{"folded_name":"Chinese (zh-HK)","native_name":"Chinese","english_name":"Mandarin (zh-HK)","i18n_tag":"zh-HK"},{"folded_name":"Chinese (zh-SG)","native_name":"Chinese","english_name":"Mandarin (zh-SG)","i18n_tag":"zh-SG"},{"folded_name":"Chinese (zh-TW)","native_name":"Chinese","english_name":"Mandarin (zh-TW)","i18n_tag":"zh-TW"}]
+,
+          sort: { field: "native_name", dir: "asc" }
+        });
+        footerLanguageDataSource.read();
+        footerLanguageDataSource.pushDestroy({"i18n_tag":"xx-XX"});
+
+        $("#footer_language").kendoDropDownList({
+          autoWidth: true,
+          height: 300,
+          filter: "contains",
+          dataTextField: "native_name",
+          dataValueField: "i18n_tag",
+          dataSource: footerLanguageDataSource,
+          template: '#= data.native_name # (#= data.i18n_tag #)',
+          valueTemplate: '#= data.native_name # (#= data.i18n_tag #)',
+          change: function() {
+            $("#footer_language_save").removeClass("hide");
+          },
+          filtering: function(e) {
+            var filterValue = e.filter != undefined ? e.filter.value : "";
+            e.preventDefault();
+            this.dataSource.filter({
+              logic: "or",
+              filters: [
+                { field: "folded_name", operator: "contains", value: filterValue },
+                { field: "english_name", operator: "contains", value: filterValue },
+                { field: "native_name", operator: "contains", value: filterValue }
+              ]
+            });
+          }
+        });
+
+        $("#footer_language_save").on("click", function(e) {
+          e.preventDefault();
+          var selectedLanguage = $("#footer_language").data("kendoDropDownList").value();
+          $.post({
+            url: '/set_i18n?language=en-US',
+            dataType: "json",
+            data: { language: selectedLanguage }
+          }).done(function(response) {
+            if (response.success) {
+              window.location.reload();
+            } else {
+              showError();
+            }
+          }).fail(function() {
+            showError();
+          });
+        });
+
+        var seach_redirect_template = "/search{0}?language=en-US&query=%7B1%7D";
+        var processing_selected_item = false;
+
+        function processSelectedItem(event) {
+          var dataItem = null;
+          var media_type = null;
+          var search_value = '';
+          var selected_item = '';
+
+          if (event == null) {
+            dataItem = $("#search_v4").data("kendoAutoComplete").value();
+          } else {
+            dataItem = event.dataItem;
+          }
+
+          // This is the returned items from trending, when no search has been performed
+          if ( typeof(dataItem) == 'string' ) {
+            try {
+              var search_value = $(dataItem).data('search-name');
+              var media_type = $(dataItem).data('media-type');
+            } catch(error) {
+              var search_value = dataItem;
+            }
+
+            if (search_value && media_type) {
+              selected_item = kendo.format(decodeURI(seach_redirect_template), media_type, encodeURIComponent(search_value));
+            } else if (search_value) {
+              selected_item = kendo.format(decodeURI(seach_redirect_template), '', encodeURIComponent(search_value));
+            } else {
+              selected_item = kendo.format(decodeURI(seach_redirect_template), '', encodeURIComponent(dataItem));
+              search_value = dataItem;
+            }
+          // This is the returned items from a search
+          } else {
+            switch(dataItem.media_type) {
+              case 'movie':
+                selected_item = kendo.format(decodeURI(seach_redirect_template), '/movie', encodeURIComponent(dataItem.name));
+                search_value = dataItem.name;
+                break;
+              case 'tv':
+                selected_item = kendo.format(decodeURI(seach_redirect_template), '/tv', encodeURIComponent(dataItem.name));
+                search_value = dataItem.name;
+                break;
+              case 'person':
+                selected_item = kendo.format(decodeURI(seach_redirect_template), '/person', encodeURIComponent(dataItem.name));
+                search_value = dataItem.name;
+                break;
+              default:
+                selected_item = kendo.format(decodeURI(seach_redirect_template), '', encodeURIComponent(dataItem));
+                search_value = dataItem;
+            }
+          }
+
+          $("#search_v4").data("kendoAutoComplete").value(search_value);
+          window.location = selected_item;
+        }
+
+        $("#search_v4").kendoAutoComplete({
+          highlightFirst: false,
+          minLength: 1,
+          dataTextField: "title",
+          template: kendo.template($("#slim_multi_search_template").html()),
+          noDataTemplate: $("#search_no_data_template").html(),
+          dataSource: {
+            serverFiltering: true,
+            transport: {
+              read: '/search/trending?language=en-US',
+              parameterMap: function() {
+                return { query: $("#search_v4").data("kendoAutoComplete").value() };
+              }
+            },
+            schema: {
+              data: "results"
+            }
+          },
+          popup: {
+            appendTo: $("section.search")
+          },
+          filtering: function(e) {
+            var filter = e.filter != undefined ? e.filter.value : "";
+            if (filter == '') {
+              if ( ($('#search_v4-list #trending_search_header_template').length) == 0 ) {
+                // $('#search_v4_listbox').empty();
+                $('#search_v4-list').prepend($("#search_v4_headerTemplate").html());
+              }
+            } else {
+              $("#trending_search_header_template").remove();
+            }
+          },
+          select: function(e) {
+            processing_selected_item = true;
+            processSelectedItem(e);
+          },
+          close: function(e) {
+            // Use this to prevent the popup from closing in dev.
+            // e.preventDefault();
+          }
+        }).data("kendoAutoComplete");
+
+        $('#search_v4').on("keydown", function(event) {
+          if (event.keyCode == 13) {
+            if (processing_selected_item) {
+              processing_selected_item = false;
+              return;
+            } else {
+              processSelectedItem(null);
+            }
+          }
+        });
+
+        $('header #search_form').submit(function() {
+          return false;
+        });
+
+        var autocompleteInput = $('section.search .k-autocomplete input');
+        autocompleteInput.on('focus', function (e) {
+          var value = autocompleteInput.val();
+          if (value == null || value == '') {
+            $("#search_v4").data("kendoAutoComplete").search('');
+          } else {
+            var fieldLength = value.length;
+            autocompleteInput[0].setSelectionRange(fieldLength, fieldLength);
+          }
+        });
+
+        $('header.show_search_false li.search_buttons a.search').on('click', function(e) {
+          e.preventDefault();
+          showSearch(true);
+        });
+
+        $('header.show_search_true li.search_buttons a.search').on('click', function(e) {
+          e.preventDefault();
+          $("#search_v4").data("kendoAutoComplete").focus();
+        });
+
+        $('header.show_search_false li.search_buttons a.close').on('click', function(e) {
+          e.preventDefault();
+          showSearch(false);
+        });
+
+        $('main.show_search_false').on('click', function(e) {
+          showSearch(false);
+        });
+
+        $('header').on('click', '.k-clear-value', function(e) {
+          $('#search_v4').data("kendoAutoComplete").focus();
+        });
+
+
+        public_media_type_map = {
+          'movie': 'Movie',
+          'tv': 'TV Show',
+          'person': 'Person'
+        };
+
+        document.addEventListener('keydown', function(e) {
+          if (e.target.closest('[contenteditable], input, textarea, select')) return;
+          if (e.metaKey || e.altKey) return;
+
+          var key = e.key;
+
+            if (e.ctrlKey) return;
+
+          if (key === 'b' && $('a.keyboard_s.parent').length) { $('a.keyboard_s.parent')[0].click(); return; }
+          if (key === 's' && $('#search_v4').length) {
+            e.preventDefault();
+            if ($('header').hasClass('show_search_false')) { showSearch(true); } else { $('#search_v4').data('kendoAutoComplete').focus(); $('#search_v4').select(); }
+            return;
+          }
+          if (key === '?') { keyboard_shortcut_popup.open(); return; }
+          if (key === 'ArrowLeft' && !window.TMDbImageGallery?.overlay && $('span.previous a.keyboard_s').length) { $('span.previous a.keyboard_s')[0].click(); return; }
+          if (key === 'ArrowRight' && !window.TMDbImageGallery?.overlay && $('span.next a.keyboard_s').length) { $('span.next a.keyboard_s')[0].click(); return; }
+          if (key === 'm' && $('#new_shortcut_bar').length) { $('#new_shortcut_bar').focus(); return; }
+        });
+      }).catch(function(error) {
+        console.error("Error initializing footer Kendo UI", error);
+      });
+
+      var gender_lookup = {
+        0: 'two',
+        1: 'one',
+        2: 'two',
+        3: 'two'
+      }
+    </script>
+
+    <script id="person_template" type="text/x-kendo-tmpl">
+      <div class="item profile list_item grid_item">
+        <div class="image_content profile">
+          <a class="result" href="${data.url}" title="${data.name}" alt="${data.name}">
+            # if (data.profile_path) { #
+              <img class="" src="https://media.themoviedb.org/t/p/w66_and_h66_face${data.profile_path}" alt="${data.name}" width="45" height="45" srcset="https://media.themoviedb.org/t/p/w66_and_h66_face${data.profile_path} 1x, https://media.themoviedb.org/t/p/w132_and_h132_face${data.profile_path} 2x">
+            # } else { #
+              <div class="glyphicons picture profile ${gender_lookup[data.gender]} grey no_image_holder w45_and_h45"></div>
+            # } #
+          </a>
+        </div>
+
+        <div class="content">
+          <p class="name"><a class="result" href="${data.url}" title="${data.name}" alt="${data.name}">${data.name}</a></p>
+
+          # if (data.known_for) { #
+            <p class="sub">${data.known_for}</p>
+          # } #
+        </div>
+      </div>
+    </script>
+
+    <script id="person_template_with_known_for" type="text/x-kendo-tmpl">
+      <div class="item profile list_item known_for">
+        <div class="image_content profile">
+          # if (data.profile_path) { #
+            <img class="" src="https://media.themoviedb.org/t/p/w66_and_h66_face${data.profile_path}" alt="${data.name}" width="45" height="45" srcset="https://media.themoviedb.org/t/p/w66_and_h66_face${data.profile_path} 1x, https://media.themoviedb.org/t/p/w132_and_h132_face${data.profile_path} 2x">
+          # } else { #
+            <div class="glyphicons picture grey no_image_holder w45_and_h45 profile"></div>
+          # } #
+        </div>
+
+        <div class="content">
+          <p class="name">${data.name}</p>
+          # if (data.known_for) { #
+            <p class="sub">${data.known_for_department} &bull; ${data.known_for}</p>
+          # } else { #
+            <p class="sub">No known credits.</p>
+          # } #
+        </div>
+      </div>
+    </script>
+
+    <script id="person_result_template" type="text/x-kendo-tmpl">
+      <div class="ac_item profile list_item known_for">
+        <div class="image_content profile">
+          # if (data.profile_path) { #
+            <img class="" src="https://media.themoviedb.org/t/p/w66_and_h66_face${data.profile_path}" alt="${data.name}" width="45" height="45" srcset="https://media.themoviedb.org/t/p/w66_and_h66_face${data.profile_path} 1x, https://media.themoviedb.org/t/p/w132_and_h132_face${data.profile_path} 2x">
+          # } else { #
+            <div class="glyphicons picture grey no_image_holder w45_and_h45 profile"></div>
+          # } #
+        </div>
+
+        <div class="content">
+          <p class="name">${data.name}</p>
+          # if (data.known_for) { #
+            <p class="sub">
+              # if (data.media_type) { #
+                <span class="media_type person">#= public_media_type_map[data.media_type] # &bull; </span>
+              # } #
+              # for (var i = 0; i < data.known_for.length; i++) { #
+              <span class="comma">#= data.known_for[i].title ? data.known_for[i].title : data.known_for[i].name #</span>
+              # } #
+            </p>
+          # } else { #
+            <p class="sub">No known credits.</p>
+          # } #
+        </div>
+      </div>
+    </script>
+
+    <script id="movie_result_template" type="text/x-kendo-tmpl">
+      <div class="ac_results">
+        <div class="ac_item poster list_item">
+          <div class="image_content poster">
+            # if (data.poster_path) { #
+              <img class="" src="https://media.themoviedb.org/t/p/w45_and_h67_face${data.poster_path}" alt="${data.title}" width="45" height="67" srcset="https://media.themoviedb.org/t/p/w45_and_h67_face${data.poster_path} 1x, https://media.themoviedb.org/t/p/w94_and_h141_face${data.poster_path} 2x">
+            # } else { #
+              <div class="glyphicons picture grey no_image_holder w45_and_h67"></div>
+            # } #
+          </div>
+
+          <div class="content">
+            <p class="name">${data.title}</p>
+            <p class="sub">
+              # if (data.media_type) { #
+                <span class="media_type movie">#= public_media_type_map[data.media_type] # &bull; </span>
+              # } #
+              # if (data.original_title !== data.title) { #
+                <span class="comma"><span class="original_title">#= data.original_title #</span></span>
+              # } #
+              # if (data.release_date) { #
+                <span class="comma"><span class="release_date">#= data.release_date #</span></span>
+              # } #
+            </p>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script id="tv_show_result_template" type="text/x-kendo-tmpl">
+      <div class="ac_item poster list_item">
+        <div class="image_content poster">
+          # if (data.poster_path) { #
+            <img class="" src="https://media.themoviedb.org/t/p/w45_and_h67_face${data.poster_path}" alt="${data.title}" width="45" height="67" srcset="https://media.themoviedb.org/t/p/w45_and_h67_face${data.poster_path} 1x, https://media.themoviedb.org/t/p/w94_and_h141_face${data.poster_path} 2x">
+          # } else { #
+            <div class="glyphicons picture grey no_image_holder w45_and_h67"></div>
+          # } #
+        </div>
+
+        <div class="content">
+          <p class="name">${data.name}</p>
+          <p class="sub">
+            # if (data.media_type) { #
+                <span class="media_type tv">#= public_media_type_map[data.media_type] # &bull; </span>
+              # } #
+            # if (data.original_name !== data.name) { #
+              <span class="comma"><span class="original_title">#= data.original_name #</span></span>
+            # } #
+            # if (data.first_air_date) { #
+              <span class="comma"><span class="release_date">#= data.first_air_date #</span></span>
+            # } #
+          </p>
+        </div>
+      </div>
+    </script>
+
+    <script id="slim_movie_result_template" type="text/x-kendo-tmpl">
+      <div class="ac_item poster list_item">
+        <div class="image_content poster">
+          # if (data.poster_path) { #
+            <img class="" src="https://media.themoviedb.org/t/p/w45_and_h67_face${data.poster_path}" alt="${data.title}" width="45" height="67" srcset="https://media.themoviedb.org/t/p/w45_and_h67_face${data.poster_path} 1x, https://media.themoviedb.org/t/p/w94_and_h141_face${data.poster_path} 2x">
+          # } else { #
+            <div class="glyphicons picture grey no_image_holder w45_and_h67"></div>
+          # } #
+        </div>
+
+        <div class="content">
+          <p class="name">${data.title}</p>
+          <p class="sub">
+            # if (data.original_title !== data.title) { #
+              <span class="comma"><span class="original_title">#= data.original_title #</span></span>
+            # } #
+            # if (data.release_date) { #
+              <span class="comma"><span class="release_date">#= data.release_date #</span></span>
+            # } #
+          </p>
+        </div>
+
+        <p><span class="media_type movie">#= public_media_type_map[data.media_type] #</span></p>
+      </div>
+    </script>
+
+    <script id="multi_search_template" type="text/x-kendo-tmpl">
+      <div class="ac_results">
+        # if (data.media_type == 'movie') { #
+          #= kendo.render(kendo.template($("\\#movie_result_template").html()), [data]) #
+        # } else if (data.media_type == 'tv') { #
+          #= kendo.render(kendo.template($("\\#tv_show_result_template").html()), [data]) #
+        # } else if (data.media_type == 'person') { #
+          #= kendo.render(kendo.template($("\\#person_result_template").html()), [data]) #
+        # } #
+      </div>
+    </script>
+
+    <script id="search_v4_headerTemplate" type="text/x-kendo-template">
+      <div id="trending_search_header_template" class="slim_search_results_header">
+        <div class="wrapper">
+          <h2><span class="glyphicons trending"></span> Trending</h2>
+        </div>
+      </div>
+    </script>
+
+    <script id="search_no_data_template" type="text/x-kendo-template">
+      <div class="slim_search_results_header no_data">
+        <div class="wrapper">
+          <h2>No Results</h2>
+        </div>
+      </div>
+    </script>
+
+    <script id="slim_multi_search_template" type="text/x-kendo-tmpl">
+      # if (data.media_type == 'movie') { #
+        <div class="slim_search_results slim">
+          <div class="wrapper">
+            <div class="glyphicons film"></div>
+            <p>#= data.name # <span>in Movies</span></p>
+          </div>
+        </div>
+      # } else if (data.media_type == 'tv') { #
+        <div class="slim_search_results slim">
+          <div class="wrapper">
+            <div class="glyphicons tv"></div>
+            <p>#= data.name # <span>in TV Shows</span></p>
+          </div>
+        </div>
+      # } else if (data.media_type == 'person') { #
+        <div class="slim_search_results slim">
+          <div class="wrapper">
+            <div class="glyphicons user"></div>
+            <p>#= data.name # <span>in People</span></p>
+          </div>
+        </div>
+      # } else { #
+        <div class="slim_search_results slim">
+          <div class="wrapper">
+            <div class="glyphicons search"></div>
+            <p>#= data #</p>
+          </div>
+        </div>
+      # } #
+    </script>
+
+    <script id="delete-confirmation" type="text/x-kendo-template">
+      <section class="window_content">
+        <p class="delete-message">Are you sure?</p>
+
+        <button class="delete-cancel k-button">No</button>
+        <button class="delete-confirm k-button">Yes</button>
+      </section>
+    </script>
+
+    <div id="dialog_window"></div>
+    <span id="notification" class="hide"></span>
+
+
+    <script id="network_combo_template" type="text/x-kendo-tmpl">
+      <span class="k-state-default image">
+        # if (data.logo_path) { #
+          <img src="https://media.themoviedb.org/t/p/h15${data.logo_path}" alt="${data.name}" srcset="https://media.themoviedb.org/t/p/h15${data.logo_path} 1x, https://media.themoviedb.org/t/p/h30${data.logo_path} 2x" height="15">&nbsp;&nbsp;-&nbsp;
+        # } #
+        ${data.name}# if (data.origin_country) { # (${data.origin_country}) # } #
+      </span>
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "The Movie Database",
+        "alternateName": "TMDB",
+        "url": "https://www.themoviedb.org"
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+         "@context": "https://schema.org",
+         "@type": "WebSite",
+         "url": "https://www.themoviedb.org/",
+         "potentialAction": {
+           "@type": "SearchAction",
+           "target": "https://www.themoviedb.org/search?query={search_term_string}",
+           "query-input": "required name=search_term_string"
+         }
+      }
+    </script>
+
+
+      <div id="auth_modal" class="auth-modal-overlay" role="dialog" aria-modal="true">
+  <div class="auth-modal-card-wrap">
+    <button type="button" class="auth-card-close" data-auth-close aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="4" y1="4" x2="16" y2="16" /><line x1="16" y1="4" x2="4" y2="16" />
+      </svg>
+    </button>
+    
+<div class="auth-card" data-auth-mode="login">
+  <div class="auth-card-header">
+    <h2 class="auth-card-title" data-auth-title>
+      Login
+    </h2>
+  </div>
+
+
+
+    <div class="auth-card-social">
+        <a class="auth-social-button" href="/login/google/start?language=en-US" data-auth-once>
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+            <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.56 2.7-3.86 2.7-6.62z" />
+            <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.82.86-3.06.86-2.35 0-4.34-1.58-5.05-3.7H.96v2.33A9 9 0 0 0 9 18z" />
+            <path fill="#FBBC05" d="M3.95 10.72A5.41 5.41 0 0 1 3.66 9c0-.6.1-1.2.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.82.96 4.05l2.99-2.33z" />
+            <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.46 3.44 1.34l2.58-2.58C13.46.89 11.42 0 9 0A9 9 0 0 0 .96 4.95l2.99 2.33c.71-2.12 2.7-3.7 5.05-3.7z" />
+          </svg>
+          <span>Continue with Google</span>
+        </a>
+
+        <a class="auth-social-button" href="/login/apple/start?language=en-US" data-auth-once>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701" />
+          </svg>
+          <span>Continue with Apple</span>
+        </a>
+
+        <button id="auth_magic_link_button" class="auth-social-button" type="button" data-auth-switch="magic_link" data-auth-login-only>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
+            <path d="m22 7-10 7L2 7"></path>
+          </svg>
+          <span>Email me a sign-in link</span>
+        </button>
+    </div>
+
+    <div class="auth-card-divider">
+      <span>OR</span>
+    </div>
+
+  <div data-auth-panel="login" >
+    <form id="auth_login_form" class="auth-card-form" action="/login?language=en-US" method="post" accept-charset="utf-8">
+      <input type="hidden" name="authenticity_token" value="v-O3pphZn3L-WkoWJdqTrk3WYlnTb8uOPOwmobOkobw=">
+
+      <span class="auth-field-wrap">
+        <input id="auth_username" class="auth-field-input" type="text" name="username" value="" autocapitalize="off" autocomplete="username" autocorrect="off" placeholder="Username">
+      </span>
+
+      <span class="auth-field-wrap">
+        <input id="auth_password" class="auth-field-input" type="password" name="password" autocomplete="current-password" placeholder="Password">
+        <button type="button" class="auth-password-toggle" data-password-toggle aria-label="Show password" tabindex="-1">
+          <svg class="auth-eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
+          <svg class="auth-eye-closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" /><line x1="1" y1="1" x2="23" y2="23" /></svg>
+        </button>
+      </span>
+
+      <div class="auth-card-footer">
+        <button id="auth_login_button" class="auth-submit-button" type="submit">Login</button>
+        <a class="auth-forgot-link" href="/reset-password?language=en-US">Reset password</a>
+        <a class="auth-forgot-link" href="/resend-email-verification?language=en-US">Resend Verification Email</a>
+        <p class="auth-switch-text">
+          New to TMDB? <button type="button" class="auth-switch-link" data-auth-switch="signup">Sign Up</button>
+        </p>
+      </div>
+    </form>
+  </div>
+
+  <div data-auth-panel="signup" inert hidden>
+    <form id="auth_signup_form" class="auth-card-form" action="/signup?language=en-US" method="post" accept-charset="utf-8">
+      <input type="hidden" name="authenticity_token" value="v-O3pphZn3L-WkoWJdqTrk3WYlnTb8uOPOwmobOkobw=">
+
+      <span class="auth-field-wrap">
+        <input id="auth_signup_username" class="auth-field-input" type="text" name="username" autocapitalize="off" autocomplete="username" autocorrect="off" placeholder="Username">
+      </span>
+
+      <span class="auth-field-wrap">
+        <input id="auth_signup_password" class="auth-field-input" type="password" name="password" autocomplete="new-password" placeholder="Password">
+        <button type="button" class="auth-password-toggle" data-password-toggle aria-label="Show password" tabindex="-1">
+          <svg class="auth-eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
+          <svg class="auth-eye-closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" /><line x1="1" y1="1" x2="23" y2="23" /></svg>
+        </button>
+      </span>
+
+      <span class="auth-field-wrap">
+        <input id="auth_signup_password_confirm" class="auth-field-input" type="password" name="password_confirm" autocomplete="new-password" placeholder="Password Confirm">
+        <button type="button" class="auth-password-toggle" data-password-toggle aria-label="Show password" tabindex="-1">
+          <svg class="auth-eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
+          <svg class="auth-eye-closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" /><line x1="1" y1="1" x2="23" y2="23" /></svg>
+        </button>
+      </span>
+
+      <span class="auth-field-wrap">
+        <input id="auth_signup_email" class="auth-field-input" type="email" name="email" autocapitalize="off" autocomplete="email" autocorrect="off" placeholder="Email">
+      </span>
+
+      <p class="auth-terms-text">By clicking the "Sign up" button below, I certify that I have read and agree to the TMDB <a href="/terms-of-use?language=en-US" target="_blank">terms of use</a> and <a href="/privacy-policy?language=en-US" target="_blank">privacy policy</a>.</p>
+
+      <div class="auth-card-footer">
+        <button id="auth_signup_button" class="auth-submit-button" type="submit">Sign Up</button>
+        <p class="auth-switch-text">
+          Already have an account? <button type="button" class="auth-switch-link" data-auth-switch="login">Login</button>
+        </p>
+      </div>
+    </form>
+  </div>
+
+    <div data-auth-panel="magic_link" inert hidden>
+      <form id="auth_magic_link_form" class="auth-card-form" action="/login/link/request?language=en-US" method="post" accept-charset="utf-8">
+        <input type="hidden" name="authenticity_token" value="v-O3pphZn3L-WkoWJdqTrk3WYlnTb8uOPOwmobOkobw=">
+        <input type="hidden" name="redirect_to" value="">
+
+        <span class="auth-field-wrap">
+          <input id="auth_magic_link_email" class="auth-field-input" type="email" name="email" autocapitalize="off" autocomplete="email" autocorrect="off" placeholder="Email" required>
+        </span>
+
+        <div class="auth-card-footer">
+          <button id="auth_magic_link_submit" class="auth-submit-button" type="submit">Email me a sign-in link</button>
+          <p class="auth-switch-text">
+            Prefer password? <button type="button" class="auth-switch-link" data-auth-switch="login">Back to login</button>
+          </p>
+        </div>
+      </form>
+    </div>
+</div>
+
+  </div>
+</div>
+
+<script>
+  window.tmdbAuthCard = function(card) {
+    if (!card || card._tmdbAuthCardInit) return;
+    card._tmdbAuthCardInit = true;
+
+    var title = card.querySelector("[data-auth-title]");
+    var panels = {
+      login: card.querySelector('[data-auth-panel="login"]'),
+      signup: card.querySelector('[data-auth-panel="signup"]'),
+      magic_link: card.querySelector('[data-auth-panel="magic_link"]')
+    };
+
+    var panelTitles = {
+      login: "Login",
+      signup: "Sign Up",
+      magic_link: "Sign in with Email Link"
+    };
+
+    function showPanel(target) {
+      var resolvedTarget = panels[target] ? target : "login";
+
+      Object.keys(panels).forEach(function(key) {
+        var panel = panels[key];
+        if (!panel) return;
+
+        if (key === resolvedTarget) {
+          panel.removeAttribute("inert");
+          panel.removeAttribute("hidden");
+        } else {
+          panel.setAttribute("inert", "");
+          panel.setAttribute("hidden", "");
+        }
+      });
+
+      if (title) {
+        title.textContent = panelTitles[resolvedTarget] || panelTitles.login;
+      }
+      card.setAttribute("data-auth-mode", resolvedTarget);
+
+      card.querySelectorAll("[data-auth-login-only]").forEach(function(el) {
+        el.style.display = (resolvedTarget === "login") ? "" : "none";
+      });
+
+      var panel = panels[resolvedTarget];
+      if (!panel) return;
+
+      var firstInput = panel.querySelector("input:not([type=hidden])");
+      if (firstInput) firstInput.focus();
+    }
+
+    card.addEventListener("click", function(e) {
+      var onceLink = e.target.closest("[data-auth-once]");
+      if (onceLink) {
+        if (onceLink.dataset.authClicked) {
+          e.preventDefault();
+          return;
+        }
+        onceLink.dataset.authClicked = "true";
+        onceLink.style.opacity = "0.5";
+        onceLink.style.pointerEvents = "none";
+      }
+
+      var switchBtn = e.target.closest("[data-auth-switch]");
+      if (switchBtn) showPanel(switchBtn.getAttribute("data-auth-switch"));
+
+      var toggle = e.target.closest("[data-password-toggle]");
+      if (!toggle) return;
+
+      var wrap = toggle.closest(".auth-field-wrap");
+      if (!wrap) return;
+
+      var input = wrap.querySelector("input");
+      var eyeOpen = toggle.querySelector(".auth-eye-open");
+      var eyeClosed = toggle.querySelector(".auth-eye-closed");
+
+      if (input.type === "password") {
+        input.type = "text";
+        eyeOpen.style.display = "none";
+        eyeClosed.style.display = "";
+        toggle.setAttribute("aria-label", "Hide password");
+      } else {
+        input.type = "password";
+        eyeOpen.style.display = "";
+        eyeClosed.style.display = "none";
+        toggle.setAttribute("aria-label", "Show password");
+      }
+    });
+
+    card._showPanel = showPanel;
+  };
+
+  (function() {
+    var overlay = document.getElementById("auth_modal");
+    if (!overlay) return;
+
+    var card = overlay.querySelector(".auth-card");
+    window.tmdbAuthCard(card);
+
+    function openModal(mode) {
+      overlay.setAttribute("data-open", "");
+      document.body.style.overflow = "hidden";
+      card._showPanel(mode || "login");
+      setTimeout(function() {
+        var panel = card.querySelector('[data-auth-panel="' + (mode || "login") + '"]');
+        var firstInput = panel.querySelector("input:not([type=hidden])");
+        if (firstInput) firstInput.focus();
+      }, 50);
+    }
+
+    function closeModal() {
+      overlay.removeAttribute("data-open");
+      document.body.style.overflow = "";
+    }
+
+    overlay.querySelector("[data-auth-close]").addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && overlay.hasAttribute("data-open")) closeModal();
+    });
+
+    document.addEventListener("click", function(e) {
+      var trigger = e.target.closest("[data-auth-modal]");
+      if (!trigger) return;
+
+      e.preventDefault();
+      openModal(trigger.getAttribute("data-auth-modal") || "login");
+    });
+
+    window.tmdbAuthModal = { open: openModal, close: closeModal };
+  })();
+</script>
+
+  </body>
+</html>
+

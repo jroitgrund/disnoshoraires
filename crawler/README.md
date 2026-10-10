@@ -90,7 +90,7 @@ A re-release with a new year on AlloCiné (such as "Avengers : Endgame Extended"
 
 ### Backdrop
 
-TMDB has no "still" tag. The pass picks the backdrop most likely to be a frame of the film, not key art or a posed photo (`tmdbBackdrop`):
+TMDB has no "still" tag. The pass picks the backdrop most likely to be a frame of the film, not key art or a posed photo (`pickBackdrop`):
 
 1. Only backdrops without language (`image_language=xx`). Key art carries the title, so it gets a language.
 2. The largest series from one contributor, of 3 or more. Frame grabs from a copy of the film or its trailer come in series. Key art comes alone.
@@ -98,3 +98,8 @@ TMDB has no "still" tag. The pass picks the backdrop most likely to be a frame o
 3. In that series, or else among all backdrops without language, the one TMDB ranks first.
 
 This was checked by eye on Fjord, Toy Story 5 and The Odyssey. Letterboxd's backdrop is not a source: it is often an upload of its own, not a TMDB image.
+
+## Tests
+
+`npm test`. The parsers and the domain rules are pure functions. The site modules only fetch and call them.
+Tests give them real responses, saved in `fixtures/`, and compare the output with snapshots (`vitest -u` to update).

@@ -1,0 +1,193 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`crawl 1`] = `
+{
+  "crawledAt": "2026-10-10T08:00:00.000Z",
+  "from": "2026-10-10",
+  "movies": [
+    {
+      "countries": [
+        "France",
+      ],
+      "directors": [
+        "Christophe Réveille",
+      ],
+      "genres": [
+        "Documentaire",
+      ],
+      "id": 318226,
+      "originalTitle": "Les Survivants du Che",
+      "productionYear": 2026,
+      "runtime": "1h 38min",
+      "screenings": [
+        {
+          "bookingUrl": "https://www.ticketingcine.com/EMS1045/FRJIU7J#showsession?id=emsx104500017412&ps=webedia",
+          "experiences": [],
+          "language": "original",
+          "startsAt": "2026-10-10T18:15:00",
+          "subtitles": "standard",
+          "theaterId": "P0028",
+        },
+      ],
+      "title": "Les Survivants du Che",
+      "url": "https://www.allocine.fr/film/fichefilm_gen_cfilm=318226.html",
+    },
+    {
+      "countries": [
+        "U.S.A.",
+      ],
+      "directors": [
+        "Destin Daniel Cretton",
+      ],
+      "genres": [
+        "Action",
+        "Aventure",
+        "Fantastique",
+        "Science Fiction",
+      ],
+      "id": 276608,
+      "originalTitle": "Spider-Man: Brand New Day",
+      "productionYear": 2026,
+      "runtime": "2h 25min",
+      "screenings": [
+        {
+          "bookingUrl": "https://www.ticketingcine.com/EMS1045/FR5AGHP#showsession?id=emsx104500017413&ps=webedia",
+          "experiences": [],
+          "language": "original",
+          "startsAt": "2026-10-10T20:00:00",
+          "subtitles": "standard",
+          "theaterId": "P0028",
+        },
+      ],
+      "title": "Spider-Man: Brand New Day",
+      "url": "https://www.allocine.fr/film/fichefilm_gen_cfilm=276608.html",
+    },
+  ],
+  "theaters": [
+    {
+      "address": "Saint-Henri - 2, rue du Cinema 13016 Marseille",
+      "id": "P0028",
+      "name": "Alhambra",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=P0028.html",
+    },
+    {
+      "address": "125 La Canebière 13001 Marseille",
+      "id": "W1304",
+      "name": "Artplexe Canebière",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=W1304.html",
+    },
+    {
+      "address": "100, av. de Hambourg 13008 Marseille",
+      "id": "P0019",
+      "name": "Bonneveine",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=P0019.html",
+    },
+    {
+      "address": "283, av. du Prado 13008 Marseille",
+      "id": "P0042",
+      "name": "Chambord",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=P0042.html",
+    },
+    {
+      "address": "56 Traverse de la Buzine 13011 Marseille",
+      "id": "W1311",
+      "name": "Château de la Buzine - salle de cinéma",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=W1311.html",
+    },
+    {
+      "address": "36 Avenue du Prado 13006 Marseille",
+      "id": "P0045",
+      "name": "Cinéma Le Prado Marseille",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=P0045.html",
+    },
+    {
+      "address": "59 Cours Julien 13006 Marseille",
+      "id": "B1306",
+      "name": "La Baleine",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=B1306.html",
+    },
+    {
+      "address": "31, boul. d'Athenes 13001 Marseille",
+      "id": "P0681",
+      "name": "La Cinémathèque",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=P0681.html",
+    },
+    {
+      "address": "136 rue Loubon 13003 Marseille",
+      "id": "W1303",
+      "name": "Le Gyptis",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=W1303.html",
+    },
+    {
+      "address": "2 bd Léon Bancal 13011 Marseille 11e arrondissement",
+      "id": "P0680",
+      "name": "Les 3 Palmes",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=P0680.html",
+    },
+    {
+      "address": "37, rue Vincent Scotto (angle Canebière) 13001 Marseille",
+      "id": "P0749",
+      "name": "Les Variétés",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=P0749.html",
+    },
+    {
+      "address": "1 esplanade du J4 13002 Marseille",
+      "id": "W1300",
+      "name": "Mucem",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=W1300.html",
+    },
+    {
+      "address": "54 rue de Chanterac 13002 Marseille",
+      "id": "W0213",
+      "name": "Pathé La Joliette - Dolby Cinema",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=W0213.html",
+    },
+    {
+      "address": "36, av. du Marechal-Foch 13004 Marseille",
+      "id": "P0018",
+      "name": "Pathé Marseille - Madeleine",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=P0018.html",
+    },
+    {
+      "address": "49 cours julien 13006 Marseille",
+      "id": "W3006",
+      "name": "Videodrome 2",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=W3006.html",
+    },
+    {
+      "address": "Esplanade du J4 13002 Marseille",
+      "id": "W1302",
+      "name": "Villa Méditerranée",
+      "url": "https://www.allocine.fr/seance/salle_gen_csalle=W1302.html",
+    },
+  ],
+  "to": "2026-10-13",
+}
+`;
+
+exports[`dates from a Saturday 1`] = `
+[
+  "2026-10-10",
+  "2026-10-11",
+  "2026-10-12",
+  "2026-10-13",
+]
+`;
+
+exports[`dates from a Tuesday 1`] = `
+[
+  "2026-10-13",
+]
+`;
+
+exports[`dates from a Wednesday 1`] = `
+[
+  "2026-10-07",
+  "2026-10-08",
+  "2026-10-09",
+  "2026-10-10",
+  "2026-10-11",
+  "2026-10-12",
+  "2026-10-13",
+]
+`;

@@ -1,0 +1,41 @@
+import { expect, test } from "vitest";
+import { fixture } from "./fixture.ts";
+import {
+  parseRottenTomatoesFilm,
+  parseRottenTomatoesSearch,
+} from "./rottentomatoes.ts";
+
+test("search", () => {
+  expect(
+    parseRottenTomatoesSearch(
+      fixture("rottentomatoes/search-the-beloved.html"),
+    ),
+  ).toMatchSnapshot();
+});
+
+test("film page with a Tomatometer", () => {
+  expect(
+    parseRottenTomatoesFilm(
+      "https://www.rottentomatoes.com/m/the_beloved_2026",
+      fixture("rottentomatoes/the_beloved_2026.html"),
+    ),
+  ).toMatchSnapshot();
+});
+
+test("film page without reviews", () => {
+  expect(
+    parseRottenTomatoesFilm(
+      "https://www.rottentomatoes.com/m/the_beloved_2",
+      fixture("rottentomatoes/the_beloved_2.html"),
+    ),
+  ).toMatchSnapshot();
+});
+
+test("old film page", () => {
+  expect(
+    parseRottenTomatoesFilm(
+      "https://www.rottentomatoes.com/m/akira",
+      fixture("rottentomatoes/akira.html"),
+    ),
+  ).toMatchSnapshot();
+});

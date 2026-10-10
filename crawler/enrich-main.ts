@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
 import { Session } from "pantomime";
-import { enrich } from "./enrich.ts";
+import { enrich, mergeEnrichment, toEnrich } from "./enrich.ts";
 import {
   CrawlSchema,
   type Enrichment,
@@ -21,15 +21,12 @@ if (input == null || output == null) {
 const crawl = CrawlSchema.parse(
   JSON.parse(await readFile(input, "utf8")) as unknown,
 );
-// The previous output only saves work: a movie still showing is not enriched again.
 const previous: Enrichment["movies"] = existsSync(output)
   ? EnrichmentSchema.parse(
       JSON.parse(await readFile(output, "utf8")) as unknown,
     ).movies
   : {};
-const missing = crawl.movies.filter(
-  (movie) => previous[String(movie.id)] == null,
-);
+const missing = toEnrich(crawl.movies, previous);
 console.error(
   `enrich ${String(missing.length)} of ${String(crawl.movies.length)} movies`,
 );
@@ -38,16 +35,9 @@ const external =
     ? new Map<number, External>()
     : await enrichWithSession(missing);
 // Parsed before it is written, so the file always matches its schema.
-const enrichment = EnrichmentSchema.parse({
-  crawledAt: crawl.crawledAt,
-  enrichedAt: new Date().toISOString(),
-  movies: Object.fromEntries(
-    crawl.movies.map((movie) => [
-      String(movie.id),
-      previous[String(movie.id)] ?? external.get(movie.id),
-    ]),
-  ),
-});
+const enrichment = EnrichmentSchema.parse(
+  mergeEnrichment(crawl, previous, external, new Date().toISOString()),
+);
 await mkdir(dirname(output), { recursive: true });
 // Write then rename, so a reader never sees a half-written file.
 await writeFile(`${output}.tmp`, `${JSON.stringify(enrichment, null, 2)}\n`);

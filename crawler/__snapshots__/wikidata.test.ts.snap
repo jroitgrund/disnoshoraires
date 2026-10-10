@@ -1,0 +1,70 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`known IDs 1`] = `
+[
+  [
+    188280,
+    {
+      "rottenTomatoes": [
+        "m/fjord",
+      ],
+      "sensCritique": [
+        "112471227",
+      ],
+      "tmdb": [
+        "1401459",
+      ],
+    },
+  ],
+  [
+    325965,
+    {
+      "rottenTomatoes": [
+        "m/the_beloved_2026",
+      ],
+      "sensCritique": [],
+      "tmdb": [
+        "1074074",
+      ],
+    },
+  ],
+  [
+    6429,
+    {
+      "rottenTomatoes": [
+        "m/akira",
+      ],
+      "sensCritique": [],
+      "tmdb": [
+        "149",
+      ],
+    },
+  ],
+  [
+    1000036867,
+    {
+      "rottenTomatoes": [],
+      "sensCritique": [],
+      "tmdb": [],
+    },
+  ],
+  [
+    35275,
+    {
+      "rottenTomatoes": [],
+      "sensCritique": [],
+      "tmdb": [],
+    },
+  ],
+]
+`;
+
+exports[`query 1`] = `
+"SELECT ?allocine ?tmdb ?rt ?sc WHERE {
+    VALUES ?allocine { "188280" "6429" }
+    ?item wdt:P1265 ?allocine.
+    OPTIONAL { ?item wdt:P4947 ?tmdb }
+    OPTIONAL { ?item wdt:P1258 ?rt }
+    OPTIONAL { ?item wdt:P10100 ?sc }
+  }"
+`;

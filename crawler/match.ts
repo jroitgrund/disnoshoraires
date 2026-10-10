@@ -110,7 +110,7 @@ export function samePerson(a: string, b: string): boolean {
 }
 
 /** Lower case, no accents, no punctuation, no AlloCiné homonym marks such as "(II)". */
-export function normalize(text: string): string {
+function normalize(text: string): string {
   return text
     .normalize("NFKD")
     .replace(/\p{M}/gu, "")
@@ -122,24 +122,13 @@ export function normalize(text: string): string {
 }
 
 /** Dice coefficient of the sets of character bigrams, from 0 to 1. */
-export function similarity(a: string, b: string): number {
+function similarity(a: string, b: string): number {
   const ba = new Set(bigrams(normalize(a)));
   const bb = new Set(bigrams(normalize(b)));
   if (ba.size === 0 || bb.size === 0) {
     return normalize(a) === normalize(b) ? 1 : 0;
   }
   return (2 * ba.intersection(bb).size) / (ba.size + bb.size);
-}
-
-/** The best title similarity of a candidate to any title of the AlloCiné film. */
-export function titleScore(
-  titles: readonly string[],
-  candidate: readonly string[],
-): number {
-  return Math.max(
-    0,
-    ...titles.flatMap((a) => candidate.map((b) => similarity(a, b))),
-  );
 }
 
 function tokens(name: string): string[] {

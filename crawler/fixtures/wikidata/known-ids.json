@@ -1,0 +1,51 @@
+{
+  "head" : {
+    "vars" : [ "allocine", "tmdb", "rt", "sc" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "allocine" : {
+        "type" : "literal",
+        "value" : "6429"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "149"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : "m/akira"
+      }
+    }, {
+      "allocine" : {
+        "type" : "literal",
+        "value" : "325965"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "1074074"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : "m/the_beloved_2026"
+      }
+    }, {
+      "allocine" : {
+        "type" : "literal",
+        "value" : "188280"
+      },
+      "tmdb" : {
+        "type" : "literal",
+        "value" : "1401459"
+      },
+      "rt" : {
+        "type" : "literal",
+        "value" : "m/fjord"
+      },
+      "sc" : {
+        "type" : "literal",
+        "value" : "112471227"
+      }
+    } ]
+  }
+}

@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`film page 1`] = `
+{
+  "directors": [
+    "Cristian Mungiu",
+  ],
+  "rating": 3.79,
+  "ratingCount": 70452,
+  "titles": [
+    "Fjord",
+  ],
+  "tmdbId": "1401459",
+  "url": "https://letterboxd.com/film/fjord-2026/",
+  "year": 2026,
+}
+`;

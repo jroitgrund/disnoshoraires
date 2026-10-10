@@ -1,3 +1,4 @@
+import { parse } from "node-html-parser";
 import type { Session } from "pantomime";
 import { z } from "zod";
 import type { MovieInfo, Screening, Theater } from "./schema.ts";
@@ -59,26 +60,32 @@ const ShowtimesPageSchema = z.object({
   pagination: z.object({ totalPages: z.number() }),
 });
 
-type ShowtimesPage = z.infer<typeof ShowtimesPageSchema>;
+export type ShowtimesPage = z.infer<typeof ShowtimesPageSchema>;
+
+export interface ShowtimeRow {
+  readonly movie: MovieInfo;
+  readonly screening: Screening;
+}
 
 /** The city page renders its theater list on the server; there is no API call for it. */
 export async function listTheaters(
   session: Session,
   cityId: number,
 ): Promise<Theater[]> {
-  const cards = await session.visit(
-    `${ORIGIN}/salle/cinema/ville-${String(cityId)}/`,
-    (page) =>
-      page.locator(".theater-card").evaluateAll((elements) =>
-        elements.map((card) => ({
-          theater:
-            card
-              .querySelector("[data-theater]")
-              ?.getAttribute("data-theater") ?? null,
-          address: card.querySelector("address")?.textContent.trim() ?? null,
-        })),
-      ),
+  return parseTheaters(
+    await session.visit(`${ORIGIN}/salle/cinema/ville-${String(cityId)}/`),
   );
+}
+
+export function parseTheaters(html: string): Theater[] {
+  const cards = parse(html)
+    .querySelectorAll(".theater-card")
+    .map((card) => ({
+      theater:
+        card.querySelector("[data-theater]")?.getAttribute("data-theater") ??
+        null,
+      address: card.querySelector("address")?.text.trim() ?? null,
+    }));
   return z
     .array(TheaterCardSchema)
     .parse(cards)
@@ -94,7 +101,7 @@ export async function theaterShowtimes(
   session: Session,
   theaterId: string,
   date: string,
-): Promise<{ movie: MovieInfo; screening: Screening }[]> {
+): Promise<ShowtimeRow[]> {
   const first = await showtimesPage(session, theaterId, date, 1);
   const rest = await mapSequential(
     Array.from(
@@ -103,7 +110,16 @@ export async function theaterShowtimes(
     ),
     (page) => showtimesPage(session, theaterId, date, page),
   );
-  return [first, ...rest]
+  return showtimeRows([first, ...rest], theaterId, date);
+}
+
+/** The rows of all pages of one theater and date. */
+export function showtimeRows(
+  pages: readonly ShowtimesPage[],
+  theaterId: string,
+  date: string,
+): ShowtimeRow[] {
+  return pages
     .flatMap((page) => page.results)
     .flatMap(({ movie, showtimes }) =>
       Object.entries(showtimes).flatMap(([bucket, list]) =>
@@ -140,9 +156,15 @@ async function showtimesPage(
     `${ORIGIN}/_/showtimes/theater-${theaterId}/d-${date}/${suffix}`,
     { json: { filters: [] }, referrer: theaterUrl(theaterId) },
   );
-  const parsed = ShowtimesPageSchema.parse(
-    JSON.parse(response.text) as unknown,
-  );
+  return parseShowtimesPage(response.text, theaterId, date);
+}
+
+export function parseShowtimesPage(
+  json: string,
+  theaterId: string,
+  date: string,
+): ShowtimesPage {
+  const parsed = ShowtimesPageSchema.parse(JSON.parse(json) as unknown);
   // A day without showtimes comes back as an error with no results:
   // `next.showtime.on` when a later day has showtimes, `no.showtime.error` when none has.
   if (

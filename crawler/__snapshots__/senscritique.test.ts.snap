@@ -1,0 +1,129 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`product 1`] = `
+{
+  "directors": [
+    "Katsuhiro Ôtomo",
+  ],
+  "id": "418144",
+  "rating": 7.9,
+  "ratingCount": 36971,
+  "titles": [
+    "Akira",
+  ],
+  "url": "https://www.senscritique.com/film/akira/418144",
+  "year": 1988,
+}
+`;
+
+exports[`search 1`] = `
+[
+  {
+    "film": {
+      "directors": [
+        "Katsuhiro Ôtomo",
+      ],
+      "id": "418144",
+      "rating": 7.9,
+      "ratingCount": 36971,
+      "titles": [
+        "Akira",
+      ],
+      "url": "https://www.senscritique.com/film/akira/418144",
+      "year": 1988,
+    },
+    "id": "418144",
+    "year": 1988,
+  },
+  {
+    "film": {
+      "directors": [
+        "A.R. Murugadoss",
+      ],
+      "id": "22435657",
+      "rating": null,
+      "ratingCount": 7,
+      "titles": [
+        "Akira",
+        "Naam Hai Akira",
+      ],
+      "url": "https://www.senscritique.com/film/akira/22435657",
+      "year": 2016,
+    },
+    "id": "22435657",
+    "year": 2016,
+  },
+  {
+    "film": {
+      "directors": [
+        "Nobuhiko Ôbayashi",
+      ],
+      "id": "41951548",
+      "rating": null,
+      "ratingCount": 4,
+      "titles": [
+        "Making of Dreams: A Movie Conversation between Akira Kurosawa and Nobuhiko Ôbayashi",
+        "Making of Dreams: Kurosawa Akira and Ôbayashi Nobuhiko- Eiga no Taiwa",
+      ],
+      "url": "https://www.senscritique.com/film/making_of_dreams_kurosawa_akira_and_obayashi_nobuhiko_eiga_no_taiwa/41951548",
+      "year": 1990,
+    },
+    "id": "41951548",
+    "year": 1990,
+  },
+  {
+    "film": {
+      "directors": [
+        "Yoshinari Okamoto",
+      ],
+      "id": "44895460",
+      "rating": null,
+      "ratingCount": 4,
+      "titles": [
+        "Akira Kurosawa: It Is Wonderful to Create",
+        "Kurosawa Akira: Tsukuru to iu koto wa subarashii",
+      ],
+      "url": "https://www.senscritique.com/film/akira_kurosawa_it_is_wonderful_to_create_drunken_angel/44895460",
+      "year": 2002,
+    },
+    "id": "44895460",
+    "year": 2002,
+  },
+  {
+    "film": {
+      "directors": [
+        "Yuichi Shintani",
+      ],
+      "id": "51290273",
+      "rating": null,
+      "ratingCount": 4,
+      "titles": [
+        "Akira, le rapport de production",
+        "Akira: Production Report",
+      ],
+      "url": "https://www.senscritique.com/film/akira_le_rapport_de_production/51290273",
+      "year": 1988,
+    },
+    "id": "51290273",
+    "year": 1988,
+  },
+  {
+    "film": {
+      "directors": [
+        "Hisao Kurosawa",
+      ],
+      "id": "485007",
+      "rating": null,
+      "ratingCount": 14,
+      "titles": [
+        "Message from Akira Kurosawa: For Beautiful Movies",
+        "Kurosawa Akira kara no messêji: Utsukushii eiga o",
+      ],
+      "url": "https://www.senscritique.com/film/message_from_akira_kurosawa_for_beautiful_movies/485007",
+      "year": 2000,
+    },
+    "id": "485007",
+    "year": 2000,
+  },
+]
+`;

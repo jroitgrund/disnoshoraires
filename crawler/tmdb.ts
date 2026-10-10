@@ -24,6 +24,15 @@ export interface SearchResult {
   readonly year: number | null;
 }
 
+export interface Backdrop {
+  /** The full-size image. */
+  readonly url: string;
+  /** The TMDB user who uploaded it. */
+  readonly uploader: string | null;
+  /** `xx` when the image has no text. */
+  readonly language: string | null;
+}
+
 const LdSchema = z.object({
   url: z.string(),
   aggregateRating: z
@@ -36,10 +45,11 @@ export async function searchTmdb(query: string): Promise<SearchResult[]> {
   const response = await request(
     `${ORIGIN}/search/movie?language=en-US&query=${encodeURIComponent(query)}`,
   );
-  if (response == null) {
-    return [];
-  }
-  return parse(response.text)
+  return response == null ? [] : parseTmdbSearch(response.text);
+}
+
+export function parseTmdbSearch(html: string): SearchResult[] {
+  return parse(html)
     .querySelectorAll("#movie_results [data-object-id]")
     .map((card) => ({
       id:
@@ -61,8 +71,17 @@ export async function tmdbFilm(id: string): Promise<TmdbFilm | null> {
   }
   // AlloCiné and TMDB can share only the French title: "Doraemon et le Château sous-marin".
   const french = await request(`${ORIGIN}/movie/${id}?language=fr-FR`);
-  const frenchTitle = french == null ? null : pageTitle(parse(french.text));
-  const root = parse(response.text);
+  return parseTmdbFilm(id, response.text, french?.text ?? null);
+}
+
+/** `html` is the `en-US` page, `frenchHtml` the `fr-FR` page. */
+export function parseTmdbFilm(
+  id: string,
+  html: string,
+  frenchHtml: string | null,
+): TmdbFilm {
+  const frenchTitle = frenchHtml == null ? null : pageTitle(parse(frenchHtml));
+  const root = parse(html);
   const ld = LdSchema.parse(
     JSON.parse(
       (
@@ -109,21 +128,19 @@ export async function tmdbFilm(id: string): Promise<TmdbFilm | null> {
   };
 }
 
-/**
- * The backdrop most likely to be a frame of the film, not key art or a posed photo:
- * 1. Only backdrops without language: key art carries the title, so it gets a language.
- * 2. Prefer the largest series from one person: frame grabs from a copy of the film or its trailer
- *    come in series. Key art comes alone. The TMDB import account does not count: its press kits mix both.
- * 3. In that series, or else among all, the one TMDB ranks first (by votes).
- */
+/** See `pickBackdrop`. */
 export async function tmdbBackdrop(id: string): Promise<string | null> {
   const response = await request(
     `${ORIGIN}/movie/${id}/images/backdrops?image_language=xx`,
   );
-  if (response == null) {
-    return null;
-  }
-  const backdrops = parse(response.text)
+  return response == null
+    ? null
+    : pickBackdrop(parseTmdbBackdrops(response.text));
+}
+
+/** In TMDB's order: by votes. */
+export function parseTmdbBackdrops(html: string): Backdrop[] {
+  return parse(html)
     .querySelectorAll("li.card[data-image-id]")
     .map((card) => ({
       url: card.querySelector(".image_content a")?.getAttribute("href") ?? null,
@@ -137,7 +154,18 @@ export async function tmdbBackdrop(id: string): Promise<string | null> {
           .querySelector(".kendo_image_language_dropdown")
           ?.getAttribute("data-language") ?? null,
     }))
-    .filter((backdrop) => backdrop.url != null && backdrop.language === "xx");
+    .filter((backdrop): backdrop is Backdrop => backdrop.url != null);
+}
+
+/**
+ * The backdrop most likely to be a frame of the film, not key art or a posed photo:
+ * 1. Only backdrops without language: key art carries the title, so it gets a language.
+ * 2. Prefer the largest series from one person: frame grabs from a copy of the film or its trailer
+ *    come in series. Key art comes alone. The TMDB import account does not count: its press kits mix both.
+ * 3. In that series, or else among all, the one TMDB ranks first (by votes).
+ */
+export function pickBackdrop(all: readonly Backdrop[]): string | null {
+  const backdrops = all.filter((backdrop) => backdrop.language === "xx");
   const series = [
     ...Map.groupBy(
       backdrops.filter((backdrop) => backdrop.uploader !== IMPORT_ACCOUNT),

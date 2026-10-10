@@ -54,10 +54,11 @@ export async function searchRottenTomatoes(
     session,
     `${ORIGIN}/search?search=${encodeURIComponent(query)}`,
   );
-  if (response == null) {
-    return [];
-  }
-  return parse(response.text)
+  return response == null ? [] : parseRottenTomatoesSearch(response.text);
+}
+
+export function parseRottenTomatoesSearch(html: string): SearchResult[] {
+  return parse(html)
     .querySelectorAll('search-page-result[type="movie"] search-page-media-row')
     .map((row) => ({
       id:
@@ -75,10 +76,17 @@ export async function rottenTomatoesFilm(
   id: string,
 ): Promise<RottenTomatoesFilm | null> {
   const response = await fetchOrNull(session, `${ORIGIN}/${id}`);
-  if (response == null) {
-    return null;
-  }
-  const root = parse(response.text);
+  return response == null
+    ? null
+    : parseRottenTomatoesFilm(response.url, response.text);
+}
+
+/** `url` is the page's URL after redirects. `null` without a scorecard or JSON-LD. */
+export function parseRottenTomatoesFilm(
+  url: string,
+  html: string,
+): RottenTomatoesFilm | null {
+  const root = parse(html);
   const scorecard = root.querySelector("#media-scorecard-json")?.text;
   const ld = root.querySelector('script[type="application/ld+json"]')?.text;
   if (scorecard == null || ld == null) {
@@ -100,7 +108,7 @@ export async function rottenTomatoesFilm(
           .releaseYear,
   ].find((value) => value != null && /^\d{4}$/.test(value));
   return {
-    url: response.url,
+    url,
     titles: [facts.name],
     year: year == null ? null : Number(year),
     directors: facts.director.map((director) => director.name),

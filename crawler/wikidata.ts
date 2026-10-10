@@ -23,29 +23,37 @@ const ResultsSchema = z.object({
   }),
 });
 
-/**
- * One query for all films. P1265: AlloCiné film ID, P4947: TMDB movie ID,
- * P1258: Rotten Tomatoes ID (`m/slug`), P10100: SensCritique work ID.
- */
+/** One query for all films. */
 export async function knownIds(
   allocineIds: readonly number[],
 ): Promise<(allocineId: number) => KnownIds> {
+  const response = await request(
+    `https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(sparqlQuery(allocineIds))}`,
+  );
+  if (response == null) {
+    throw new Error("wikidata: no SPARQL endpoint");
+  }
+  return parseKnownIds(JSON.parse(response.text) as unknown);
+}
+
+/**
+ * P1265: AlloCiné film ID, P4947: TMDB movie ID,
+ * P1258: Rotten Tomatoes ID (`m/slug`), P10100: SensCritique work ID.
+ */
+export function sparqlQuery(allocineIds: readonly number[]): string {
   const values = allocineIds.map((id) => `"${String(id)}"`).join(" ");
-  const query = `SELECT ?allocine ?tmdb ?rt ?sc WHERE {
+  return `SELECT ?allocine ?tmdb ?rt ?sc WHERE {
     VALUES ?allocine { ${values} }
     ?item wdt:P1265 ?allocine.
     OPTIONAL { ?item wdt:P4947 ?tmdb }
     OPTIONAL { ?item wdt:P1258 ?rt }
     OPTIONAL { ?item wdt:P10100 ?sc }
   }`;
-  const response = await request(
-    `https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(query)}`,
-  );
-  if (response == null) {
-    throw new Error("wikidata: no SPARQL endpoint");
-  }
-  const rows = ResultsSchema.parse(JSON.parse(response.text) as unknown).results
-    .bindings;
+}
+
+/** `json` is the SPARQL response. */
+export function parseKnownIds(json: unknown): (allocineId: number) => KnownIds {
+  const rows = ResultsSchema.parse(json).results.bindings;
   const byFilm = Map.groupBy(rows, (row) => row.allocine.value);
   return (allocineId) => {
     const group = byFilm.get(String(allocineId));
