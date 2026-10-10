@@ -330,14 +330,16 @@ export class Session implements AsyncDisposable {
           .boundingBox()
           .catch(() => null);
     if (turnstile != null) {
-      await human.idle(uniform(this.rng, 800, 2000));
+      await duringReload(human.idle(uniform(this.rng, 800, 2000)));
       // The checkbox sits at the left of the widget, vertically centred.
-      await human.clickAt({
-        x: turnstile.x + uniform(this.rng, 20, 34),
-        y: turnstile.y + turnstile.height / 2 + normal(this.rng, 0, 3),
-      });
+      await duringReload(
+        human.clickAt({
+          x: turnstile.x + uniform(this.rng, 20, 34),
+          y: turnstile.y + turnstile.height / 2 + normal(this.rng, 0, 3),
+        }),
+      );
     }
-    await human.idle(1000);
+    await duringReload(human.idle(1000));
     return this.awaitChallenge(deadline, clicked || turnstile != null);
   }
 
@@ -385,6 +387,23 @@ export class Session implements AsyncDisposable {
 }
 
 /** Waits for `load`, then for the network to calm down, within bounds. */
+/**
+ * A challenge that clears reloads the page: an action on the old page fails. The next
+ * check of the challenge sees the new page.
+ */
+async function duringReload(action: Promise<void>): Promise<void> {
+  try {
+    await action;
+  } catch (error) {
+    if (
+      !(error instanceof Error) ||
+      !error.message.includes("Execution context was destroyed")
+    ) {
+      throw error;
+    }
+  }
+}
+
 async function settle(page: Page): Promise<void> {
   await page.waitForLoadState("load", { timeout: 15_000 }).catch(() => null);
   await page
