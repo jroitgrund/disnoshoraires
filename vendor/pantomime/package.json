@@ -1,0 +1,13 @@
+{
+  "name": "pantomime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Patchright browser session with human-like input, pacing, and backoff",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "peerDependencies": {
+    "patchright": "^1.63.0"
+  }
+}

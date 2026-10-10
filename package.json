@@ -20,7 +20,7 @@
     "@astrojs/preact": "^6.0.6",
     "astro": "^7.3.8",
     "node-html-parser": "^9.0.4",
-    "pantomime": "file:../pantomime",
+    "pantomime": "file:vendor/pantomime",
     "patchright": "^1.63.0",
     "preact": "^10.29.8",
     "zod": "^4.6.5"
@@ -30,6 +30,7 @@
     "@types/node": "^24.19.1",
     "prettier": "^3.9.9",
     "prettier-plugin-astro": "^1.1.1",
-    "typescript": "~6.0.3"
+    "typescript": "~6.0.3",
+    "wrangler": "^4.149.0"
   }
 }

@@ -1,0 +1,83 @@
+name: site
+
+on:
+  schedule:
+    # Tuesday 09:00 in Paris in summer time, 08:00 in winter time.
+    - cron: "0 7 * * 2"
+  workflow_dispatch:
+  push:
+    branches-ignore: [main]
+
+jobs:
+  production:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    concurrency: data
+    permissions:
+      contents: read
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # pantomime opens Google Chrome with a window: it needs Chrome and a display.
+      - run: npx patchright install --with-deps --force chrome
+      - uses: dawidd6/action-download-artifact@v27
+        with:
+          name: data
+          path: data
+          search_artifacts: true
+          workflow_conclusion: ""
+          if_no_artifact_found: ignore
+      - run: xvfb-run --auto-servernum npm run crawl
+      - run: xvfb-run --auto-servernum npm run enrich
+      - uses: actions/upload-artifact@v5
+        with:
+          name: data
+          path: data/
+          retention-days: 90
+      - name: Delete older data artifacts
+        run: >
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=data&per_page=100"
+          --jq ".artifacts[] | select(.workflow_run.id != $GITHUB_RUN_ID) | .id"
+          | xargs -r -I{} gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/{}"
+      - run: npm run build
+      - run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+  preview:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - uses: dawidd6/action-download-artifact@v27
+        with:
+          name: data
+          path: data
+          search_artifacts: true
+          workflow_conclusion: ""
+      - run: npm run build
+      - name: Upload preview
+        # A preview alias allows only lower case letters, digits and dashes.
+        run: >
+          npx wrangler versions upload --preview-alias "$(echo "$GITHUB_REF_NAME"
+          | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+|-+$//g' | cut -c1-40)"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
