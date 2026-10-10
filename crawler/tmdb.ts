@@ -35,8 +35,12 @@ export interface Backdrop {
 
 const LdSchema = z.object({
   url: z.string(),
+  // A film with reviews and no votes has only `reviewCount`.
   aggregateRating: z
-    .object({ ratingValue: z.number(), ratingCount: z.number() })
+    .object({
+      ratingValue: z.number().optional(),
+      ratingCount: z.number().optional(),
+    })
     .optional(),
 });
 

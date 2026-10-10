@@ -32,6 +32,15 @@ test("film page that shares only the French title with AlloCiné", () => {
   ).toMatchSnapshot();
 });
 
+test("film page with a review and no votes", () => {
+  const film = parseTmdbFilm(
+    "1494715",
+    fixture("tmdb/new-group-en.html"),
+    fixture("tmdb/new-group-fr.html"),
+  );
+  expect([film.rating, film.ratingCount]).toEqual([null, 0]);
+});
+
 test("film page without a French overview", () => {
   expect(
     parseTmdbFilm(
