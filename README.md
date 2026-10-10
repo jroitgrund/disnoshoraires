@@ -34,6 +34,7 @@ The site is a Cloudflare Worker with static assets only (`wrangler.jsonc`). `.gi
 
 - Every Tuesday at 07:00 UTC, and on manual run from `main`: one `crawl` job per city, in parallel. When all succeed: `enrich`, `build`, then `wrangler deploy`.
   Each run uploads `data/` as the `data` artifact and deletes the older ones. After a failed city, "Re-run failed jobs" crawls only the failed cities and deploys.
+  A manual run with `crawl_run` set to the ID of an earlier run skips the crawl and uses that run's crawl, for one day.
 - Every day at 23:01 UTC: `build` with the latest `data` artifact, then `wrangler deploy`. This drops the past days and screenings.
 - On a push to a branch other than `main`: `build` with the latest `data` artifact, then `wrangler versions upload` with the branch name as the preview alias.
 

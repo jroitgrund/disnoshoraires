@@ -7,12 +7,17 @@ on:
     # 00:01 in Paris in winter time, 01:01 in summer time: always after midnight, so past days drop.
     - cron: "1 23 * * *"
   workflow_dispatch:
+    inputs:
+      crawl_run:
+        description: ID of a run whose crawl to reuse (within a day). Empty crawls again.
+        required: false
+        default: ""
   push:
     branches-ignore: [main]
 
 jobs:
   cities:
-    if: github.event_name != 'push' && github.event.schedule != '1 23 * * *' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'push' && github.event.schedule != '1 23 * * *' && github.ref == 'refs/heads/main' && !inputs.crawl_run
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -59,9 +64,10 @@ jobs:
           path: data/showtimes/
           retention-days: 1
 
-  # Runs only when all cities are crawled: a city without data has no page.
+  # Runs only when all cities are crawled, or on the crawl of an earlier run: a city without data has no page.
   production:
     needs: crawl
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' && (needs.crawl.result == 'success' || inputs.crawl_run) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 240
     concurrency: data
@@ -83,6 +89,8 @@ jobs:
           pattern: showtimes-*
           path: data/showtimes/
           merge-multiple: true
+          run-id: ${{ inputs.crawl_run || github.run_id }}
+          github-token: ${{ github.token }}
       - run: xvfb-run --auto-servernum npm run enrich
       - uses: actions/upload-artifact@v5
         with:

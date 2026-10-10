@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { Identity } from "./film.ts";
 import type { Http } from "./http.ts";
-import { unique } from "./lists.ts";
+import { chunks, unique } from "./lists.ts";
 import type { SearchResult, Site } from "./lookup.ts";
 
 const SPARQL = "https://query.wikidata.org/sparql";
@@ -9,6 +9,8 @@ const API = "https://www.wikidata.org/w/api.php";
 const ENTITY = "http://www.wikidata.org/entity/";
 /** Search results to read. The lookup loads at most this many per title. */
 const SEARCH_LIMIT = 5;
+/** Wikimedia refuses a URL over about 8 KB with a 503: 100 IDs make a URL of about 3.7 KB. */
+const IDS_PER_QUERY = 100;
 /** Joins the values of one column. A title can hold any printable character. */
 const SEPARATOR = "\u001f";
 
@@ -84,6 +86,20 @@ export async function wikidataFilms(
     throw new Error("wikidata: no SPARQL endpoint");
   }
   return parseWikidataFilms(JSON.parse(response.text) as unknown);
+}
+
+/** The items with one of these AlloCiné IDs, one query per 100 IDs. */
+export async function wikidataFilmsByAllocineIds(
+  http: Http,
+  allocineIds: readonly number[],
+): Promise<WikidataFilm[]> {
+  const items = await Promise.all(
+    chunks(allocineIds, IDS_PER_QUERY).map((chunk) =>
+      wikidataFilms(http, { allocineIds: chunk }),
+    ),
+  );
+  // An item with AlloCiné IDs in two chunks comes back twice.
+  return [...new Map(items.flat().map((item) => [item.id, item])).values()];
 }
 
 /** Search gives the items with their data: no item to load. */

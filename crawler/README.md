@@ -37,7 +37,7 @@ The session sites run one site after the other (all Letterboxd, then all Rotten 
 ### Where the IDs come from
 
 1. **Wikidata.** The item gives the TMDB (P4947), Rotten Tomatoes (P1258) and SensCritique (P10100) IDs, and the Wikipedia articles.
-   - One SPARQL query finds the items with the AlloCiné ID (P1265) of every film. This finds most films, also recent ones.
+   - SPARQL queries find the items with the AlloCiné ID (P1265) of every film, 100 IDs per query: Wikimedia refuses a longer URL. This finds most films, also recent ones.
    - For a film without such an item: a search by title, original title first, for items with a director (P57). One SPARQL query loads the results. The first one that passes the identity check is the item. An item with another AlloCiné ID is another film.
 
    Wikidata can be wrong, so its IDs go through the same check as search results.

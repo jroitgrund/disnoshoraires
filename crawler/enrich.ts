@@ -18,7 +18,7 @@ import {
 } from "./rules.ts";
 import { type SensCritiqueFilm, sensCritiqueSite } from "./senscritique.ts";
 import { tmdbBackdrop, tmdbSite } from "./tmdb.ts";
-import { wikidataFilms, wikidataSite } from "./wikidata.ts";
+import { wikidataFilmsByAllocineIds, wikidataSite } from "./wikidata.ts";
 
 type WithTmdb = Linked & Pick<Found, "tmdb" | "backdrop">;
 type WithSessionSites = WithTmdb & Pick<Found, "letterboxd" | "rottenTomatoes">;
@@ -57,14 +57,15 @@ export async function enrich(
   );
 }
 
-/** One query for the items with the movies' AlloCiné IDs, then a search by title for each movie without one. */
+/** Queries for the items with the movies' AlloCiné IDs, then a search by title for each movie without one. */
 async function wikidataPass(
   http: Http,
   all: readonly Target[],
 ): Promise<Linked[]> {
-  const byAllocineId = await wikidataFilms(http, {
-    allocineIds: all.map((target) => target.movie.id),
-  });
+  const byAllocineId = await wikidataFilmsByAllocineIds(
+    http,
+    all.map((target) => target.movie.id),
+  );
   const site = wikidataSite(http);
   const done = progress("wikidata", all.length);
   return Promise.all(
