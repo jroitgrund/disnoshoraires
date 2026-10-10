@@ -13,12 +13,10 @@ import type { Day, Showing, Venue } from "../programme.ts";
 
 interface Props {
   day: Day;
-  /** Shown when the day has no film left. */
-  empty: string;
 }
 
 /** One day: its films, each with its theaters and times. */
-export function DaySection({ day, empty }: Props) {
+export function DaySection({ day }: Props) {
   const long = formatDayLong(day.date);
 
   return (
@@ -34,7 +32,7 @@ export function DaySection({ day, empty }: Props) {
         <span class="day-date">{long}</span>
       </h2>
       {day.showings.length === 0 ? (
-        <p class="empty">{empty}</p>
+        <p class="empty">Plus de séance ce jour.</p>
       ) : (
         day.showings.map((showing) => (
           <FilmEntry date={day.date} showing={showing} />

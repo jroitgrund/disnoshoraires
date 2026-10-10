@@ -15,14 +15,12 @@ interface Props {
 const { city, oldOnly } = Astro.props;
 const copy = oldOnly
   ? {
-      tagline: `vieux films ${city.at} jour par jour`,
-      description: `Les séances de vieux films ${city.at}, jour par jour, d'aujourd'hui à mardi.`,
-      empty: "Plus de vieux film ce jour.",
+      tagline: `fossiles ${city.at} jour par jour`,
+      description: `Les séances de fossiles ${city.at}, les films d'avant l'an dernier, jour par jour, d'aujourd'hui à mardi.`,
     }
   : {
       tagline: `séances ${city.at} jour par jour`,
       description: `Toutes les séances de cinéma ${city.at}, jour par jour, d'aujourd'hui à mardi.`,
-      empty: "Plus de séance ce jour.",
     };
 const days = programme(loadCrawl(city.slug), loadExternal(), { oldOnly });
 const home = `/${city.slug}/`;
@@ -50,7 +48,7 @@ const home = `/${city.slug}/`;
     </nav>
     <a
       class:list={["switch", { "is-on": oldOnly }]}
-      href={oldOnly ? home : `${home}vieux-films/`}
+      href={oldOnly ? home : `${home}fossiles/`}
       role="switch"
       aria-checked={oldOnly ? "true" : "false"}
     >
@@ -58,19 +56,19 @@ const home = `/${city.slug}/`;
         <span class="switch-knob"></span>
       </span>
       <span class="bar-long" aria-hidden="true">
-        Vieux films seulement
+        Fossiles seulement
       </span>
       <span class="bar-short" aria-hidden="true">
-        Vieux
+        Fossiles
       </span>
-      <span class="sr-only">Vieux films seulement</span>
+      <span class="sr-only">Fossiles seulement</span>
     </a>
   </div>
   <main>
     {days.length === 0 ? (
       <p class="empty">Aucune séance à venir.</p>
     ) : (
-      days.map((day) => <DaySection day={day} empty={copy.empty} />)
+      days.map((day) => <DaySection day={day} />)
     )}
   </main>
 </Page>

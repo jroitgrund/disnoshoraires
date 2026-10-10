@@ -26,7 +26,7 @@ One page per city shows every cinema screening in the city, from today to the ne
 
 - Cities: Aix-en-Provence, Bordeaux, Cannes, Clermont-Ferrand, Dijon, Grenoble, Le Mans, Lille, Lyon, Marseille, Monaco, Montpellier, Nantes, Nice, Nîmes, Paris, Rennes, Strasbourg, Toulouse, Tours. Each city page is at `/<city>/`, such as `/le-mans/`.
 - `npm run crawl` collects the data from AlloCiné into one file per city, `data/showtimes/<city>.json`. `npm run build` makes the static site from these files. The site is only as current as the last crawl.
-- The footer shows the name and icon links to GitHub, Instagram and an e-mail address. The name opens the page, above the day bar. At its end, a switch leads to the city's "vieux films" page. That page is identical but leaves out films of the current and the previous year.
+- The footer shows the name and icon links to GitHub, Instagram and an e-mail address. The name opens the page, above the day bar. At its end, a switch leads to the city's "fossiles" page, at `/<city>/fossiles/`. That page is identical but leaves out films of the current and the previous year.
 
 ## Capabilities and Constraints
 
