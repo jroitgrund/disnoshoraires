@@ -29,13 +29,12 @@ const home = `/${city.slug}/`;
 ---
 
 <Page tagline={copy.tagline} description={copy.description}>
-  <p class="place">
-    <span class="place-name">{city.name}</span>
-    <a class="place-change" href="/">
-      Changer de ville
-    </a>
-  </p>
   <div class="bar">
+    <a class="bar-city" href="/">
+      {city.name}
+      <span class="i i-swap" aria-hidden="true"></span>
+      <span class="sr-only">, changer de ville</span>
+    </a>
     <nav class="days" aria-label="Jours">
       {days.map(({ date }) => {
         const [weekday, day] = formatDayShort(date).split(" ");

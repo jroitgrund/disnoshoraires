@@ -164,6 +164,10 @@ h3 {
   --icon: url("/icons/arrow-right.svg");
 }
 
+.i-swap {
+  --icon: url("/icons/swap.svg");
+}
+
 /* The two listings read as one page with a switch: the knob slides across
    the page change, the rest swaps at once. */
 
@@ -215,37 +219,7 @@ h3 {
   mask: url("/logo.svg") center / contain no-repeat;
 }
 
-/* The city, on the sign's yellow: the sign names the site, this line the
-   city of the listing. */
-.place {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0 var(--s-4);
-  margin: 0;
-  padding: var(--s-1) var(--s-2) var(--s-2);
-  background: var(--loggia);
-  border-top: var(--hairline);
-}
-
-.place-name {
-  font-size: var(--t-film);
-  font-weight: 700;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-
-.place-change {
-  font-size: var(--t-label);
-}
-
-.place-change:hover {
-  color: var(--ink);
-  text-decoration-thickness: 4px;
-}
-
-/* Day bar, with the switch at its end. */
+/* Day bar: the city first, the switch at the end. */
 
 .bar .switch {
   gap: var(--s-2);
@@ -335,6 +309,15 @@ h3 {
 
 .bar-short {
   display: none;
+}
+
+/* The city opens the city picker. */
+.bar .bar-city {
+  gap: var(--s-2);
+}
+
+.bar-city .i::before {
+  margin: 0;
 }
 
 /* Days */
@@ -1034,6 +1017,30 @@ h3 {
     gap: 0.2rem;
     padding: 0 var(--s-2);
     --track-h: 1rem;
+  }
+
+  /* The city takes a line of its own above the days. It scrolls away: only
+     the days stay. */
+  .bar {
+    top: calc(-1 * var(--city-h));
+    flex-wrap: wrap;
+    height: auto;
+    --city-h: 2.5rem;
+  }
+
+  .days,
+  .bar .switch {
+    height: var(--nav-h);
+  }
+
+  .bar .bar-city {
+    flex: 1 0 100%;
+    justify-content: flex-start;
+    height: var(--city-h);
+    padding: 0 var(--s-2);
+    font-size: var(--t-body);
+    border-right: 0;
+    border-bottom: 1px solid var(--on-sea);
   }
 
   .bar-long {

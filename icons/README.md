@@ -14,3 +14,4 @@ All icons use `stroke="currentColor"`. Set the color with the CSS `color` proper
 | ![image](image.svg)                 | `image.svg`         | Opens a frame of the film.                                            |
 | ![close](close.svg)                 | `close.svg`         | Closes the frame of the film.                                         |
 | ![arrow-right](arrow-right.svg)     | `arrow-right.svg`   | Opens the city that matches the search on the root page.              |
+| ![swap](swap.svg)                   | `swap.svg`          | Follows the city name in the day bar: opens the city picker.          |
