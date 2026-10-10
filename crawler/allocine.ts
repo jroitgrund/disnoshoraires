@@ -1,6 +1,7 @@
 import { parse } from "node-html-parser";
 import type { Session } from "pantomime";
 import { z } from "zod";
+import { cinemaDay } from "../shared/dates.ts";
 import type { MovieInfo, Screening, Theater } from "../shared/schema.ts";
 import { mapSequential } from "./lists.ts";
 
@@ -155,26 +156,37 @@ export function showtimeRows(
       movie == null
         ? []
         : Object.entries(showtimes).flatMap(([bucket, list]) =>
-            list.map((showtime) => {
-              if (!showtime.startsAt.startsWith(date)) {
-                throw new Error(
-                  `showtime ${showtime.startsAt} at ${theaterId} is not on ${date}`,
-                );
-              }
-              return {
-                movie: movieInfo(movie),
-                screening: {
-                  theaterId,
-                  startsAt: showtime.startsAt,
-                  language: LANGUAGES[showtime.diffusionVersion],
-                  subtitles: subtitlesOf(bucket),
-                  experiences: showtime.experience ?? [],
-                  bookingUrl: bookingUrl(showtime.data?.ticketing ?? null),
-                },
-              };
-            }),
+            list.filter(isOfDay(theaterId, date)).map((showtime) => ({
+              movie: movieInfo(movie),
+              screening: {
+                theaterId,
+                startsAt: showtime.startsAt,
+                language: LANGUAGES[showtime.diffusionVersion],
+                subtitles: subtitlesOf(bucket),
+                experiences: showtime.experience ?? [],
+                bookingUrl: bookingUrl(showtime.data?.ticketing ?? null),
+              },
+            })),
           ),
     );
+}
+
+/**
+ * AlloCiné lists a late show after midnight on both days: it is kept on the day of its
+ * programme only.
+ */
+function isOfDay(theaterId: string, date: string) {
+  return (showtime: { startsAt: string }): boolean => {
+    if (cinemaDay(showtime.startsAt) === date) {
+      return true;
+    }
+    if (showtime.startsAt.startsWith(date)) {
+      return false;
+    }
+    throw new Error(
+      `showtime ${showtime.startsAt} at ${theaterId} is not on ${date}`,
+    );
+  };
 }
 
 async function showtimesPage(

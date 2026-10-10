@@ -43,6 +43,30 @@ test("showings without a film are left out", () => {
   expect(new Set(rows.map((row) => row.movie.id)).size).toBe(12);
 });
 
+test("late shows after midnight are on the day before", () => {
+  const lateShows = (date: string) =>
+    showtimeRows(
+      [
+        parseShowtimesPage(
+          fixture(`allocine/showtimes-w7502-${date}.json`),
+          "W7502",
+          date,
+        ),
+      ],
+      "W7502",
+      date,
+    )
+      .map((row) => row.screening.startsAt)
+      .filter((startsAt) => startsAt.slice(11, 13) < "06")
+      .toSorted();
+  expect(lateShows("2026-10-10")).toEqual([
+    "2026-10-11T00:10:00",
+    "2026-10-11T00:15:00",
+    "2026-10-11T00:30:00",
+  ]);
+  expect(lateShows("2026-10-11")).toEqual([]);
+});
+
 test("day without showtimes", () => {
   const page = parseShowtimesPage(
     fixture("allocine/showtimes-p0028-past.json"),

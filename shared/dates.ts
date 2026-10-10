@@ -25,6 +25,15 @@ export function nextTuesday(today: string): string {
   return addDays(today, untilTuesday === 0 ? 7 : untilTuesday);
 }
 
+/**
+ * The day whose programme a screening belongs to. A show that starts before 06:00 is the
+ * late show of the evening before: theaters list it on that day.
+ */
+export function cinemaDay(startsAt: string): string {
+  const date = startsAt.slice(0, 10);
+  return startsAt.slice(11, 13) < "06" ? addDays(date, -1) : date;
+}
+
 export function addDays(date: string, days: number): string {
   return new Date(Date.parse(`${date}T00:00:00Z`) + days * DAY_MS)
     .toISOString()

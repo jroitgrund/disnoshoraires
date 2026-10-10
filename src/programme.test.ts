@@ -42,6 +42,7 @@ const crawl: Crawl = {
     movie(1, "Fjord", 2026, [
       screening("P1", "2026-10-10T14:00:00"),
       screening("P1", "2026-10-10T21:00:00"),
+      screening("P1", "2026-10-11T00:10:00"),
       screening("P2", "2026-10-10T20:00:00"),
       screening("P2", "2026-10-12T20:00:00"),
     ]),
@@ -86,10 +87,10 @@ const outline = (oldOnly: boolean): string[] =>
         .join("; ")}`,
   );
 
-test("days from today, without started screenings, films and theaters in order", () => {
+test("days from today, without started screenings, films and theaters in order, late shows on the evening before", () => {
   expect(outline(false)).toMatchInlineSnapshot(`
     [
-      "2026-10-10: Fjord [Artplexe 20:00, Variétés 21:00]",
+      "2026-10-10: Fjord [Artplexe 20:00, Variétés 21:00 00:10]",
       "2026-10-11: ",
       "2026-10-12: Akira (old) +external [Variétés 18:00]; Fjord [Artplexe 20:00]",
       "2026-10-13: ",

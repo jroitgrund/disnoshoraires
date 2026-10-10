@@ -1,4 +1,9 @@
-import { datesBetween, parisDate, parisTime } from "../shared/dates.ts";
+import {
+  cinemaDay,
+  datesBetween,
+  parisDate,
+  parisTime,
+} from "../shared/dates.ts";
 import type {
   Crawl,
   Enrichment,
@@ -55,7 +60,7 @@ export function programme(
         .flatMap((movie) => {
           const screenings = movie.screenings.filter(
             (screening) =>
-              screening.startsAt.startsWith(date) &&
+              cinemaDay(screening.startsAt) === date &&
               screening.startsAt.slice(0, 16) >= cutoff,
           );
           return screenings.length === 0
