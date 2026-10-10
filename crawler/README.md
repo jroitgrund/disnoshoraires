@@ -9,7 +9,7 @@ Two passes. Each pass writes its own file with its own schema (`shared/schema.ts
 
 ## Enrich pass
 
-For each movie of all cities, `data/external.json` has, by AlloCiné ID (a movie on in several cities is looked up once):
+For each movie of all cities, `data/external.json` has, by AlloCiné ID (a movie on in several cities is looked up once). The pass looks up only the movies that the earlier `data/external.json` does not have (`reuse.ts`), and keeps the earlier results of the others:
 
 | Site            | Data                                                                                |
 | --------------- | ----------------------------------------------------------------------------------- |

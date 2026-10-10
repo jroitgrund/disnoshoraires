@@ -32,7 +32,7 @@ A static site with all cinema showtimes of 20 French cities, one page per city, 
 
 The site is a Cloudflare Worker with static assets only (`wrangler.jsonc`). `.github/workflows/site.yml`:
 
-- Every Tuesday at 07:00 UTC, and on manual run from `main`: one `crawl` job per city, in parallel. When all succeed: `enrich`, `build`, then `wrangler deploy`.
+- Every Tuesday at 07:00 UTC, and on manual run from `main`: one `crawl` job per city, in parallel. When all succeed: `enrich` (new movies only, from the `external.json` of the latest `data` artifact), `build`, then `wrangler deploy`.
   Each run uploads `data/` as the `data` artifact and deletes the older ones. After a failed city, "Re-run failed jobs" crawls only the failed cities and deploys.
   A manual run with `crawl_run` set to the ID of an earlier run skips the crawl and uses that run's crawl, for one day.
 - Every day at 23:01 UTC: `build` with the latest `data` artifact, then `wrangler deploy`. This drops the past days and screenings.
