@@ -1,0 +1,35 @@
+{
+  "name": "disnoshoraires",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=24.12"
+  },
+  "scripts": {
+    "crawl": "node crawler/main.ts data/showtimes.json",
+    "enrich": "node crawler/enrich-main.ts data/showtimes.json data/external.json",
+    "dev": "astro dev",
+    "build": "astro build",
+    "build:full": "npm run crawl && npm run enrich && npm run build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "format": "prettier --write .",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^6.0.6",
+    "astro": "^7.3.8",
+    "node-html-parser": "^9.0.4",
+    "pantomime": "file:../pantomime",
+    "patchright": "^1.63.0",
+    "preact": "^10.29.8",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^24.19.1",
+    "prettier": "^3.9.9",
+    "prettier-plugin-astro": "^1.1.1",
+    "typescript": "~6.0.3"
+  }
+}

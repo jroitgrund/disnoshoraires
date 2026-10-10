@@ -1,0 +1,21 @@
+{
+  "name": "disnoshoraires-icons",
+  "preset": "sharp",
+  "grid": 24,
+  "strokeWidth": 2,
+  "strokeLinecap": "square",
+  "strokeLinejoin": "miter",
+  "cornerRadius": 0,
+  "padding": 2,
+  "opticalBalance": true,
+  "iconCount": 6,
+  "icons": [
+    "map-pin",
+    "play",
+    "external-link",
+    "image",
+    "close",
+    "info"
+  ],
+  "generated": "2026-10-09"
+}
