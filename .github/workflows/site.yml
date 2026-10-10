@@ -4,13 +4,15 @@ on:
   schedule:
     # Tuesday 09:00 in Paris in summer time, 08:00 in winter time.
     - cron: "0 7 * * 2"
+    # 00:01 in Paris in winter time, 01:01 in summer time: always after midnight, so past days drop.
+    - cron: "1 23 * * *"
   workflow_dispatch:
   push:
     branches-ignore: [main]
 
 jobs:
   cities:
-    if: github.event_name != 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'push' && github.event.schedule != '1 23 * * *' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -90,6 +92,33 @@ jobs:
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=data&per_page=100"
           --jq ".artifacts[] | select(.workflow_run.id != $GITHUB_RUN_ID) | .id"
           | xargs -r -I{} gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/{}"
+      - run: npm run build
+      - run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+  # The site shows what is left at build time: a daily build drops the past days and screenings.
+  rebuild:
+    if: github.event.schedule == '1 23 * * *'
+    runs-on: ubuntu-24.04
+    concurrency: data
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - uses: dawidd6/action-download-artifact@v27
+        with:
+          name: data
+          path: data
+          search_artifacts: true
+          workflow_conclusion: ""
       - run: npm run build
       - run: npx wrangler deploy
         env:
