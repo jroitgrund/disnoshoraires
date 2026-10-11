@@ -12,21 +12,21 @@ Anyone in one of the covered French cities who looks for a film to see, from tod
 
 ## Product Purpose
 
-One page per city shows every cinema screening in the city, from today to the next Tuesday (French cinemas change their programme on Wednesdays). The visitor finds a film, a time and a theater, and how to get there. The root page lets the visitor choose a city.
+Each city has one page per day, from today to the next Tuesday. A page shows every cinema screening in the city that day (French cinemas change their programme on Wednesdays). The visitor finds a film, a time and a theater, and how to get there. The root page lets the visitor choose a city.
 
 ## Positioning
 
 - All theaters of a city on one fast page, with no ads and no navigation between theaters.
-- Organized by day, then by film: one section per day, films in alphabetical order.
+- One page per day, films in alphabetical order.
 - Each theater name links to a Google Maps search for the theater.
 - Each film shows its ratings on Letterboxd, SensCritique, Rotten Tomatoes and TMDB, each a link to the film's page there, and a frame of the film from TMDB.
 - Times are plain text, not links.
 
 ## Operating Context
 
-- Cities: Aix-en-Provence, Bordeaux, Cannes, Clermont-Ferrand, Dijon, Grenoble, Le Mans, Lille, Lyon, Marseille, Monaco, Montpellier, Nantes, Nice, Nîmes, Paris, Rennes, Strasbourg, Toulouse, Tours. Each city page is at `/<city>/`, such as `/le-mans/`.
+- Cities: Aix-en-Provence, Bordeaux, Cannes, Clermont-Ferrand, Dijon, Grenoble, Le Mans, Lille, Lyon, Marseille, Monaco, Montpellier, Nantes, Nice, Nîmes, Paris, Rennes, Strasbourg, Toulouse, Tours. `/<city>/`, such as `/le-mans/`, shows the first day of the last build. Each later day is at `/<city>/<yyyy-mm-dd>/`, such as `/le-mans/2026-10-12/`.
 - `npm run crawl` collects the data from AlloCiné into one file per city, `data/showtimes/<city>.json`. `npm run build` makes the static site from these files. The site is only as current as the last crawl.
-- The footer shows the name and icon links to GitHub, Instagram and an e-mail address. The name opens the page, above the day bar. At its end, a switch leads to the city's "fossiles" page, at `/<city>/fossiles/`. That page is identical but leaves out films of the current and the previous year.
+- The footer shows the name and icon links to GitHub, Instagram and an e-mail address. The name opens the page, above the day bar. At its end, a switch leads to the city's "fossiles" page, at `/<city>/fossiles/` and `/<city>/fossiles/<yyyy-mm-dd>/`, on the same day. That page is identical but leaves out films of the current and the previous year.
 
 ## Capabilities and Constraints
 
@@ -53,6 +53,6 @@ One page per city shows every cinema screening in the city, from today to the ne
 ## Product Principles
 
 - Time to a decision: the visitor goes from "what is on tonight" to a film, a time and a theater in as few steps as possible.
-- Everything at once: one page, no filters that hide screenings, nothing on the page that does not help choose.
+- Everything at once: one page per day, no filters that hide screenings, nothing on the page that does not help choose.
 - Honest data: show what the crawl found and when, never invent or estimate.
 - Fast on a weak mobile connection: static HTML and CSS, and only the JavaScript that the city picker needs.

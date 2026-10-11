@@ -37,7 +37,7 @@ export interface Day {
 }
 
 /**
- * What is still to come at build time, from today (or the crawl start, if later) to the end of the crawl.
+ * What is still to come at build time, on each of the programme dates.
  * A rebuild drops the screenings that started since.
  */
 export function programme(
@@ -53,34 +53,38 @@ export function programme(
   const movies = crawl.movies.filter(
     (movie) => !oldOnly || isOld(movie, today),
   );
-  return datesBetween(crawl.from > today ? crawl.from : today, crawl.to).map(
-    (date) => ({
-      date,
-      showings: movies
-        .flatMap((movie) => {
-          const screenings = movie.screenings.filter(
-            (screening) =>
-              cinemaDay(screening.startsAt) === date &&
-              screening.startsAt.slice(0, 16) >= cutoff,
-          );
-          return screenings.length === 0
-            ? []
-            : [
-                {
-                  movie,
-                  external: external[String(movie.id)],
-                  synopsis:
-                    movie.synopsis ??
-                    external[String(movie.id)]?.tmdb?.synopsis ??
-                    null,
-                  old: isOld(movie, today),
-                  venues: venues(screenings, theaters),
-                },
-              ];
-        })
-        .toSorted((a, b) => a.movie.title.localeCompare(b.movie.title, "fr")),
-    }),
-  );
+  return programmeDates(crawl, now).map((date) => ({
+    date,
+    showings: movies
+      .flatMap((movie) => {
+        const screenings = movie.screenings.filter(
+          (screening) =>
+            cinemaDay(screening.startsAt) === date &&
+            screening.startsAt.slice(0, 16) >= cutoff,
+        );
+        return screenings.length === 0
+          ? []
+          : [
+              {
+                movie,
+                external: external[String(movie.id)],
+                synopsis:
+                  movie.synopsis ??
+                  external[String(movie.id)]?.tmdb?.synopsis ??
+                  null,
+                old: isOld(movie, today),
+                venues: venues(screenings, theaters),
+              },
+            ];
+      })
+      .toSorted((a, b) => a.movie.title.localeCompare(b.movie.title, "fr")),
+  }));
+}
+
+/** From today (or the crawl start, if later) to the end of the crawl. */
+export function programmeDates(crawl: Crawl, now = new Date()): string[] {
+  const today = parisDate(now);
+  return datesBetween(crawl.from > today ? crawl.from : today, crawl.to);
 }
 
 /** A film made before last year. A film with no known year could be recent: it is not old. */

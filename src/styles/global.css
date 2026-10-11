@@ -302,6 +302,11 @@ h3 {
   text-decoration-thickness: 2px;
 }
 
+.days a[aria-current="page"] {
+  background: var(--on-sea);
+  color: var(--sea);
+}
+
 .bar a:focus-visible {
   outline-color: var(--on-sea);
   outline-offset: -5px;
@@ -327,10 +332,9 @@ h3 {
 .day {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  /* The first day too stands apart from the day bar: it is one of the days,
+  /* The day too stands apart from the day bar: it is one of the days,
      not the page title. */
   margin-top: var(--s-8);
-  scroll-margin-top: var(--nav-h);
 }
 
 /* The rule under the day name closes the table too. The footer closes the

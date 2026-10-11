@@ -1,0 +1,12 @@
+---
+import Listing from "../../components/Listing.astro";
+import { dayPaths } from "../../routes.ts";
+
+export function getStaticPaths() {
+  return dayPaths(false);
+}
+
+const { city, dates, day } = Astro.props;
+---
+
+<Listing city={city} oldOnly={false} dates={dates} day={day} />

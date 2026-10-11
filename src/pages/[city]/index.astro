@@ -1,12 +1,12 @@
 ---
-import { CITIES, cityBySlug } from "../../../shared/cities.ts";
 import Listing from "../../components/Listing.astro";
+import { cityPaths } from "../../routes.ts";
 
 export function getStaticPaths() {
-  return CITIES.map(({ slug }) => ({ params: { city: slug } }));
+  return cityPaths(false);
 }
 
-const city = cityBySlug(Astro.params.city);
+const { city, dates, day } = Astro.props;
 ---
 
-<Listing city={city} oldOnly={false} />
+<Listing city={city} oldOnly={false} dates={dates} day={day} />

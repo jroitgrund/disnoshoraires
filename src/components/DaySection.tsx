@@ -20,11 +20,7 @@ export function DaySection({ day }: Props) {
   const long = formatDayLong(day.date);
 
   return (
-    <section
-      class="day"
-      id={`jour-${day.date}`}
-      aria-labelledby={`titre-${day.date}`}
-    >
+    <section class="day" aria-labelledby={`titre-${day.date}`}>
       <h2 class="day-head" id={`titre-${day.date}`}>
         <span class="day-name" aria-hidden="true">
           {long.split(" ")[0]}
