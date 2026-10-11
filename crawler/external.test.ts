@@ -69,6 +69,6 @@ test("external without matches", () => {
 
 test("report", () => {
   expect(report(fjord, external)).toMatchInlineSnapshot(
-    `"-tmdb -lb -rt +sc -wd Fjord (2026)"`,
+    `"-tmdb -letterboxd -rottenTomatoes +sensCritique -wikipedia Fjord (2026)"`,
   );
 });

@@ -1,7 +1,7 @@
 import type { Session } from "pantomime";
-import type { Enrichment, MovieInfo } from "../shared/schema.ts";
+import { type Enrichment, type MovieInfo, NOTHING } from "../shared/schema.ts";
 import { allocineIdOf } from "./allocine.ts";
-import { type Found, NOTHING, report, toExternal } from "./external.ts";
+import { type Found, report, toExternal } from "./external.ts";
 import { type Target, targets } from "./film.ts";
 import type { Http } from "./http.ts";
 import { letterboxdSite } from "./letterboxd.ts";

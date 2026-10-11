@@ -18,6 +18,7 @@ A static site with all cinema showtimes of 20 French cities, one page per city, 
 - `shared/`: code that the crawler and the site both use.
   - `cities.ts`: the cities, with their AlloCiné ID and the path of their pages.
   - `schema.ts`: the zod schemas of `data/showtimes/<city>.json` and `data/external.json`. The site validates the files with them.
+  - `data.ts`: the paths of the files in `data/`, and their reads.
   - `dates.ts`: calendar days in French time, and the cinema week.
   - `sites.ts`: the external sites: name, rating scale, search page.
 - `crawler/`: runs directly with Node (type stripping, no build step).
@@ -27,7 +28,7 @@ A static site with all cinema showtimes of 20 French cities, one page per city, 
   - `enrich.ts`: the enrich pass. It runs the lookups of `rules.ts` with `lookup.ts` against one module per site, and maps the results with `external.ts`.
   - `film.ts`: the identity of a film, and the movies to look up. `match.ts` compares two identities. `wikidata.ts` gives known IDs.
 - `src/`: the Astro site. Preact components render at build time. The root page has one script that filters the cities as the visitor types.
-  - `load.ts` reads `data/`. `programme.ts` turns it into days, films and theaters. The components only render that.
+  - `routes.ts` reads `data/` once per build. `programme.ts` turns it into days, films and theaters. `paths.ts` gives the path of each page. The components only render that.
   - Each film has its page, `/fiche/<source>-<id>/`, such as `/fiche/allocine-188280/`. A day page has only the title of each film card: its script loads the rest from the film's page when the card opens. Without JavaScript, the card links to that page.
 
 ## Deploy

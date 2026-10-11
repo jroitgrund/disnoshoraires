@@ -1,5 +1,11 @@
 import type { External, Movie, Screening, Theater } from "../shared/schema.ts";
-import { SITES, type SiteInfo } from "../shared/sites.ts";
+import { timeOf } from "../shared/dates.ts";
+import {
+  SITE_KEYS,
+  type SiteInfo,
+  type SiteKey,
+  SITES,
+} from "../shared/sites.ts";
 
 // Dates are calendar days and times are French local times: format them in UTC to keep them as-is.
 const dayLong = new Intl.DateTimeFormat("fr-FR", {
@@ -14,12 +20,29 @@ const dayShort = new Intl.DateTimeFormat("fr-FR", {
   timeZone: "UTC",
 });
 
+const weekdayLong = new Intl.DateTimeFormat("fr-FR", {
+  weekday: "long",
+  timeZone: "UTC",
+});
+
 export function formatDayLong(date: string): string {
-  return dayLong.format(new Date(`${date}T12:00:00Z`));
+  return dayLong.format(noon(date));
 }
 
-export function formatDayShort(date: string): string {
-  return dayShort.format(new Date(`${date}T12:00:00Z`)).replace(".", "");
+export function formatWeekday(date: string): string {
+  return weekdayLong.format(noon(date));
+}
+
+/** "sam", "10". */
+export function formatDayShort(date: string): { weekday: string; day: string } {
+  const parts = dayShort.formatToParts(noon(date));
+  const part = (type: Intl.DateTimeFormatPartTypes): string =>
+    parts.find((p) => p.type === type)?.value ?? "";
+  return { weekday: part("weekday").replace(".", ""), day: part("day") };
+}
+
+function noon(date: string): Date {
+  return new Date(`${date}T12:00:00Z`);
 }
 
 /** French puts a space before ? ! : ; and the sign never starts a line. */
@@ -28,7 +51,7 @@ export function formatTitle(title: string): string {
 }
 
 export function formatTime(startsAt: string): string {
-  return startsAt.slice(11, 16).replace(":", "h");
+  return timeOf(startsAt).replace(":", "h");
 }
 
 export interface Version {
@@ -86,9 +109,8 @@ const decimal = new Intl.NumberFormat("fr-FR", {
   maximumFractionDigits: 1,
 });
 
-/** Each site's rating in its own scale: the scales differ too much to merge. */
-export function scores(movie: Movie, external: External | undefined): Score[] {
-  const { letterboxd, sensCritique, rottenTomatoes, tmdb } = external ?? {};
+/** Each site's rating in its own scale, in the order of `SITES`: the scales differ too much to merge. */
+export function scores(movie: Movie, external: External): Score[] {
   const search = (site: SiteInfo, query: string): Score => ({
     site: site.name,
     url: site.search(query),
@@ -109,45 +131,52 @@ export function scores(movie: Movie, external: External | undefined): Score[] {
       },
     ],
   });
-  return [
-    letterboxd == null
-      ? search(
-          SITES.letterboxd,
-          [movie.originalTitle, movie.productionYear]
-            .filter((part) => part != null)
-            .join(" "),
-        )
-      : outOf(SITES.letterboxd, letterboxd),
-    sensCritique == null
-      ? search(SITES.sensCritique, movie.originalTitle)
-      : outOf(SITES.sensCritique, sensCritique),
-    rottenTomatoes == null
-      ? search(SITES.rottenTomatoes, movie.originalTitle)
-      : {
-          site: SITES.rottenTomatoes.name,
-          url: rottenTomatoes.url,
-          search: false,
-          // Both meters always show, so press and public never swap places.
-          values: [
-            { percent: rottenTomatoes.critics, label: "presse" },
-            { percent: rottenTomatoes.audience, label: "public" },
-          ].map(({ percent, label }) => ({
-            value: percent == null ? null : String(percent),
-            scale: SITES.rottenTomatoes.scale,
-            label,
-          })),
-        },
-    tmdb == null
-      ? search(SITES.tmdb, movie.originalTitle)
-      : outOf(SITES.tmdb, tmdb),
-  ];
+  const score: { [K in SiteKey]: (site: SiteInfo) => Score } = {
+    letterboxd: (site) =>
+      external.letterboxd == null
+        ? search(
+            site,
+            [movie.originalTitle, movie.productionYear]
+              .filter((part) => part != null)
+              .join(" "),
+          )
+        : outOf(site, external.letterboxd),
+    sensCritique: (site) =>
+      external.sensCritique == null
+        ? search(site, movie.originalTitle)
+        : outOf(site, external.sensCritique),
+    rottenTomatoes: (site) => {
+      const page = external.rottenTomatoes;
+      return page == null
+        ? search(site, movie.originalTitle)
+        : {
+            site: site.name,
+            url: page.url,
+            search: false,
+            // Both meters always show, so press and public never swap places.
+            values: [
+              { percent: page.critics, label: "presse" },
+              { percent: page.audience, label: "public" },
+            ].map(({ percent, label }) => ({
+              value: percent == null ? null : String(percent),
+              scale: site.scale,
+              label,
+            })),
+          };
+    },
+    tmdb: (site) =>
+      external.tmdb == null
+        ? search(site, movie.originalTitle)
+        : outOf(site, external.tmdb),
+  };
+  return SITE_KEYS.map((key) => score[key](SITES[key]));
 }
 
 /** The French article first: the site is in French. */
 export function wikipediaLinks(
-  external: External | undefined,
+  external: External,
 ): { label: string; url: string }[] {
-  const wikipedia = external?.wikipedia;
+  const { wikipedia } = external;
   return [
     { label: "Wikipédia", url: wikipedia?.fr ?? null },
     { label: "Wikipedia (en)", url: wikipedia?.en ?? null },

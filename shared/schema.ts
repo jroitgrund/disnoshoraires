@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LOCAL_DATE_TIME } from "./dates.ts";
 
 export const TheaterSchema = z.object({
   id: z.string(),
@@ -24,7 +25,7 @@ export const MovieInfoSchema = z.object({
 
 export const ScreeningSchema = z.object({
   theaterId: z.string(),
-  startsAt: z.string(),
+  startsAt: z.string().regex(LOCAL_DATE_TIME),
   language: z.enum(["dubbed", "original", "local"]),
   subtitles: z.enum(["none", "standard", "deaf"]),
   experiences: z.array(z.string()),
@@ -85,10 +86,10 @@ export const MovieSchema = MovieInfoSchema.extend({
 
 export const CrawlSchema = z.object({
   /** Today. */
-  from: z.string(),
+  from: z.iso.date(),
   /** The first Tuesday after today. */
-  to: z.string(),
-  crawledAt: z.string(),
+  to: z.iso.date(),
+  crawledAt: z.iso.datetime(),
   theaters: z.array(TheaterSchema),
   movies: z.array(MovieSchema),
 });
@@ -107,3 +108,12 @@ export type Movie = z.infer<typeof MovieSchema>;
 export type External = z.infer<typeof ExternalSchema>;
 export type Crawl = z.infer<typeof CrawlSchema>;
 export type Enrichment = z.infer<typeof EnrichmentSchema>;
+
+/** A movie that was not looked up, or found on no site. */
+export const NOTHING: External = {
+  tmdb: null,
+  letterboxd: null,
+  rottenTomatoes: null,
+  sensCritique: null,
+  wikipedia: null,
+};

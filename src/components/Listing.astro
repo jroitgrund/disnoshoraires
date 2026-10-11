@@ -4,7 +4,7 @@ import Page from "../layouts/Page.astro";
 import { DaySection } from "../components/DaySection.tsx";
 import { formatDayLong, formatDayShort } from "../format.ts";
 import type { Day } from "../programme.ts";
-import { dayHref } from "../routes.ts";
+import { dayHref } from "../paths.ts";
 
 interface Props {
   city: City;
@@ -38,13 +38,15 @@ const copy = oldOnly
     </a>
     <nav class="days" aria-label="Jours">
       {dates.map((date) => {
-        const [weekday, number] = formatDayShort(date).split(" ");
+        const { weekday, day: number } = formatDayShort(date);
         return (
           <a
             href={dayHref(city, oldOnly, dates, date)}
             aria-current={date === day?.date ? "page" : undefined}
           >
-            <span class="bar-long">{formatDayShort(date)}</span>
+            <span class="bar-long">
+              {weekday} {number}
+            </span>
             <span class="bar-short">
               <span>{weekday}</span> {number}
             </span>
@@ -80,6 +82,8 @@ const copy = oldOnly
 </Page>
 
 <script>
+  import { CARD_PARTS } from "../card.ts";
+
   const filled = new WeakSet<HTMLElement>();
 
   /** Puts the film's still, summary and foot in its card, from the film's
@@ -99,10 +103,10 @@ const copy = oldOnly
       })
       .then((html) => {
         const page = new DOMParser().parseFromString(html, "text/html");
-        [".card-still", ".card-summary", ".card-foot"].forEach((part) => {
-          const loaded = page.querySelector(part);
+        Object.values(CARD_PARTS).forEach((part) => {
+          const loaded = page.querySelector(`.${part}`);
           if (loaded != null) {
-            card.querySelector(part)?.replaceWith(loaded);
+            card.querySelector(`.${part}`)?.replaceWith(loaded);
           }
         });
       })

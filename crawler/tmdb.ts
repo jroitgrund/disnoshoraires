@@ -109,6 +109,9 @@ export function parseTmdbFilm(
     ),
   );
   const title = pageTitle(root);
+  if (title == null) {
+    throw new Error(`tmdb ${id}: no title`);
+  }
   const originalTitle = root
     .querySelectorAll("section.facts p")
     .find((p) => p.querySelector("strong")?.text.trim() === "Original Title");
@@ -136,7 +139,7 @@ export function parseTmdbFilm(
           .map((job) => job.trim())
           .includes("Director"),
       )
-      .map((person) => person.querySelector("a")?.text.trim() ?? ""),
+      .flatMap((person) => person.querySelector("a")?.text.trim() || []),
     rating: ratingCount > 0 ? (ld.aggregateRating?.ratingValue ?? null) : null,
     ratingCount,
     // Without a French overview, the French page shows the English one.
@@ -206,6 +209,6 @@ function overview(root: HTMLElement): string | null {
   return text === "" ? null : text;
 }
 
-function pageTitle(root: HTMLElement): string {
-  return root.querySelector(".title h2 a")?.text.trim() ?? "";
+function pageTitle(root: HTMLElement): string | null {
+  return root.querySelector(".title h2 a")?.text.trim() || null;
 }

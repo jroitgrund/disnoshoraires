@@ -1,5 +1,12 @@
 import { expect, test } from "vitest";
-import type { Crawl, External, Movie, Screening } from "../shared/schema.ts";
+import { timeOf } from "../shared/dates.ts";
+import {
+  type Crawl,
+  type External,
+  type Movie,
+  NOTHING,
+  type Screening,
+} from "../shared/schema.ts";
 import { programme } from "./programme.ts";
 
 const screening = (theaterId: string, startsAt: string): Screening => ({
@@ -78,10 +85,10 @@ const outline = (oldOnly: boolean): string[] =>
       `${date}: ${showings
         .map(
           ({ movie, external, old, venues }) =>
-            `${movie.title}${old ? " (old)" : ""}${external == null ? "" : " +external"} [${venues
+            `${movie.title}${old ? " (old)" : ""}${external === NOTHING ? "" : " +external"} [${venues
               .map(
                 ({ theater, screenings }) =>
-                  `${theater.name} ${screenings.map((s) => s.startsAt.slice(11, 16)).join(" ")}`,
+                  `${theater.name} ${screenings.map((s) => timeOf(s.startsAt)).join(" ")}`,
               )
               .join(", ")}]`,
         )

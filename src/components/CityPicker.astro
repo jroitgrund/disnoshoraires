@@ -1,5 +1,6 @@
 ---
 import { CITIES } from "../../shared/cities.ts";
+import { cityHref } from "../paths.ts";
 import { wallFontSize } from "../wall.ts";
 ---
 
@@ -32,7 +33,7 @@ import { wallFontSize } from "../wall.ts";
     >
       {CITIES.map((city) => (
         <li>
-          <a href={`/${city.slug}/`}>{city.name}</a>
+          <a href={cityHref(city, false)}>{city.name}</a>
         </li>
       ))}
     </ul>

@@ -6,8 +6,8 @@
     "node": ">=24.12"
   },
   "scripts": {
-    "crawl": "node crawler/main.ts data/showtimes",
-    "enrich": "node crawler/enrich-main.ts data/showtimes data/external.json",
+    "crawl": "node crawler/main.ts",
+    "enrich": "node crawler/enrich-main.ts",
     "dev": "astro dev",
     "build": "astro build",
     "build:full": "npm run crawl && npm run enrich && npm run build",

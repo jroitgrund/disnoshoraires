@@ -5,15 +5,6 @@ import type { SensCritiqueFilm } from "./senscritique.ts";
 import type { TmdbFilm } from "./tmdb.ts";
 import type { WikidataFilm } from "./wikidata.ts";
 
-/** A movie that was not looked up, or found on no site. */
-export const NOTHING: External = {
-  tmdb: null,
-  letterboxd: null,
-  rottenTomatoes: null,
-  sensCritique: null,
-  wikipedia: null,
-};
-
 /** The film on each site. */
 export interface Found {
   readonly tmdb: TmdbFilm | null;
@@ -52,15 +43,12 @@ export function toExternal(found: Found): External {
   };
 }
 
-/** One log line per movie: `-tmdb -lb -rt +sc Fjord (2026)`. */
+/** One log line per movie: `-tmdb -letterboxd -rottenTomatoes +sensCritique -wikipedia Fjord (2026)`. */
 export function report(movie: MovieInfo, external: External): string {
-  const mark = (found: boolean): string => (found ? "+" : "-");
   return [
-    `${mark(external.tmdb != null)}tmdb`,
-    `${mark(external.letterboxd != null)}lb`,
-    `${mark(external.rottenTomatoes != null)}rt`,
-    `${mark(external.sensCritique != null)}sc`,
-    `${mark(external.wikipedia != null)}wd`,
+    ...Object.entries(external).map(
+      ([site, page]) => `${page == null ? "-" : "+"}${site}`,
+    ),
     `${movie.title} (${String(movie.productionYear)})`,
   ].join(" ");
 }

@@ -1,4 +1,5 @@
 import type { External, Movie } from "../../shared/schema.ts";
+import { CARD_PARTS } from "../card.ts";
 import {
   backdropSources,
   formatTitle,
@@ -14,13 +15,13 @@ interface Props {
 /** The page of a film. A day page loads its still, summary and foot into
  * the film's card when the card opens. */
 export function Fiche({ showing }: Props) {
-  const backdrop = showing.external?.tmdb?.backdrop;
+  const backdrop = showing.external.tmdb?.backdrop;
 
   return (
     <article class="fiche" aria-labelledby="fiche-titre">
       {backdrop != null && (
         <img
-          class="card-still"
+          class={CARD_PARTS.still}
           {...backdropSources(backdrop)}
           sizes="(min-width: 64rem) 36rem, 100vw"
           alt=""
@@ -51,7 +52,7 @@ function FicheSummary({ showing }: Props) {
   ].filter((part) => part != null && part !== "");
 
   return (
-    <div class="card-summary">
+    <div class={CARD_PARTS.summary}>
       {movie.originalTitle !== movie.title && (
         <p class="film-original">{movie.originalTitle}</p>
       )}
@@ -66,7 +67,7 @@ function FicheFoot({ showing }: Props) {
   const wikipedia = wikipediaLinks(external);
 
   return (
-    <div class="card-foot">
+    <div class={CARD_PARTS.foot}>
       <Scores movie={movie} external={external} />
       {wikipedia.length > 0 && (
         <ul class="film-links" aria-label="Encyclopédie">
@@ -84,13 +85,7 @@ function FicheFoot({ showing }: Props) {
 }
 
 /** Each site's rating, or a search link when the enrich pass found no page. */
-function Scores({
-  movie,
-  external,
-}: {
-  movie: Movie;
-  external: External | undefined;
-}) {
+function Scores({ movie, external }: { movie: Movie; external: External }) {
   return (
     <ul class="scores" aria-label="Notes">
       {scores(movie, external).map((score) => (

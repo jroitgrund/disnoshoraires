@@ -1,7 +1,7 @@
 import { parse } from "node-html-parser";
 import type { Session } from "pantomime";
 import { z } from "zod";
-import { cinemaDay } from "../shared/dates.ts";
+import { cinemaDay, dateOf } from "../shared/dates.ts";
 import type { MovieInfo, Screening, Theater } from "../shared/schema.ts";
 import { mapSequential } from "./lists.ts";
 
@@ -180,7 +180,7 @@ function isOfDay(theaterId: string, date: string) {
     if (cinemaDay(showtime.startsAt) === date) {
       return true;
     }
-    if (showtime.startsAt.startsWith(date)) {
+    if (dateOf(showtime.startsAt) === date) {
       return false;
     }
     throw new Error(

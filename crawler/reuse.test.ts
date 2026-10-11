@@ -1,6 +1,5 @@
 import { expect, test } from "vitest";
-import type { External, MovieInfo } from "../shared/schema.ts";
-import { NOTHING } from "./external.ts";
+import { type External, type MovieInfo, NOTHING } from "../shared/schema.ts";
 import { merged, newMovies } from "./reuse.ts";
 
 const movie = (id: number) => ({ id: String(id) }) as MovieInfo;

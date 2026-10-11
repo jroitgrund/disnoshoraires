@@ -1,4 +1,5 @@
 import { type HTMLElement, parse } from "node-html-parser";
+import { localDateTime } from "../shared/dates.ts";
 import type { MovieInfo, Screening } from "../shared/schema.ts";
 import type { ShowtimeRow } from "./allocine.ts";
 import type { Http } from "./http.ts";
@@ -52,7 +53,7 @@ export interface LumiereFilm {
   readonly synopsis: string | null;
   /** `null` when the page does not give them. */
   readonly directors: readonly string[] | null;
-  /** Ticketing URL by `YYYY-MM-DDTHH:MM`. */
+  /** Ticketing URL by start, in the form of `Screening.startsAt`. */
   readonly bookings: Readonly<Record<string, string>>;
 }
 
@@ -298,10 +299,10 @@ export function lumiereRows(
     url: entry.link,
   };
   return entry.times.map((time) => {
-    const startsAt = `${entry.date}T${time}`;
+    const startsAt = localDateTime(entry.date, time);
     const screening: Screening = {
       theaterId,
-      startsAt: `${startsAt}:00`,
+      startsAt,
       language: french ? "local" : dubbed ? "dubbed" : "original",
       subtitles: entry.deaf ? "deaf" : french || dubbed ? "none" : "standard",
       experiences: [],
@@ -334,7 +335,10 @@ function bookingTime(text: string, year: number): string | null {
   if (match?.[1] == null || match[3] == null || month === -1) {
     return null;
   }
-  return `${String(year)}-${pad(month + 1)}-${pad(Number(match[1]))}T${clockTime(match[3])}`;
+  return localDateTime(
+    `${String(year)}-${pad(month + 1)}-${pad(Number(match[1]))}`,
+    clockTime(match[3]),
+  );
 }
 
 /** "9h" → "09:00", "16h45" → "16:45". */

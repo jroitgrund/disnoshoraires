@@ -40,3 +40,8 @@ export const SITES = {
       `https://www.themoviedb.org/search/movie?query=${encodeURIComponent(query)}`,
   },
 } as const satisfies Record<Exclude<keyof External, "wikipedia">, SiteInfo>;
+
+export type SiteKey = keyof typeof SITES;
+
+/** In the order of `SITES`. */
+export const SITE_KEYS = Object.keys(SITES) as SiteKey[];

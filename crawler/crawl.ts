@@ -1,6 +1,6 @@
 import { Session } from "pantomime";
 import type { City } from "../shared/cities.ts";
-import { datesBetween, nextTuesday, parisDate } from "../shared/dates.ts";
+import { datesBetween, nextTuesday } from "../shared/dates.ts";
 import type { Crawl, MovieInfo, Theater } from "../shared/schema.ts";
 import {
   listTheaters,
@@ -17,10 +17,7 @@ import { sameFilm } from "./match.ts";
  * All showtimes from today to the next Tuesday in a city's theaters,
  * grouped by movie. Fails as a whole or not at all.
  */
-export async function crawlCity(
-  city: City,
-  today: string = parisDate(new Date()),
-): Promise<Crawl> {
+export async function crawlCity(city: City, today: string): Promise<Crawl> {
   const dates = crawlDates(today);
   await using session = await Session.launch();
   const theaters = await listTheaters(session, city.allocineId);

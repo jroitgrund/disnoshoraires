@@ -1,5 +1,11 @@
 const DAY_MS = 86_400_000;
 
+/**
+ * The start of a screening: `YYYY-MM-DDTHH:MM:SS` without an offset. The sources give the time on the
+ * cinema's clock, in French time.
+ */
+export const LOCAL_DATE_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
+
 /** AlloCiné days follow French time. */
 export function parisDate(now: Date): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris" }).format(
@@ -7,7 +13,7 @@ export function parisDate(now: Date): string {
   );
 }
 
-export function parisTime(now: Date): string {
+function parisTime(now: Date): string {
   return new Intl.DateTimeFormat("en-GB", {
     timeZone: "Europe/Paris",
     hour: "2-digit",
@@ -30,8 +36,30 @@ export function nextTuesday(today: string): string {
  * late show of the evening before: theaters list it on that day.
  */
 export function cinemaDay(startsAt: string): string {
-  const date = startsAt.slice(0, 10);
-  return startsAt.slice(11, 13) < "06" ? addDays(date, -1) : date;
+  const date = dateOf(startsAt);
+  return timeOf(startsAt) < "06:00" ? addDays(date, -1) : date;
+}
+
+/** `time` is `HH:MM`. */
+export function localDateTime(date: string, time: string): string {
+  return `${date}T${time}:00`;
+}
+
+export function dateOf(startsAt: string): string {
+  return startsAt.slice(0, 10);
+}
+
+/** `HH:MM`. */
+export function timeOf(startsAt: string): string {
+  return startsAt.slice(11, 16);
+}
+
+/** A screening that starts in the current minute has not started yet. */
+export function hasStarted(startsAt: string, now: Date): boolean {
+  return (
+    localDateTime(dateOf(startsAt), timeOf(startsAt)) <
+    localDateTime(parisDate(now), parisTime(now))
+  );
 }
 
 export function addDays(date: string, days: number): string {

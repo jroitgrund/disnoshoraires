@@ -1,12 +1,14 @@
+import { CARD_PARTS } from "../card.ts";
 import {
   formatDayLong,
   formatTime,
   formatTitle,
+  formatWeekday,
   mapsUrl,
   versionLabel,
 } from "../format.ts";
+import { ficheHref, ficheId } from "../paths.ts";
 import type { Day, Showing, Venue } from "../programme.ts";
-import { ficheHref, ficheId } from "../routes.ts";
 
 interface Props {
   day: Day;
@@ -14,15 +16,13 @@ interface Props {
 
 /** One day: its films, each with its theaters and times. */
 export function DaySection({ day }: Props) {
-  const long = formatDayLong(day.date);
-
   return (
     <section class="day" aria-labelledby={`titre-${day.date}`}>
       <h2 class="day-head" id={`titre-${day.date}`}>
         <span class="day-name" aria-hidden="true">
-          {long.split(" ")[0]}
+          {formatWeekday(day.date)}
         </span>{" "}
-        <span class="day-date">{long}</span>
+        <span class="day-date">{formatDayLong(day.date)}</span>
       </h2>
       {day.showings.length === 0 ? (
         <p class="empty">Plus de séance ce jour.</p>
@@ -62,7 +62,9 @@ function FilmEntry({ date, showing }: { date: string; showing: Showing }) {
         data-fiche={fiche}
       >
         {/* Holds the still's place until the card loads it. */}
-        {showing.external?.tmdb?.backdrop != null && <div class="card-still" />}
+        {showing.external.tmdb?.backdrop != null && (
+          <div class={CARD_PARTS.still} />
+        )}
         <header class="card-head">
           <h4 class="card-title" id={cardTitleId}>
             {title}
@@ -75,12 +77,12 @@ function FilmEntry({ date, showing }: { date: string; showing: Showing }) {
             aria-label={`Fermer la fiche de ${movie.title}`}
           />
         </header>
-        <div class="card-summary">
+        <div class={CARD_PARTS.summary}>
           <noscript>
             <a href={fiche}>Voir la fiche</a>
           </noscript>
         </div>
-        <div class="card-foot" />
+        <div class={CARD_PARTS.foot} />
       </section>
       <Venues venues={venues} />
     </article>

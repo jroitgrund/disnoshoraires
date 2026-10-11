@@ -1,16 +1,17 @@
 import {
   cinemaDay,
   datesBetween,
+  hasStarted,
   parisDate,
-  parisTime,
 } from "../shared/dates.ts";
-import type {
-  Crawl,
-  Enrichment,
-  External,
-  Movie,
-  Screening,
-  Theater,
+import {
+  type Crawl,
+  type Enrichment,
+  type External,
+  type Movie,
+  NOTHING,
+  type Screening,
+  type Theater,
 } from "../shared/schema.ts";
 
 /** The times of one movie in one theater. */
@@ -22,7 +23,7 @@ export interface Venue {
 /** One movie on one day. */
 export interface Showing {
   readonly movie: Movie;
-  readonly external: External | undefined;
+  readonly external: External;
   /** AlloCiné's, else TMDB's: both in French. */
   readonly synopsis: string | null;
   /** The source's, else TMDB's. */
@@ -45,10 +46,9 @@ export interface Day {
 export function programme(
   crawl: Crawl,
   external: Enrichment["movies"],
-  { oldOnly, now = new Date() }: { oldOnly: boolean; now?: Date },
+  { oldOnly, now }: { oldOnly: boolean; now: Date },
 ): Day[] {
   const today = parisDate(now);
-  const cutoff = `${today}T${parisTime(now)}`;
   const theaters = new Map(
     crawl.theaters.map((theater) => [theater.id, theater]),
   );
@@ -62,20 +62,20 @@ export function programme(
         const screenings = movie.screenings.filter(
           (screening) =>
             cinemaDay(screening.startsAt) === date &&
-            screening.startsAt.slice(0, 16) >= cutoff,
+            !hasStarted(screening.startsAt, now),
         );
+        const sites = external[movie.id] ?? NOTHING;
         return screenings.length === 0
           ? []
           : [
               {
                 movie,
-                external: external[movie.id],
-                synopsis:
-                  movie.synopsis ?? external[movie.id]?.tmdb?.synopsis ?? null,
+                external: sites,
+                synopsis: movie.synopsis ?? sites.tmdb?.synopsis ?? null,
                 genres:
                   movie.genres.length > 0
                     ? movie.genres
-                    : (external[movie.id]?.tmdb?.genres ?? []),
+                    : (sites.tmdb?.genres ?? []),
                 old: isOld(movie, today),
                 venues: venues(screenings, theaters),
               },
@@ -86,7 +86,7 @@ export function programme(
 }
 
 /** From today (or the crawl start, if later) to the end of the crawl. */
-export function programmeDates(crawl: Crawl, now = new Date()): string[] {
+export function programmeDates(crawl: Crawl, now: Date): string[] {
   const today = parisDate(now);
   return datesBetween(crawl.from > today ? crawl.from : today, crawl.to);
 }
