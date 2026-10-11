@@ -1,3 +1,6 @@
+import { FESTIVAL_LUMIERE_2026 } from "./festival.ts";
+import type { Movie } from "./schema.ts";
+
 export interface City {
   /** The path of the city's pages: `/<slug>/`. */
   readonly slug: string;
@@ -10,6 +13,8 @@ export interface City {
   readonly crawlSeconds: number;
   /** The AlloCiné theater ID of the Institut Lumière: AlloCiné lists it without showtimes. */
   readonly institutLumiere?: string;
+  /** Festival screenings that the crawl does not read: see `withFestival`. */
+  readonly festival?: readonly Movie[];
 }
 
 export const CITIES: readonly City[] = [
@@ -132,6 +137,7 @@ export const CITIES: readonly City[] = [
     allocineId: 113315,
     crawlSeconds: 252,
     institutLumiere: "P0050",
+    festival: FESTIVAL_LUMIERE_2026,
   },
   {
     slug: "marseille",

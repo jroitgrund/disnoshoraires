@@ -24,7 +24,7 @@ export const ENRICHMENT_FILE = join(DIR, "external.json");
 export function readCrawls(): { city: City; crawl: Crawl }[] {
   const crawls = CITIES.map((city) => ({
     city,
-    crawl: withFestival(city, readCrawl(city)),
+    crawl: withFestival(readCrawl(city), city.festival ?? []),
   }));
   const merge = sourceMerge(crawls.map(({ crawl }) => crawl));
   return crawls.map(({ city, crawl }) => ({ city, crawl: merge(crawl) }));

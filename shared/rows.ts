@@ -82,29 +82,36 @@ export function sourceMerge(crawls: readonly Crawl[]): (crawl: Crawl) => Crawl {
       (twin(roots, movie) ?? movie).movie,
     ]),
   );
-  return (crawl) => {
-    const rows = crawl.movies.flatMap((movie) =>
-      movie.screenings.map((screening) => ({
-        movie: into.get(movie.id) ?? info(movie),
-        screening,
-        rank: sourceRank(movie.id),
-      })),
-    );
-    const slot = ({ movie, screening }: (typeof rows)[number]) =>
-      `${movie.id} ${screening.theaterId} ${screening.startsAt}`;
-    const firstRank = new Map(
-      [...Map.groupBy(rows, slot)].map(([key, group]) => [
-        key,
-        Math.min(...group.map((row) => row.rank)),
-      ]),
-    );
-    return {
-      ...crawl,
-      movies: moviesOf(
-        rows.filter((row) => row.rank === firstRank.get(slot(row))),
+  return (crawl) => ({
+    ...crawl,
+    movies: moviesOf(
+      firstSourcePerSlot(
+        crawl.movies.flatMap((movie) =>
+          movie.screenings.map((screening) => ({
+            movie: into.get(movie.id) ?? info(movie),
+            screening,
+            rank: sourceRank(movie.id),
+          })),
+        ),
       ),
-    };
-  };
+    ),
+  });
+}
+
+/** The rows of the earliest source in each slot: same film, theater and start. */
+function firstSourcePerSlot(
+  rows: readonly (ShowtimeRow & { readonly rank: number })[],
+): ShowtimeRow[] {
+  return [
+    ...Map.groupBy(
+      rows,
+      ({ movie, screening }) =>
+        `${movie.id} ${screening.theaterId} ${screening.startsAt}`,
+    ).values(),
+  ].flatMap((slot) => {
+    const first = Math.min(...slot.map((row) => row.rank));
+    return slot.filter((row) => row.rank === first);
+  });
 }
 
 function info({ screenings, ...movieInfo }: Movie): MovieInfo {

@@ -7,7 +7,7 @@ Two passes. Each pass writes its own file with its own schema (`shared/schema.ts
 | `npm run crawl`  | AlloCiné, Institut Lumière | `data/showtimes/<city>.json` | `CrawlSchema`      |
 | `npm run enrich` | `data/showtimes/`          | `data/external.json`         | `EnrichmentSchema` |
 
-Each movie has an ID of its source and the source’s own key (`shared/ids.ts`): `allocine:<id>`, `lumiere:<slug>`, `festival:<slug>`.
+Each movie has an ID of its source and the source's own key (`shared/ids.ts`): `allocine:<id>`, `lumiere:<slug>`, `festival:<slug>`.
 
 ## Institut Lumière
 
@@ -22,7 +22,7 @@ AlloCiné lists the Institut Lumière (Lyon) without showtimes. The crawl reads 
 
 `shared/festival-lumiere-2026.json` holds the festival's screenings (10 to 18 October), taken once from its printed programme. The festival's site gives the synopsis and the countries. Each film has the ID `festival:<slug>`. Only the theaters of AlloCiné's Lyon list are kept: the Halle Tony Garnier, the Auditorium and the cinemas of the suburbs are left out. Talks and master classes are left out.
 
-The crawl does not read it. Enrich and the site add it to the Lyon crawl, on the crawl's dates (`shared/festival.ts`).
+The crawl does not read it. Enrich and the site add it to the Lyon crawl (`festival` in `shared/cities.ts`), on the crawl's dates and in the crawl's theaters (`shared/festival.ts`).
 
 ## Sources merged
 
