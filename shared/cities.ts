@@ -6,7 +6,7 @@ export interface City {
   readonly at: string;
   /** The `ville-<id>` of AlloCiné's city page. */
   readonly allocineId: number;
-  /** How long the crawl took in CI on 2026-10-10. CI starts the longest crawls first. */
+  /** About how long the crawl takes in CI. CI starts the longest crawls first. */
   readonly crawlSeconds: number;
   /** The AlloCiné theater ID of the Institut Lumière: AlloCiné lists it without showtimes. */
   readonly institutLumiere?: string;
@@ -21,11 +21,53 @@ export const CITIES: readonly City[] = [
     crawlSeconds: 54,
   },
   {
+    slug: "amiens",
+    name: "Amiens",
+    at: "à Amiens",
+    allocineId: 117737,
+    crawlSeconds: 76,
+  },
+  {
+    slug: "angers",
+    name: "Angers",
+    at: "à Angers",
+    allocineId: 102559,
+    crawlSeconds: 64,
+  },
+  {
+    slug: "annecy",
+    name: "Annecy",
+    at: "à Annecy",
+    allocineId: 115435,
+    crawlSeconds: 112,
+  },
+  {
+    slug: "besancon",
+    name: "Besançon",
+    at: "à Besançon",
+    allocineId: 93056,
+    crawlSeconds: 100,
+  },
+  {
     slug: "bordeaux",
     name: "Bordeaux",
     at: "à Bordeaux",
     allocineId: 96943,
     crawlSeconds: 85,
+  },
+  {
+    slug: "brest",
+    name: "Brest",
+    at: "à Brest",
+    allocineId: 95171,
+    crawlSeconds: 88,
+  },
+  {
+    slug: "caen",
+    name: "Caen",
+    at: "à Caen",
+    allocineId: 88168,
+    crawlSeconds: 76,
   },
   {
     slug: "cannes",
@@ -56,6 +98,13 @@ export const CITIES: readonly City[] = [
     crawlSeconds: 71,
   },
   {
+    slug: "le-havre",
+    name: "Le Havre",
+    at: "au Havre",
+    allocineId: 116123,
+    crawlSeconds: 76,
+  },
+  {
     slug: "le-mans",
     name: "Le Mans",
     at: "au Mans",
@@ -68,6 +117,13 @@ export const CITIES: readonly City[] = [
     at: "à Lille",
     allocineId: 107951,
     crawlSeconds: 72,
+  },
+  {
+    slug: "limoges",
+    name: "Limoges",
+    at: "à Limoges",
+    allocineId: 120079,
+    crawlSeconds: 76,
   },
   {
     slug: "lyon",
@@ -85,6 +141,13 @@ export const CITIES: readonly City[] = [
     crawlSeconds: 227,
   },
   {
+    slug: "metz",
+    name: "Metz",
+    at: "à Metz",
+    allocineId: 106969,
+    crawlSeconds: 76,
+  },
+  {
     slug: "monaco",
     name: "Monaco",
     at: "à Monaco",
@@ -97,6 +160,20 @@ export const CITIES: readonly City[] = [
     at: "à Montpellier",
     allocineId: 97612,
     crawlSeconds: 94,
+  },
+  {
+    slug: "mulhouse",
+    name: "Mulhouse",
+    at: "à Mulhouse",
+    allocineId: 113016,
+    crawlSeconds: 76,
+  },
+  {
+    slug: "nancy",
+    name: "Nancy",
+    at: "à Nancy",
+    allocineId: 105434,
+    crawlSeconds: 88,
   },
   {
     slug: "nantes",
@@ -120,11 +197,25 @@ export const CITIES: readonly City[] = [
     crawlSeconds: 46,
   },
   {
+    slug: "orleans",
+    name: "Orléans",
+    at: "à Orléans",
+    allocineId: 101569,
+    crawlSeconds: 64,
+  },
+  {
     slug: "paris",
     name: "Paris",
     at: "à Paris",
     allocineId: 115755,
     crawlSeconds: 1376,
+  },
+  {
+    slug: "perpignan",
+    name: "Perpignan",
+    at: "à Perpignan",
+    allocineId: 112079,
+    crawlSeconds: 76,
   },
   {
     slug: "rennes",
@@ -134,11 +225,32 @@ export const CITIES: readonly City[] = [
     crawlSeconds: 52,
   },
   {
+    slug: "rouen",
+    name: "Rouen",
+    at: "à Rouen",
+    allocineId: 116312,
+    crawlSeconds: 76,
+  },
+  {
+    slug: "saint-etienne",
+    name: "Saint-Étienne",
+    at: "à Saint-Étienne",
+    allocineId: 100691,
+    crawlSeconds: 88,
+  },
+  {
     slug: "strasbourg",
     name: "Strasbourg",
     at: "à Strasbourg",
     allocineId: 112664,
     crawlSeconds: 87,
+  },
+  {
+    slug: "toulon",
+    name: "Toulon",
+    at: "à Toulon",
+    allocineId: 119194,
+    crawlSeconds: 64,
   },
   {
     slug: "toulouse",

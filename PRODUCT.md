@@ -24,7 +24,7 @@ Each city has one page per day, for seven days from today. A page shows every ci
 
 ## Operating Context
 
-- Cities: Aix-en-Provence, Bordeaux, Cannes, Clermont-Ferrand, Dijon, Grenoble, Le Mans, Lille, Lyon, Marseille, Monaco, Montpellier, Nantes, Nice, Nîmes, Paris, Rennes, Strasbourg, Toulouse, Tours. `/<city>/`, such as `/le-mans/`, shows the first day of the last build. Each later day is at `/<city>/<yyyy-mm-dd>/`, such as `/le-mans/2026-10-12/`.
+- Cities: Aix-en-Provence, Amiens, Angers, Annecy, Besançon, Bordeaux, Brest, Caen, Cannes, Clermont-Ferrand, Dijon, Grenoble, Le Havre, Le Mans, Lille, Limoges, Lyon, Marseille, Metz, Monaco, Montpellier, Mulhouse, Nancy, Nantes, Nice, Nîmes, Orléans, Paris, Perpignan, Rennes, Rouen, Saint-Étienne, Strasbourg, Toulon, Toulouse, Tours. `/<city>/`, such as `/le-mans/`, shows the first day of the last build. Each later day is at `/<city>/<yyyy-mm-dd>/`, such as `/le-mans/2026-10-12/`.
 - `npm run crawl` collects the data from AlloCiné, and from the Institut Lumière's site for Lyon, into one file per city, `data/showtimes/<city>.json`. `npm run build` makes the static site from these files. The site is only as current as the last crawl.
 - The footer shows the name and icon links to GitHub, Instagram and an e-mail address. The name opens the page, above the day bar. At its end, a switch leads to the city's "fossiles" page, at `/<city>/fossiles/` and `/<city>/fossiles/<yyyy-mm-dd>/`, on the same day. That page is identical but leaves out films of the current and the previous year.
 
