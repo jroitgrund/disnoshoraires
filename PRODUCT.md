@@ -34,7 +34,8 @@ Each city has one page per day, from today to the next Tuesday. A page shows eve
 - Data per screening: theater, start time, language (dubbed, original, French), subtitles (none, standard, deaf and hard of hearing), formats (4DX, Dolby Cinema, Atmos, ScreenX). The crawl also collects a booking URL, which the site does not show.
 - Data per theater: name, address, AlloCiné page. Maps links are Google Maps searches.
 - All text for visitors is in French.
-- The city pages are fully static and ship no JavaScript to the browser. The root page ships one small script that filters the city list as the visitor types. Without it, the list of links works.
+- All pages are static. The root page ships one small script that filters the city list as the visitor types. Without it, the list of links works.
+- Each film has its own page. A day page ships one small script that loads a film card from that page when the card opens. Without it, the card links to the film's page.
 - Mobile first.
 
 ## Brand Commitments
@@ -55,4 +56,4 @@ Each city has one page per day, from today to the next Tuesday. A page shows eve
 - Time to a decision: the visitor goes from "what is on tonight" to a film, a time and a theater in as few steps as possible.
 - Everything at once: one page per day, no filters that hide screenings, nothing on the page that does not help choose.
 - Honest data: show what the crawl found and when, never invent or estimate.
-- Fast on a weak mobile connection: static HTML and CSS, and only the JavaScript that the city picker needs.
+- Fast on a weak mobile connection: static HTML and CSS, and only the JavaScript that the city picker and the film cards need.

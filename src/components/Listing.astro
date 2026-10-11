@@ -82,8 +82,8 @@ const copy = oldOnly
 <script>
   const filled = new WeakSet<HTMLElement>();
 
-  /** Puts the film's still and details in its card, from the film's page.
-   * The card keeps its link to that page if the request fails. */
+  /** Puts the film's still, summary and foot in its card, from the film's
+   * page. The card keeps only its title if the request fails. */
   function fill(card: HTMLElement) {
     const href = card.dataset["fiche"];
     if (href == null || filled.has(card)) {
@@ -99,15 +99,12 @@ const copy = oldOnly
       })
       .then((html) => {
         const page = new DOMParser().parseFromString(html, "text/html");
-        const still = page.querySelector(".card-still");
-        const details = page.querySelector(".card-details");
-        if (details == null) {
-          return;
-        }
-        card.querySelector(".card-details")?.replaceWith(details);
-        if (still != null) {
-          card.prepend(still);
-        }
+        [".card-still", ".card-summary", ".card-foot"].forEach((part) => {
+          const loaded = page.querySelector(part);
+          if (loaded != null) {
+            card.querySelector(part)?.replaceWith(loaded);
+          }
+        });
       })
       .catch(() => {
         filled.delete(card);

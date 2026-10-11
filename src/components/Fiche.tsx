@@ -11,8 +11,8 @@ interface Props {
   showing: Showing;
 }
 
-/** The page of a film. A day page loads its still and details into the
- * film's card when the card opens. */
+/** The page of a film. A day page loads its still, summary and foot into
+ * the film's card when the card opens. */
 export function Fiche({ showing }: Props) {
   const backdrop = showing.external?.tmdb?.backdrop;
 
@@ -28,35 +28,45 @@ export function Fiche({ showing }: Props) {
           decoding="async"
         />
       )}
-      <div class="card-body">
+      <header class="card-head">
         <h2 class="card-title" id="fiche-titre">
           {formatTitle(showing.movie.title)}
         </h2>
-        <FicheDetails showing={showing} />
-      </div>
+      </header>
+      <FicheSummary showing={showing} />
+      <FicheFoot showing={showing} />
     </article>
   );
 }
 
-function FicheDetails({ showing }: Props) {
-  const { movie, external, synopsis } = showing;
-  const wikipedia = wikipediaLinks(external);
+function FicheSummary({ showing }: Props) {
+  const { movie, synopsis } = showing;
   const meta = [
     movie.productionYear,
     movie.countries.join(", "),
     movie.directors.join(", "),
     // "1h 55min" stays on one line.
-    movie.runtime?.replace(" ", " "),
+    movie.runtime?.replace(" ", "\u00a0"),
     movie.genres.join(", "),
   ].filter((part) => part != null && part !== "");
 
   return (
-    <div class="card-details">
+    <div class="card-summary">
       {movie.originalTitle !== movie.title && (
         <p class="film-original">{movie.originalTitle}</p>
       )}
       <p class="film-meta">{meta.join(" / ")}</p>
       {synopsis != null && <p class="film-synopsis">{synopsis}</p>}
+    </div>
+  );
+}
+
+function FicheFoot({ showing }: Props) {
+  const { movie, external } = showing;
+  const wikipedia = wikipediaLinks(external);
+
+  return (
+    <div class="card-foot">
       <Scores movie={movie} external={external} />
       {wikipedia.length > 0 && (
         <ul class="film-links" aria-label="Encyclopédie">

@@ -61,23 +61,26 @@ function FilmEntry({ date, showing }: { date: string; showing: Showing }) {
         aria-labelledby={cardTitleId}
         data-fiche={fiche}
       >
-        <div class="card-body">
-          <header class="card-head">
-            <h4 class="card-title" id={cardTitleId}>
-              {title}
-            </h4>
-            <button
-              class="card-close i i-close"
-              type="button"
-              popovertarget={cardId}
-              popovertargetaction="hide"
-              aria-label={`Fermer la fiche de ${movie.title}`}
-            />
-          </header>
-          <p class="card-details">
+        {/* Holds the still's place until the card loads it. */}
+        {showing.external?.tmdb?.backdrop != null && <div class="card-still" />}
+        <header class="card-head">
+          <h4 class="card-title" id={cardTitleId}>
+            {title}
+          </h4>
+          <button
+            class="card-close i i-close"
+            type="button"
+            popovertarget={cardId}
+            popovertargetaction="hide"
+            aria-label={`Fermer la fiche de ${movie.title}`}
+          />
+        </header>
+        <div class="card-summary">
+          <noscript>
             <a href={fiche}>Voir la fiche</a>
-          </p>
+          </noscript>
         </div>
+        <div class="card-foot" />
       </section>
       <Venues venues={venues} />
     </article>

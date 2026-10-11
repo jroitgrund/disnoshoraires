@@ -452,10 +452,11 @@ h3 {
 }
 
 /* The card: what describes the film, on demand. Its frame costs nothing
-   until it opens. */
+   until it opens. All cards have one height: only the summary scrolls. On a
+   screen too short for that, the whole card scrolls. */
 .card {
   width: min(100vw - 2 * var(--s-4), 36rem);
-  max-height: calc(100dvh - 2 * var(--s-4));
+  height: min(100dvh - 2 * var(--s-4), 48rem);
   margin: auto;
   padding: 0;
   overflow: auto;
@@ -470,6 +471,11 @@ h3 {
     transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
     display 250ms allow-discrete,
     overlay 250ms allow-discrete;
+}
+
+.card:popover-open {
+  display: flex;
+  flex-direction: column;
 }
 
 .card:not(:popover-open) {
@@ -491,6 +497,7 @@ h3 {
 
 .card-still {
   display: block;
+  flex: none;
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
@@ -506,12 +513,10 @@ h3 {
   border: var(--rule);
 }
 
-.card-body {
-  padding: var(--s-4);
-}
-
 .card-head {
   display: flex;
+  flex: none;
+  padding: var(--s-4) var(--s-4) 0;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--s-3);
@@ -548,6 +553,40 @@ h3 {
   background: var(--sea);
   border-color: var(--sea);
   color: var(--on-sea);
+}
+
+.card-summary {
+  padding: 0 var(--s-4);
+}
+
+/* Rules above and below show where the summary scrolls. */
+.card .card-summary {
+  flex: 1;
+  min-height: 6rem;
+  margin-top: var(--s-3);
+  padding-block: 0 var(--s-3);
+  overflow-y: auto;
+  border-block: var(--hairline);
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink) var(--paper);
+}
+
+.card-foot {
+  flex: none;
+  padding: 0 var(--s-4) var(--s-4);
+}
+
+/* The parts arrive from the film's page as the card opens. */
+.card .card-summary,
+.card .card-foot {
+  animation: card-fill 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes card-fill {
+  from {
+    opacity: 0;
+  }
 }
 
 .film-original {
@@ -596,6 +635,11 @@ h3 {
 @media (prefers-reduced-motion: reduce) {
   .card {
     transition: none;
+  }
+
+  .card .card-summary,
+  .card .card-foot {
+    animation: none;
   }
 }
 
