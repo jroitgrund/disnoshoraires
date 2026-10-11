@@ -78,3 +78,66 @@ const copy = oldOnly
     )}
   </main>
 </Page>
+
+<script>
+  const filled = new WeakSet<HTMLElement>();
+
+  /** Puts the film's still and details in its card, from the film's page.
+   * The card keeps its link to that page if the request fails. */
+  function fill(card: HTMLElement) {
+    const href = card.dataset["fiche"];
+    if (href == null || filled.has(card)) {
+      return;
+    }
+    filled.add(card);
+    fetch(href)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`${href}: ${String(response.status)}`);
+        }
+        return response.text();
+      })
+      .then((html) => {
+        const page = new DOMParser().parseFromString(html, "text/html");
+        const still = page.querySelector(".card-still");
+        const details = page.querySelector(".card-details");
+        if (details == null) {
+          return;
+        }
+        card.querySelector(".card-details")?.replaceWith(details);
+        if (still != null) {
+          card.prepend(still);
+        }
+      })
+      .catch(() => {
+        filled.delete(card);
+      });
+  }
+
+  // A tap starts the request before the card opens.
+  document.addEventListener("pointerdown", (event) => {
+    const card =
+      event.target instanceof Element
+        ? event.target.closest<HTMLButtonElement>(".film-open")
+            ?.popoverTargetElement
+        : null;
+    if (card instanceof HTMLElement) {
+      fill(card);
+    }
+  });
+
+  // The event does not bubble: only a capture on the document sees every card.
+  document.addEventListener(
+    "beforetoggle",
+    (event) => {
+      if (
+        event instanceof ToggleEvent &&
+        event.newState === "open" &&
+        event.target instanceof HTMLElement
+      ) {
+        fill(event.target);
+      }
+    },
+    { capture: true },
+  );
+</script>

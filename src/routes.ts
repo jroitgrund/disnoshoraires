@@ -1,4 +1,5 @@
 import { CITIES, type City } from "../shared/cities.ts";
+import type { Movie } from "../shared/schema.ts";
 import { loadCrawl, loadExternal } from "./load.ts";
 import { programme } from "./programme.ts";
 
@@ -11,6 +12,11 @@ export function dayHref(
 ): string {
   const base = `/${city.slug}/${oldOnly ? "fossiles/" : ""}`;
   return date == null || date === dates[0] ? base : `${base}${date}/`;
+}
+
+/** One page per film, for all cities and days. */
+export function ficheHref(movie: Movie): string {
+  return `/fiche/${String(movie.id)}/`;
 }
 
 function cityProgrammes(oldOnly: boolean) {
@@ -37,4 +43,17 @@ export function dayPaths(oldOnly: boolean) {
       props: { city, dates, day },
     })),
   );
+}
+
+/** Each film on the programme of any city. */
+export function fichePaths() {
+  const showings = cityProgrammes(false).flatMap(({ days }) =>
+    days.flatMap((day) => day.showings),
+  );
+  return [
+    ...new Map(showings.map((showing) => [showing.movie.id, showing])).values(),
+  ].map((showing) => ({
+    params: { id: String(showing.movie.id) },
+    props: { showing },
+  }));
 }

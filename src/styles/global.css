@@ -498,6 +498,14 @@ h3 {
   border-bottom: var(--rule);
 }
 
+/* A film's own page: the card, without the day around it. */
+.fiche {
+  width: min(100vw - 2 * var(--s-4), 36rem);
+  margin: var(--s-8) auto;
+  background: var(--paper);
+  border: var(--rule);
+}
+
 .card-body {
   padding: var(--s-4);
 }

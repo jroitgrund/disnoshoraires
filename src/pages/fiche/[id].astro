@@ -1,0 +1,20 @@
+---
+import { Fiche } from "../../components/Fiche.tsx";
+import Page from "../../layouts/Page.astro";
+import { fichePaths } from "../../routes.ts";
+
+export function getStaticPaths() {
+  return fichePaths();
+}
+
+const { showing } = Astro.props;
+---
+
+<Page
+  tagline={showing.movie.title}
+  description={showing.synopsis ?? showing.movie.title}
+>
+  <main>
+    <Fiche showing={showing} />
+  </main>
+</Page>
