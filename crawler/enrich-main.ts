@@ -1,7 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { Session } from "pantomime";
-import { CITIES } from "../shared/cities.ts";
-import { ENRICHMENT_FILE, readCrawl } from "../shared/data.ts";
+import { ENRICHMENT_FILE, readCrawls } from "../shared/data.ts";
 import {
   type Enrichment,
   EnrichmentSchema,
@@ -12,7 +11,7 @@ import { pacedHttp } from "./http.ts";
 import { writeJson } from "./output.ts";
 import { merged, newMovies } from "./reuse.ts";
 
-const crawls = CITIES.map(readCrawl);
+const crawls = readCrawls().map(({ crawl }) => crawl);
 // A film on in several cities is looked up once.
 const movies = [
   ...new Map(

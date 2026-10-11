@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import { parseShowtimesPage, parseTheaters, showtimeRows } from "./allocine.ts";
-import { assembleCrawl, crawlDates, withAllocineMovies } from "./crawl.ts";
+import { assembleCrawl, crawlDates } from "./crawl.ts";
 import { fixture } from "./test/fixture.ts";
 
 test.each([
@@ -26,53 +26,4 @@ test("crawl", () => {
       showtimeRows([page], "P0028", "2026-10-10"),
     ),
   ).toMatchSnapshot();
-});
-
-test("a film from another source takes the AlloCiné movie it matches", () => {
-  const screening = (theaterId: string) => ({
-    theaterId,
-    startsAt: "2026-10-10T20:00:00",
-    language: "original" as const,
-    subtitles: "standard" as const,
-    experiences: [],
-    bookingUrl: null,
-  });
-  const movie = (id: string, title: string, directors: string[]) => ({
-    id,
-    title,
-    originalTitle: title,
-    synopsis: null,
-    runtime: null,
-    genres: [],
-    productionYear: 1984,
-    countries: [],
-    directors,
-    url: "",
-  });
-  expect(
-    withAllocineMovies(
-      [
-        {
-          movie: movie("allocine:67", "Amadeus", ["Milos Forman"]),
-          screening: screening("P1"),
-        },
-      ],
-      [
-        {
-          movie: movie("lumiere:amadeus", "Amadeus", ["M. Forman"]),
-          screening: screening("P0050"),
-        },
-        {
-          movie: movie("lumiere:hair", "Hair", ["M. Forman"]),
-          screening: screening("P0050"),
-        },
-      ],
-    ).map((row) => `${row.movie.id} ${row.screening.theaterId}`),
-  ).toMatchInlineSnapshot(`
-    [
-      "allocine:67 P1",
-      "allocine:67 P0050",
-      "lumiere:hair P0050",
-    ]
-  `);
 });

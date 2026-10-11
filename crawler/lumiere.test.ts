@@ -1,6 +1,8 @@
 import { expect, test } from "vitest";
 import {
+  calendarRows,
   creditDirectors,
+  filmEntries,
   lumiereRows,
   nextMonthLink,
   parseCalendar,
@@ -93,6 +95,16 @@ test("a link without a film block", () => {
   ).toBeNull();
 });
 
+test("a festival page that is not a film", () => {
+  expect(
+    parseFilm(
+      fixture("lumiere/festival-jamais-le-dimanche.html"),
+      "https://www.festival-lumiere.org/programme/invitation-a-agnes-jaoui",
+      2026,
+    ),
+  ).toBeNull();
+});
+
 test("film of the festival", () => {
   expect(
     parseFilm(
@@ -127,4 +139,56 @@ test("rows", () => {
       "P0050",
     ),
   ).toMatchSnapshot();
+});
+
+test("a link by its path leads to the site", () => {
+  expect(
+    parseCalendar(
+      [
+        "<title>Calendrier 2026</title>",
+        '<div class="vc-block-calendar"><h2>Dimanche 4 octobre</h2>',
+        '<div class="wysiwyg-content"><p><strong>16h45</strong> Rétrospective ',
+        '<a href="/programme/milos-forman#amadeus">Amadeus</a> (M. Forman, 2h40)</p>',
+        "</div></div>",
+      ].join(""),
+    ).map((entry) => entry.link),
+  ).toEqual([
+    "https://www.institut-lumiere.org/programme/milos-forman#amadeus",
+  ]);
+});
+
+test("rows of the calendar, each with the film of its page", () => {
+  const { rows, skipped } = calendarRows(
+    filmEntries([fixture("lumiere/calendar-2026-10.html")], ["2026-10-04"]),
+    new Map([
+      [
+        "https://www.institut-lumiere.org/programme/milos-forman",
+        fixture("lumiere/programme-milos-forman.html"),
+      ],
+      [
+        "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026",
+        fixture("lumiere/cine-club.html"),
+      ],
+      ["https://www.institut-lumiere.org/programme-cinematokid", null],
+    ]),
+    "P0050",
+  );
+  expect({
+    rows: rows.map(
+      ({ movie, screening }) =>
+        `${screening.startsAt} ${movie.title}: ${String(screening.bookingUrl)}`,
+    ),
+    skipped,
+  }).toMatchInlineSnapshot(`
+    {
+      "rows": [
+        "2026-10-04T16:45:00 Amadeus: https://billetterie.seetickets.fr/amadeus-loisirs-cinema-css5-institutlumiere-pg51-ei1130351.html",
+        "2026-10-04T17:00:00 Yojimbo: https://billetterie.seetickets.fr/yojimbo-loisirs-cinema-css5-institutlumiere-pg51-ei1130353.html",
+      ],
+      "skipped": [
+        "https://www.institut-lumiere.org/programme-cinematokid#jack",
+        "https://www.institut-lumiere.org/les-classiques-du-mois-septembre-2026#oiseaux",
+      ],
+    }
+  `);
 });

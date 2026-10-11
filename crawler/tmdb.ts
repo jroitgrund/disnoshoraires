@@ -1,7 +1,7 @@
 import { type HTMLElement, parse } from "node-html-parser";
 import { z } from "zod";
+import type { Identity } from "../shared/identity.ts";
 import { SITES } from "../shared/sites.ts";
-import type { Identity } from "./film.ts";
 import type { Http } from "./http.ts";
 import type { SearchResult, Site } from "./lookup.ts";
 import { parseJsonLd, yearIn } from "./parse.ts";

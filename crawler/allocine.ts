@@ -2,8 +2,10 @@ import { parse } from "node-html-parser";
 import type { Session } from "pantomime";
 import { z } from "zod";
 import { cinemaDay, dateOf } from "../shared/dates.ts";
+import { movieId } from "../shared/ids.ts";
+import { mapSequential } from "../shared/lists.ts";
+import type { ShowtimeRow } from "../shared/rows.ts";
 import type { MovieInfo, Screening, Theater } from "../shared/schema.ts";
-import { mapSequential } from "./lists.ts";
 
 const ORIGIN = "https://www.allocine.fr";
 
@@ -74,11 +76,6 @@ const LANGUAGES = {
 } as const satisfies Record<string, Screening["language"]>;
 
 export type ShowtimesPage = z.infer<typeof ShowtimesPageSchema>;
-
-export interface ShowtimeRow {
-  readonly movie: MovieInfo;
-  readonly screening: Screening;
-}
 
 /**
  * The city page renders its theater list on the server; there is no API call for it.
@@ -225,7 +222,7 @@ export function parseShowtimesPage(
 
 function movieInfo(movie: z.infer<typeof MovieSchema>): MovieInfo {
   return {
-    id: allocineMovieId(movie.internalId),
+    id: movieId("allocine", String(movie.internalId)),
     title: movie.title.trim(),
     originalTitle: movie.originalTitle.trim(),
     synopsis: movie.synopsis?.trim() || null,
@@ -243,15 +240,6 @@ function movieInfo(movie: z.infer<typeof MovieSchema>): MovieInfo {
       ),
     url: `${ORIGIN}/film/fichefilm_gen_cfilm=${String(movie.internalId)}.html`,
   };
-}
-
-export function allocineMovieId(internalId: number): string {
-  return `allocine:${String(internalId)}`;
-}
-
-/** `null` for a movie from another source. */
-export function allocineIdOf(movieId: string): string | null {
-  return /^allocine:(\d+)$/.exec(movieId)?.[1] ?? null;
 }
 
 /** The `default` provider is the theater's own ticketing site. */

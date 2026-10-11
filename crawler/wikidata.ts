@@ -1,7 +1,7 @@
 import { z } from "zod";
-import type { Identity } from "./film.ts";
+import type { Identity } from "../shared/identity.ts";
+import { chunks, unique } from "../shared/lists.ts";
 import type { Http } from "./http.ts";
-import { chunks, unique } from "./lists.ts";
 import type { SearchResult, Site } from "./lookup.ts";
 
 const SPARQL = "https://query.wikidata.org/sparql";

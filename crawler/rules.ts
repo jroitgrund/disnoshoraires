@@ -1,9 +1,10 @@
-import { allocineIdOf } from "./allocine.ts";
-import type { Identity, Target } from "./film.ts";
+import type { Identity } from "../shared/identity.ts";
+import { keyIn } from "../shared/ids.ts";
+import { unique } from "../shared/lists.ts";
+import { closeYear, sameFilm } from "../shared/match.ts";
+import type { Target } from "./film.ts";
 import type { LetterboxdFilm } from "./letterboxd.ts";
-import { unique } from "./lists.ts";
 import type { Event, Lookup } from "./lookup.ts";
-import { closeYear, sameFilm } from "./match.ts";
 import type { RottenTomatoesFilm } from "./rottentomatoes.ts";
 import type { SensCritiqueFilm } from "./senscritique.ts";
 import type { TmdbFilm } from "./tmdb.ts";
@@ -19,7 +20,7 @@ export interface Linked extends Target {
  * For an AlloCiné movie, an item with another AlloCiné ID is another film.
  */
 export function wikidataLookup(target: Target): Lookup<WikidataFilm> {
-  const allocineId = allocineIdOf(target.movie.id);
+  const allocineId = keyIn(target.movie.id, "allocine");
   return {
     known: [],
     titles: target.identity.titles,
@@ -37,7 +38,7 @@ export function preloaded(
   target: Target,
   items: readonly WikidataFilm[],
 ): Event<WikidataFilm>[] {
-  const allocineId = allocineIdOf(target.movie.id);
+  const allocineId = keyIn(target.movie.id, "allocine");
   return items
     .filter(
       (item) => allocineId != null && item.allocineIds.includes(allocineId),

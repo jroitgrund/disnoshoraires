@@ -62,6 +62,21 @@ export function hasStarted(startsAt: string, now: Date): boolean {
   );
 }
 
+/** `month` from 1 to 12. */
+export function isoDate(year: number, month: number, day: number): string {
+  const pad = (n: number): string => String(n).padStart(2, "0");
+  return `${String(year)}-${pad(month)}-${pad(day)}`;
+}
+
+export function yearOf(date: string): number {
+  return Number(date.slice(0, 4));
+}
+
+/** `YYYY-MM`. */
+export function monthOf(date: string): string {
+  return date.slice(0, 7);
+}
+
 export function addDays(date: string, days: number): string {
   return new Date(Date.parse(`${date}T00:00:00Z`) + days * DAY_MS)
     .toISOString()

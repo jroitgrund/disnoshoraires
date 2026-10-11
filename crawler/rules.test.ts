@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+import { keyIn, movieId } from "../shared/ids.ts";
 import type { MovieInfo } from "../shared/schema.ts";
 import { targets } from "./film.ts";
 import { parseLetterboxdFilm } from "./letterboxd.ts";
@@ -25,7 +26,7 @@ const movie = (
   productionYear: number | null,
   directors: string[],
 ): MovieInfo => ({
-  id: `allocine:${String(id)}`,
+  id: movieId("allocine", String(id)),
   title,
   originalTitle,
   synopsis: null,
@@ -66,7 +67,7 @@ const [fjordTarget, belovedTarget, akiraTarget] = targets([
   ...target,
   wikidata:
     byAllocineId.find((i) =>
-      i.allocineIds.includes(target.movie.id.replace("allocine:", "")),
+      i.allocineIds.includes(keyIn(target.movie.id, "allocine") ?? ""),
     ) ?? null,
 }));
 if (fjordTarget == null || belovedTarget == null || akiraTarget == null) {

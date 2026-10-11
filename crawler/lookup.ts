@@ -1,4 +1,4 @@
-import { unique } from "./lists.ts";
+import { unique } from "../shared/lists.ts";
 
 /** Search results to load at most, per site and title, after `consider`. */
 const MAX_CANDIDATES = 5;

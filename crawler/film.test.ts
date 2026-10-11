@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+import { movieId } from "../shared/ids.ts";
 import type { MovieInfo } from "../shared/schema.ts";
 import { targets } from "./film.ts";
 
@@ -9,7 +10,7 @@ const movie = (
   productionYear: number | null,
   directors: string[],
 ): MovieInfo => ({
-  id: `allocine:${String(id)}`,
+  id: movieId("allocine", String(id)),
   title,
   originalTitle,
   synopsis: null,

@@ -18,7 +18,10 @@ A static site with all cinema showtimes of 20 French cities, one page per city, 
 - `shared/`: code that the crawler and the site both use.
   - `cities.ts`: the cities, with their AlloCiné ID and the path of their pages.
   - `schema.ts`: the zod schemas of `data/showtimes/<city>.json` and `data/external.json`. The site validates the files with them.
-  - `data.ts`: the paths of the files in `data/`, and their reads.
+  - `data.ts`: the paths of the files in `data/`, and their reads. The crawls come merged: each film once in all cities.
+  - `ids.ts`: the movie IDs: the source and the source's own key.
+  - `identity.ts`, `match.ts`: the identity of a film, and the check that two identities are the same film.
+  - `rows.ts`: the screenings of each movie, and the merge of the movies of different sources.
   - `dates.ts`: calendar days in French time, and the cinema week.
   - `sites.ts`: the external sites: name, rating scale, search page.
 - `crawler/`: runs directly with Node (type stripping, no build step).
@@ -26,10 +29,10 @@ A static site with all cinema showtimes of 20 French cities, one page per city, 
   - `lumiere.ts`: the Institut Lumière's showtimes, from its calendar. AlloCiné lists the theater without showtimes.
   - `crawl.ts`: one atomic crawl of a city: all theaters, all days, grouped by movie.
   - `enrich.ts`: the enrich pass. It runs the lookups of `rules.ts` with `lookup.ts` against one module per site, and maps the results with `external.ts`.
-  - `film.ts`: the identity of a film, and the movies to look up. `match.ts` compares two identities. `wikidata.ts` gives known IDs.
+  - `film.ts`: the movies to look up. `wikidata.ts` gives known IDs.
 - `src/`: the Astro site. Preact components render at build time. The root page has one script that filters the cities as the visitor types.
   - `routes.ts` reads `data/` once per build. `programme.ts` turns it into days, films and theaters. `paths.ts` gives the path of each page. The components only render that.
-  - Each film has its page, `/fiche/<source>-<id>/`, such as `/fiche/allocine-188280/`. A day page has only the title of each film card: its script loads the rest from the film's page when the card opens. Without JavaScript, the card links to that page.
+  - Each film has its page, `/fiche/<title>-<year>/`, such as `/fiche/fjord-2026/`. Films with the same title and year take a number: `/fiche/fjord-2026--2/`. A day page has only the title of each film card: its script loads the rest from the film's page when the card opens. Without JavaScript, the card links to that page.
 
 ## Deploy
 

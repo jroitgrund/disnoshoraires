@@ -1,16 +1,16 @@
-import { CITIES } from "../shared/cities.ts";
-import { readCrawl, readEnrichment } from "../shared/data.ts";
-import { ficheId } from "./paths.ts";
+import { readCrawls, readEnrichment } from "../shared/data.ts";
+import { ficheSlugs } from "./paths.ts";
 import { programme } from "./programme.ts";
 
 // Read once per build. One `now` for all pages: a day page and its film pages show the same screenings.
 const NOW = new Date();
 const ENRICHMENT = readEnrichment();
-const CRAWLS = CITIES.map((city) => ({ city, crawl: readCrawl(city) }));
+const CRAWLS = readCrawls();
+const SLUGS = ficheSlugs(CRAWLS.flatMap(({ crawl }) => crawl.movies));
 
 function cityProgrammes(oldOnly: boolean) {
   return CRAWLS.map(({ city, crawl }) => {
-    const days = programme(crawl, ENRICHMENT, { oldOnly, now: NOW });
+    const days = programme(crawl, ENRICHMENT, SLUGS, { oldOnly, now: NOW });
     return { city, days, dates: days.map(({ date }) => date) };
   });
 }
@@ -41,7 +41,7 @@ export function fichePaths() {
   return [
     ...new Map(showings.map((showing) => [showing.movie.id, showing])).values(),
   ].map((showing) => ({
-    params: { id: ficheId(showing.movie) },
+    params: { slug: showing.slug },
     props: { showing },
   }));
 }

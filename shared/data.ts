@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import type { City } from "./cities.ts";
+import { CITIES, type City } from "./cities.ts";
+import { sourceMerge } from "./rows.ts";
 import {
   type Crawl,
   CrawlSchema,
@@ -18,8 +19,15 @@ export function crawlFile(city: City): string {
 /** The enrich pass writes one file for all cities. */
 export const ENRICHMENT_FILE = join(DIR, "external.json");
 
+/** The crawl of each city, with each film once in all: see `sourceMerge`. */
+export function readCrawls(): { city: City; crawl: Crawl }[] {
+  const crawls = CITIES.map((city) => ({ city, crawl: readCrawl(city) }));
+  const merge = sourceMerge(crawls.map(({ crawl }) => crawl));
+  return crawls.map(({ city, crawl }) => ({ city, crawl: merge(crawl) }));
+}
+
 /** Fails without the city's file: run `npm run crawl` first. */
-export function readCrawl(city: City): Crawl {
+function readCrawl(city: City): Crawl {
   return CrawlSchema.parse(
     JSON.parse(readFileSync(crawlFile(city), "utf8")) as unknown,
   );

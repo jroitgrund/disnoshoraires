@@ -1,4 +1,4 @@
-import type { Identity } from "./film.ts";
+import type { Identity } from "./identity.ts";
 
 /** The production year on AlloCiné and the release year on another site often differ by one. */
 const YEAR_TOLERANCE = 1;

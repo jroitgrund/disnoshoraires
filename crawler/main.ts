@@ -1,9 +1,9 @@
 import { CITIES, cityBySlug } from "../shared/cities.ts";
 import { crawlFile } from "../shared/data.ts";
 import { parisDate } from "../shared/dates.ts";
+import { mapSequential } from "../shared/lists.ts";
 import { CrawlSchema } from "../shared/schema.ts";
 import { crawlCity } from "./crawl.ts";
-import { mapSequential } from "./lists.ts";
 import { writeJson } from "./output.ts";
 
 const slugs = process.argv.slice(2);

@@ -3,7 +3,9 @@ import {
   datesBetween,
   hasStarted,
   parisDate,
+  yearOf,
 } from "../shared/dates.ts";
+import type { MovieId } from "../shared/ids.ts";
 import {
   type Crawl,
   type Enrichment,
@@ -23,8 +25,10 @@ export interface Venue {
 /** One movie on one day. */
 export interface Showing {
   readonly movie: Movie;
+  /** The path name of the film's page. */
+  readonly slug: string;
   readonly external: External;
-  /** AlloCiné's, else TMDB's: both in French. */
+  /** The source's, else TMDB's: both in French. */
   readonly synopsis: string | null;
   /** The source's, else TMDB's. */
   readonly genres: readonly string[];
@@ -46,6 +50,7 @@ export interface Day {
 export function programme(
   crawl: Crawl,
   external: Enrichment["movies"],
+  slugs: ReadonlyMap<MovieId, string>,
   { oldOnly, now }: { oldOnly: boolean; now: Date },
 ): Day[] {
   const today = parisDate(now);
@@ -70,6 +75,7 @@ export function programme(
           : [
               {
                 movie,
+                slug: slugOf(slugs, movie),
                 external: sites,
                 synopsis: movie.synopsis ?? sites.tmdb?.synopsis ?? null,
                 genres:
@@ -85,6 +91,14 @@ export function programme(
   }));
 }
 
+function slugOf(slugs: ReadonlyMap<MovieId, string>, movie: Movie): string {
+  const slug = slugs.get(movie.id);
+  if (slug == null) {
+    throw new Error(`no page for movie ${movie.id}`);
+  }
+  return slug;
+}
+
 /** From today (or the crawl start, if later) to the end of the crawl. */
 export function programmeDates(crawl: Crawl, now: Date): string[] {
   const today = parisDate(now);
@@ -94,8 +108,7 @@ export function programmeDates(crawl: Crawl, now: Date): string[] {
 /** A film made before last year. A film with no known year could be recent: it is not old. */
 function isOld(movie: Movie, today: string): boolean {
   return (
-    movie.productionYear != null &&
-    movie.productionYear < Number(today.slice(0, 4)) - 1
+    movie.productionYear != null && movie.productionYear < yearOf(today) - 1
   );
 }
 

@@ -7,18 +7,18 @@ Two passes. Each pass writes its own file with its own schema (`shared/schema.ts
 | `npm run crawl`  | AlloCiné, Institut Lumière | `data/showtimes/<city>.json` | `CrawlSchema`      |
 | `npm run enrich` | `data/showtimes/`          | `data/external.json`         | `EnrichmentSchema` |
 
-Each movie has a string ID with its source: `allocine:<id>`, `lumiere:<slug>`.
+Each movie has an ID of its source and the source's own key (`shared/ids.ts`): `allocine:<id>`, `lumiere:<slug>`.
 
 ## Institut Lumière
 
 AlloCiné lists the Institut Lumière (Lyon) without showtimes. The crawl reads its calendar (`institut-lumiere.org/calendrier`, and the next month when the dates reach into it), plain HTTP (`lumiere.ts`). The calendar is hand-written HTML:
 
 - A line starts with its times in bold ("9h et 9h15" is one film in two rooms), then the cycle, a link to the film, and the credits: "(M. Forman, 2h40)", or during the festival "de Jules Dassin (1h32)".
-- The link leads to the film's block on a programme page (`#anchor`): title, "(France, États-Unis, 1984, 2h40, coul.)", synopsis, and a ticketing link per date. During the festival it leads to the film's page on `festival-lumiere.org`: title, original title, "de Jules Dassin · Grèce · 1960 · 1h32", synopsis.
+- The link leads to the film's block on a programme page (`#anchor`): title, "(France, États-Unis, 1984, 2h40, coul.)", synopsis, and a ticketing link per date. During the festival it leads to the film's page on `festival-lumiere.org/film/`: title, original title, "de Jules Dassin · Grèce · 1960 · 1h32", synopsis.
 - A line whose link leads to no film block (a talk, an exhibition, a ticketing site) is left out.
 - Films are in French, or in the original version with French subtitles. Cinématokid shows are dubbed.
 
-A Lumière film that passes the identity check with an AlloCiné movie of the same crawl becomes that movie: it shows once, with AlloCiné's data. The calendar often gives first names as initials: "M. Forman" and "Milos Forman" are the same person.
+The crawl keeps the movies of each source. Enrich and the site read the crawls merged (`shared/rows.ts`): a movie that passes the identity check with a movie of a source earlier in `SOURCES`, in any city, becomes that movie. It shows once, with the data of the earlier source. Two movies of one source stay two films. The calendar often gives first names as initials: "M. Forman" and "Milos Forman" are the same person.
 
 ## Enrich pass
 
@@ -71,7 +71,7 @@ The session sites run one site after the other (all Letterboxd, then all Rotten 
 
 ### Identity check
 
-A film on another site is the AlloCiné film when all three are true (`match.ts`):
+A film on another site is the AlloCiné film when all three are true (`shared/match.ts`):
 
 - **Year** within 1. AlloCiné gives the production year, other sites often the release year.
 - **At least one director in common.** Names are compared after normalisation: lower case, no accents, no punctuation, no AlloCiné homonym marks such as "(II)". Two names are the same person when:

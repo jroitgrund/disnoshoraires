@@ -1,9 +1,11 @@
 import { type HTMLElement, parse } from "node-html-parser";
-import { localDateTime } from "../shared/dates.ts";
+import { isoDate, localDateTime, monthOf, yearOf } from "../shared/dates.ts";
+import { movieId } from "../shared/ids.ts";
+import { mapSequential, unique } from "../shared/lists.ts";
+import type { ShowtimeRow } from "../shared/rows.ts";
 import type { MovieInfo, Screening } from "../shared/schema.ts";
-import type { ShowtimeRow } from "./allocine.ts";
+import { slugify } from "../shared/slug.ts";
 import type { Http } from "./http.ts";
-import { mapSequential, unique } from "./lists.ts";
 import { yearIn } from "./parse.ts";
 
 const ORIGIN = "https://www.institut-lumiere.org";
@@ -66,31 +68,60 @@ export async function lumiereShowtimes(
   theaterId: string,
   dates: readonly string[],
 ): Promise<ShowtimeRow[]> {
-  // A link to a ticketing site has no film page.
-  const entries = (await calendarPages(http, dates))
+  const entries = filmEntries(await calendarPages(http, dates), dates);
+  const pages = new Map(
+    await mapSequential(unique(entries.map((e) => pageOf(e.link))), (page) =>
+      http
+        .request(page)
+        .then((response) => [page, response?.text ?? null] as const),
+    ),
+  );
+  const { rows, skipped } = calendarRows(entries, pages, theaterId);
+  skipped.forEach((link) => {
+    console.error(`lumiere: no film at ${link}`);
+  });
+  return rows;
+}
+
+/** The entries on `dates` whose link can lead to a film page. A link to a ticketing site cannot. */
+export function filmEntries(
+  calendars: readonly string[],
+  dates: readonly string[],
+): CalendarEntry[] {
+  return calendars
     .flatMap(parseCalendar)
     .filter(
       (entry) =>
         dates.includes(entry.date) &&
         [ORIGIN, FESTIVAL].includes(new URL(entry.link).origin),
     );
-  const films = new Map(
-    await mapSequential(unique(entries.map((e) => pageOf(e.link))), (page) =>
-      http.request(page).then((response) => [page, response?.text] as const),
-    ),
-  );
-  return entries.flatMap((entry) => {
-    const html = films.get(pageOf(entry.link));
-    const film =
-      html == null
-        ? null
-        : parseFilm(html, entry.link, Number(entry.date.slice(0, 4)));
-    if (film == null) {
-      console.error(`lumiere: no film at ${entry.link}`);
-      return [];
-    }
-    return lumiereRows(entry, film, theaterId);
+}
+
+/**
+ * The rows of the entries, each with its film from `pages`: the HTML of each page, `null` when it does not exist.
+ * `skipped` has the links of the entries without a film.
+ */
+export function calendarRows(
+  entries: readonly CalendarEntry[],
+  pages: ReadonlyMap<string, string | null>,
+  theaterId: string,
+): { rows: ShowtimeRow[]; skipped: string[] } {
+  const withFilms = entries.map((entry) => {
+    const html = pages.get(pageOf(entry.link)) ?? null;
+    return {
+      entry,
+      film:
+        html == null ? null : parseFilm(html, entry.link, yearOf(entry.date)),
+    };
   });
+  return {
+    rows: withFilms.flatMap(({ entry, film }) =>
+      film == null ? [] : lumiereRows(entry, film, theaterId),
+    ),
+    skipped: withFilms.flatMap(({ entry, film }) =>
+      film == null ? [entry.link] : [],
+    ),
+  };
 }
 
 /** The current month, and the next one when the dates reach into it and the calendar links to it. */
@@ -103,7 +134,7 @@ async function calendarPages(
     throw new Error(`lumiere: no calendar at ${CALENDAR}`);
   }
   const next = nextMonthLink(current.text);
-  const months = unique(dates.map((date) => date.slice(0, 7)));
+  const months = unique(dates.map(monthOf));
   if (next == null || months.length < 2) {
     return [current.text];
   }
@@ -112,14 +143,11 @@ async function calendarPages(
 }
 
 export function nextMonthLink(html: string): string | null {
-  return (
-    parse(html)
-      .querySelectorAll("a")
-      .find(
-        (a) => a.text.includes("Voir les séances") && a.text.includes(">>>"),
-      )
-      ?.getAttribute("href") ?? null
-  );
+  const href = parse(html)
+    .querySelectorAll("a")
+    .find((a) => a.text.includes("Voir les séances") && a.text.includes(">>>"))
+    ?.getAttribute("href");
+  return href == null ? null : absolute(href);
 }
 
 export function parseCalendar(html: string): CalendarEntry[] {
@@ -143,7 +171,7 @@ function calendarDate(heading: string, year: number): string {
   if (match?.[1] == null || month === -1) {
     throw new Error(`lumiere: no date in "${heading.trim()}"`);
   }
-  return `${String(year)}-${pad(month + 1)}-${pad(Number(match[1]))}`;
+  return isoDate(year, month + 1, Number(match[1]));
 }
 
 /**
@@ -179,11 +207,15 @@ function calendarEntries(html: string, date: string): CalendarEntry[] {
       if (link?.[1] == null) {
         return [];
       }
+      const href = absolute(link[1]);
+      if (href == null) {
+        return [];
+      }
       return [
         {
           date,
           times: times.split(/\s+et\s+/).map(clockTime),
-          link: link[1],
+          link: href,
           directors: creditDirectors(stripMarks(link[2] ?? "")),
           deaf: /ST-?SME/.test(chunk),
         },
@@ -202,7 +234,7 @@ export function creditDirectors(credit: string): string[] {
 }
 
 /**
- * `link` is the film's block on an Institut Lumière page (`#anchor`), or a page of the festival site.
+ * `link` is the film's block on an Institut Lumière page (`#anchor`), or a film page of the festival site (`/film/`).
  * The programme pages give dates without a year: `year` is the year of the calendar line.
  */
 export function parseFilm(
@@ -212,7 +244,7 @@ export function parseFilm(
 ): LumiereFilm | null {
   const url = new URL(link);
   if (url.origin === FESTIVAL) {
-    return parseFestivalFilm(html);
+    return url.pathname.startsWith("/film/") ? parseFestivalFilm(html) : null;
   }
   const anchor = url.hash.slice(1);
   return anchor === "" ? null : parseProgrammeFilm(html, anchor, year);
@@ -287,7 +319,7 @@ export function lumiereRows(
   const french = (film.countries[0] ?? "France") === "France";
   const dubbed = !french && entry.link.includes("cinematokid");
   const movie: MovieInfo = {
-    id: `lumiere:${slug(entry.link)}`,
+    id: movieId("lumiere", slug(entry.link)),
     title: film.title,
     originalTitle: film.originalTitle ?? film.title,
     synopsis: film.synopsis,
@@ -336,7 +368,7 @@ function bookingTime(text: string, year: number): string | null {
     return null;
   }
   return localDateTime(
-    `${String(year)}-${pad(month + 1)}-${pad(Number(match[1]))}`,
+    isoDate(year, month + 1, Number(match[1])),
     clockTime(match[3]),
   );
 }
@@ -374,10 +406,12 @@ function splitNames(names: string): string[] {
 /** `programme/milos-forman#amadeus` → `programme-milos-forman-amadeus`. */
 function slug(link: string): string {
   const url = new URL(link);
-  return `${url.pathname}${url.hash}`
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
+  return slugify(`${url.pathname}${url.hash}`);
+}
+
+/** The calendar links to other pages of the site by their path. `null` for a link that is not a URL. */
+function absolute(href: string): string | null {
+  return URL.canParse(href, ORIGIN) ? new URL(href, ORIGIN).href : null;
 }
 
 function pageOf(link: string): string {

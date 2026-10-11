@@ -1,11 +1,11 @@
 import { expect, test } from "vitest";
+import { closeYear } from "../shared/match.ts";
 import {
   type Event,
   type Lookup,
   nextStep,
   type SearchResult,
 } from "./lookup.ts";
-import { closeYear } from "./match.ts";
 
 interface Film {
   readonly id: string;

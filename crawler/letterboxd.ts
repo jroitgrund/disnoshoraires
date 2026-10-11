@@ -1,8 +1,8 @@
 import { parse } from "node-html-parser";
 import type { Session } from "pantomime";
 import { z } from "zod";
+import type { Identity } from "../shared/identity.ts";
 import { SITES } from "../shared/sites.ts";
-import type { Identity } from "./film.ts";
 import { sessionRequest } from "./http.ts";
 import type { Site } from "./lookup.ts";
 import { parseJsonLd } from "./parse.ts";

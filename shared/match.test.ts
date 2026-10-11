@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import type { Identity } from "./film.ts";
+import type { Identity } from "./identity.ts";
 import { sameFilm, samePerson, sameTitle } from "./match.ts";
 
 const pairs = (

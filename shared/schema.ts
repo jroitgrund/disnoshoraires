@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { LOCAL_DATE_TIME } from "./dates.ts";
+import { MovieIdSchema } from "./ids.ts";
 
 export const TheaterSchema = z.object({
   id: z.string(),
@@ -9,8 +10,7 @@ export const TheaterSchema = z.object({
 });
 
 export const MovieInfoSchema = z.object({
-  /** The source and its ID: `allocine:<id>`, `lumiere:<slug>`. */
-  id: z.string(),
+  id: MovieIdSchema,
   title: z.string(),
   originalTitle: z.string(),
   /** In French. */
@@ -98,7 +98,7 @@ export const CrawlSchema = z.object({
 export const EnrichmentSchema = z.object({
   enrichedAt: z.string(),
   /** By movie ID, for every movie of the crawls. */
-  movies: z.record(z.string(), ExternalSchema),
+  movies: z.record(MovieIdSchema, ExternalSchema),
 });
 
 export type Theater = z.infer<typeof TheaterSchema>;

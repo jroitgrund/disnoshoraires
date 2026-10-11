@@ -1,11 +1,11 @@
 import type { Session } from "pantomime";
+import { keyIn, type MovieId } from "../shared/ids.ts";
+import { mapSequential } from "../shared/lists.ts";
 import { type Enrichment, type MovieInfo, NOTHING } from "../shared/schema.ts";
-import { allocineIdOf } from "./allocine.ts";
 import { type Found, report, toExternal } from "./external.ts";
 import { type Target, targets } from "./film.ts";
 import type { Http } from "./http.ts";
 import { letterboxdSite } from "./letterboxd.ts";
-import { mapSequential } from "./lists.ts";
 import { runLookup } from "./lookup.ts";
 import { rottenTomatoesSite } from "./rottentomatoes.ts";
 import {
@@ -65,7 +65,7 @@ async function wikidataPass(
 ): Promise<Linked[]> {
   const byAllocineId = await wikidataFilmsByAllocineIds(
     http,
-    all.flatMap((target) => allocineIdOf(target.movie.id) ?? []),
+    all.flatMap((target) => keyIn(target.movie.id, "allocine") ?? []),
   );
   const site = wikidataSite(http);
   const done = progress("wikidata", all.length);
@@ -131,7 +131,7 @@ async function sessionPass(
 async function sensCritiquePass(
   http: Http,
   all: readonly Linked[],
-): Promise<Map<string, SensCritiqueFilm | null>> {
+): Promise<Map<MovieId, SensCritiqueFilm | null>> {
   const site = sensCritiqueSite(http);
   const done = progress("senscritique", all.length);
   return new Map(

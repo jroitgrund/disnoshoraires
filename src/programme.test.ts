@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 import { timeOf } from "../shared/dates.ts";
+import { movieId } from "../shared/ids.ts";
 import {
   type Crawl,
   type External,
@@ -7,6 +8,7 @@ import {
   NOTHING,
   type Screening,
 } from "../shared/schema.ts";
+import { ficheSlugs } from "./paths.ts";
 import { programme } from "./programme.ts";
 
 const screening = (theaterId: string, startsAt: string): Screening => ({
@@ -24,7 +26,7 @@ const movie = (
   productionYear: number | null,
   screenings: Screening[],
 ): Movie => ({
-  id: `allocine:${String(id)}`,
+  id: movieId("allocine", String(id)),
   title,
   originalTitle: title,
   synopsis: null,
@@ -76,11 +78,17 @@ const tmdb = {
 
 const external = { "allocine:2": nothing };
 
+const programmeOf = (
+  of: Crawl,
+  sites: Parameters<typeof programme>[1],
+  options: Parameters<typeof programme>[3],
+) => programme(of, sites, ficheSlugs(of.movies), options);
+
 /** Saturday 10 October 2026, 19:00 in Paris. */
 const now = new Date("2026-10-10T17:00:00Z");
 
 const outline = (oldOnly: boolean): string[] =>
-  programme(crawl, external, { oldOnly, now }).map(
+  programmeOf(crawl, external, { oldOnly, now }).map(
     ({ date, showings }) =>
       `${date}: ${showings
         .map(
@@ -118,7 +126,7 @@ test("old films only", () => {
 });
 
 test("the synopsis is AlloCiné's, else TMDB's", () => {
-  const [day] = programme(
+  const [day] = programmeOf(
     {
       ...crawl,
       movies: [
@@ -150,7 +158,7 @@ test("the synopsis is AlloCiné's, else TMDB's", () => {
 });
 
 test("the genres are the source's, else TMDB's", () => {
-  const [day] = programme(
+  const [day] = programmeOf(
     {
       ...crawl,
       movies: [
@@ -181,7 +189,7 @@ test("the genres are the source's, else TMDB's", () => {
 
 test("a screening in a theater not in the crawl fails", () => {
   expect(() =>
-    programme(
+    programmeOf(
       {
         ...crawl,
         movies: [
