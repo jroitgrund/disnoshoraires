@@ -133,39 +133,39 @@ h3 {
 }
 
 .i-close {
-  --icon: url("/icons/close.svg");
+  --icon: url("../../icons/close.svg");
 }
 
 .i-info {
-  --icon: url("/icons/info.svg");
+  --icon: url("../../icons/info.svg");
 }
 
 .i-external {
-  --icon: url("/icons/external-link.svg");
+  --icon: url("../../icons/external-link.svg");
 }
 
 .i-github {
-  --icon: url("/icons/github.svg");
+  --icon: url("../../icons/github.svg");
 }
 
 .i-instagram {
-  --icon: url("/icons/instagram.svg");
+  --icon: url("../../icons/instagram.svg");
 }
 
 .i-mail {
-  --icon: url("/icons/mail.svg");
+  --icon: url("../../icons/mail.svg");
 }
 
 .i-map {
-  --icon: url("/icons/map-pin.svg");
+  --icon: url("../../icons/map-pin.svg");
 }
 
 .i-arrow-right {
-  --icon: url("/icons/arrow-right.svg");
+  --icon: url("../../icons/arrow-right.svg");
 }
 
 .i-swap {
-  --icon: url("/icons/swap.svg");
+  --icon: url("../../icons/swap.svg");
 }
 
 /* The two listings read as one page with a switch: the knob slides across
@@ -216,7 +216,7 @@ h3 {
   height: 0.8em;
   margin-right: 0.15em;
   background: currentColor;
-  mask: url("/logo.svg") center / contain no-repeat;
+  mask: url("../../icons/logo.svg") center / contain no-repeat;
 }
 
 /* Day bar: the city first, the switch at the end. */
