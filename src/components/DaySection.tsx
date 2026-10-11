@@ -46,13 +46,20 @@ function FilmEntry({ date, showing }: { date: string; showing: Showing }) {
   return (
     <article class="film">
       <h3 class="film-title">
-        <button class="film-open" type="button" popovertarget={cardId}>
+        {/* Without JavaScript the card stays empty: the link opens the fiche. */}
+        <a
+          class="film-open"
+          href={fiche}
+          target="_blank"
+          data-card={cardId}
+          aria-haspopup="dialog"
+        >
           <span>
             {title}
             {old && <span class="film-year"> ({movie.productionYear})</span>}
           </span>
           <span class="film-cue i i-info" aria-hidden="true" />
-        </button>
+        </a>
       </h3>
       <section
         class="card"
@@ -77,11 +84,7 @@ function FilmEntry({ date, showing }: { date: string; showing: Showing }) {
             aria-label={`Fermer la fiche de ${movie.title}`}
           />
         </header>
-        <div class={CARD_PARTS.summary}>
-          <noscript>
-            <a href={fiche}>Voir la fiche</a>
-          </noscript>
-        </div>
+        <div class={CARD_PARTS.summary} />
         <div class={CARD_PARTS.foot} />
       </section>
       <Venues venues={venues} />

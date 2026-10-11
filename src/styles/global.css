@@ -429,6 +429,7 @@ h3 {
   font: inherit;
   text-align: left;
   text-transform: inherit;
+  text-decoration: none;
   border: 0;
   cursor: pointer;
 }

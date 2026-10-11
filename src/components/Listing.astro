@@ -115,15 +115,37 @@ const copy = oldOnly
       });
   }
 
+  function cardOf(target: EventTarget | null) {
+    const id =
+      target instanceof Element
+        ? target.closest<HTMLElement>(".film-open")?.dataset["card"]
+        : undefined;
+    return id == null ? null : document.getElementById(id);
+  }
+
   // A tap starts the request before the card opens.
   document.addEventListener("pointerdown", (event) => {
-    const card =
-      event.target instanceof Element
-        ? event.target.closest<HTMLButtonElement>(".film-open")
-            ?.popoverTargetElement
-        : null;
-    if (card instanceof HTMLElement) {
+    const card = cardOf(event.target);
+    if (card != null) {
       fill(card);
+    }
+  });
+
+  // A modified click opens the fiche in a new tab, as a link does.
+  document.addEventListener("click", (event) => {
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+    const card = cardOf(event.target);
+    if (card != null) {
+      event.preventDefault();
+      card.showPopover();
     }
   });
 
@@ -132,11 +154,20 @@ const copy = oldOnly
     "beforetoggle",
     (event) => {
       if (
-        event instanceof ToggleEvent &&
-        event.newState === "open" &&
-        event.target instanceof HTMLElement
+        !(event instanceof ToggleEvent) ||
+        !(event.target instanceof HTMLElement)
       ) {
-        fill(event.target);
+        return;
+      }
+      const card = event.target;
+      const link = document.querySelector<HTMLElement>(
+        `.film-open[data-card="${card.id}"]`,
+      );
+      link?.setAttribute("aria-expanded", String(event.newState === "open"));
+      if (event.newState === "open") {
+        fill(card);
+      } else if (card.contains(document.activeElement)) {
+        link?.focus();
       }
     },
     { capture: true },
