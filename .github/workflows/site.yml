@@ -34,16 +34,19 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24
+          cache: npm
+      - run: npm ci
       # The longest crawls first: Paris takes 23 min, the other cities 1 to 4 min each.
       - id: list
         env:
           CITIES: ${{ inputs.cities }}
         run: >
-          echo "slugs=$(node --input-type=module -e "const { CITIES, cityBySlug } = await import('./shared/cities.ts');
+          slugs=$(node --input-type=module -e "const { CITIES, cityBySlug } = await import('./shared/cities.ts');
           const wanted = (process.env.CITIES ?? '').split(' ').filter((slug) => slug !== '');
           const cities = wanted.length === 0 ? CITIES : wanted.map(cityBySlug);
           console.log(JSON.stringify(cities.toSorted((a, b) => b.crawlSeconds - a.crawlSeconds)
-          .map((city) => city.slug)))")" >> "$GITHUB_OUTPUT"
+          .map((city) => city.slug)))")
+          && echo "slugs=$slugs" >> "$GITHUB_OUTPUT"
 
   # One job per city, in parallel: one after the other, the crawl takes over an hour.
   crawl:
