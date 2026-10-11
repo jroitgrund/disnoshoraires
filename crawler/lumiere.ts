@@ -1,5 +1,11 @@
 import { type HTMLElement, parse } from "node-html-parser";
-import { isoDate, localDateTime, monthOf, yearOf } from "../shared/dates.ts";
+import {
+  isoDate,
+  localDateTime,
+  monthOf,
+  pad,
+  yearOf,
+} from "../shared/dates.ts";
 import { movieId } from "../shared/ids.ts";
 import { mapSequential, unique } from "../shared/lists.ts";
 import type { ShowtimeRow } from "../shared/rows.ts";
@@ -83,18 +89,26 @@ export async function lumiereShowtimes(
   return rows;
 }
 
-/** The entries on `dates` whose link can lead to a film page. A link to a ticketing site cannot. */
+/** The entries on `dates` whose link leads to a film. */
 export function filmEntries(
   calendars: readonly string[],
   dates: readonly string[],
 ): CalendarEntry[] {
   return calendars
     .flatMap(parseCalendar)
-    .filter(
-      (entry) =>
-        dates.includes(entry.date) &&
-        [ORIGIN, FESTIVAL].includes(new URL(entry.link).origin),
-    );
+    .filter((entry) => dates.includes(entry.date) && isFilmLink(entry.link));
+}
+
+/**
+ * A film's block on an Institut Lumière page (`#anchor`), or a film page of the festival site (`/film/`).
+ * Other links lead to a talk, an exhibition, a ticketing site.
+ */
+function isFilmLink(link: string): boolean {
+  const url = new URL(link);
+  return (
+    (url.origin === ORIGIN && url.hash.length > 1) ||
+    (url.origin === FESTIVAL && url.pathname.startsWith("/film/"))
+  );
 }
 
 /**
@@ -234,7 +248,7 @@ export function creditDirectors(credit: string): string[] {
 }
 
 /**
- * `link` is the film's block on an Institut Lumière page (`#anchor`), or a film page of the festival site (`/film/`).
+ * `link` leads to a film: see `isFilmLink`.
  * The programme pages give dates without a year: `year` is the year of the calendar line.
  */
 export function parseFilm(
@@ -243,11 +257,9 @@ export function parseFilm(
   year: number,
 ): LumiereFilm | null {
   const url = new URL(link);
-  if (url.origin === FESTIVAL) {
-    return url.pathname.startsWith("/film/") ? parseFestivalFilm(html) : null;
-  }
-  const anchor = url.hash.slice(1);
-  return anchor === "" ? null : parseProgrammeFilm(html, anchor, year);
+  return url.origin === FESTIVAL
+    ? parseFestivalFilm(html)
+    : parseProgrammeFilm(html, url.hash.slice(1), year);
 }
 
 /**
@@ -435,8 +447,4 @@ function stripMarks(text: string): string {
 /** Lower case, no accents: "Août" → "aout". */
 function plain(text: string): string {
   return text.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase();
-}
-
-function pad(n: number): string {
-  return String(n).padStart(2, "0");
 }

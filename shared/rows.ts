@@ -1,5 +1,5 @@
 import { identity } from "./identity.ts";
-import { sourceRank } from "./ids.ts";
+import { SOURCES, sourceRank } from "./ids.ts";
 import { sameFilm } from "./match.ts";
 import type { Crawl, Movie, MovieInfo, Screening } from "./schema.ts";
 
@@ -46,17 +46,41 @@ export function sourceMerge(crawls: readonly Crawl[]): (crawl: Crawl) => Crawl {
         .flatMap((crawl) => crawl.movies.map(info))
         .map((movie) => [movie.id, movie]),
     ).values(),
-  ].toSorted(
-    (a, b) => sourceRank(a.id) - sourceRank(b.id) || a.id.localeCompare(b.id),
+  ]
+    .map((movie) => ({
+      movie,
+      rank: sourceRank(movie.id),
+      identity: identity(movie),
+    }))
+    .toSorted(
+      (a, b) => a.rank - b.rank || a.movie.id.localeCompare(b.movie.id),
+    );
+  type Ranked = (typeof movies)[number];
+  const twin = (roots: readonly Ranked[], movie: Ranked): Ranked | undefined =>
+    roots.find(
+      (root) =>
+        root.rank < movie.rank && sameFilm(root.identity, movie.identity),
+    );
+  // The movies that stay films of their own, up to the source of `rank`.
+  const rootsUpTo = (rank: number): Ranked[] => {
+    if (rank < 0) {
+      return [];
+    }
+    const earlier = rootsUpTo(rank - 1);
+    return [
+      ...earlier,
+      ...movies.filter(
+        (movie) => movie.rank === rank && twin(earlier, movie) == null,
+      ),
+    ];
+  };
+  const roots = rootsUpTo(SOURCES.length - 1);
+  const into = new Map(
+    movies.map((movie) => [
+      movie.movie.id,
+      (twin(roots, movie) ?? movie).movie,
+    ]),
   );
-  const kept = (movie: MovieInfo): MovieInfo =>
-    movies.find(
-      (other) =>
-        sourceRank(other.id) < sourceRank(movie.id) &&
-        kept(other) === other &&
-        sameFilm(identity(other), identity(movie)),
-    ) ?? movie;
-  const into = new Map(movies.map((movie) => [movie.id, kept(movie)]));
   return (crawl) => ({
     ...crawl,
     movies: moviesOf(

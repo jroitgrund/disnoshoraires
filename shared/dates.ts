@@ -64,8 +64,12 @@ export function hasStarted(startsAt: string, now: Date): boolean {
 
 /** `month` from 1 to 12. */
 export function isoDate(year: number, month: number, day: number): string {
-  const pad = (n: number): string => String(n).padStart(2, "0");
   return `${String(year)}-${pad(month)}-${pad(day)}`;
+}
+
+/** Two digits: `9` → `09`. */
+export function pad(n: number): string {
+  return String(n).padStart(2, "0");
 }
 
 export function yearOf(date: string): number {

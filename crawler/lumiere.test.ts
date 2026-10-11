@@ -85,24 +85,32 @@ test("film of a programme page with its director", () => {
   ).toMatchSnapshot();
 });
 
-test("a link without a film block", () => {
+test("the links that lead to a film", () => {
+  const line = (href: string) =>
+    `<p><strong>16h45</strong> <a href="${href}">Film</a> (M. Forman, 2h40)</p>`;
   expect(
-    parseFilm(
-      fixture("lumiere/programme-milos-forman.html"),
-      "https://www.institut-lumiere.org/programme/milos-forman",
-      2026,
-    ),
-  ).toBeNull();
-});
-
-test("a festival page that is not a film", () => {
-  expect(
-    parseFilm(
-      fixture("lumiere/festival-jamais-le-dimanche.html"),
-      "https://www.festival-lumiere.org/programme/invitation-a-agnes-jaoui",
-      2026,
-    ),
-  ).toBeNull();
+    filmEntries(
+      [
+        [
+          "<title>Calendrier 2026</title>",
+          '<div class="vc-block-calendar"><h2>Dimanche 4 octobre</h2>',
+          '<div class="wysiwyg-content">',
+          line("/programme/milos-forman#amadeus"),
+          line("/programme/milos-forman"),
+          line("https://www.festival-lumiere.org/film/jamais-le-dimanche"),
+          line(
+            "https://www.festival-lumiere.org/programme/invitation-a-agnes-jaoui",
+          ),
+          line("https://billetterie.seetickets.fr/amadeus"),
+          "</div></div>",
+        ].join(""),
+      ],
+      ["2026-10-04"],
+    ).map((entry) => entry.link),
+  ).toEqual([
+    "https://www.institut-lumiere.org/programme/milos-forman#amadeus",
+    "https://www.festival-lumiere.org/film/jamais-le-dimanche",
+  ]);
 });
 
 test("film of the festival", () => {

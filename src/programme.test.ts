@@ -79,10 +79,10 @@ const tmdb = {
 const external = { "allocine:2": nothing };
 
 const programmeOf = (
-  of: Crawl,
+  crawl: Crawl,
   sites: Parameters<typeof programme>[1],
   options: Parameters<typeof programme>[3],
-) => programme(of, sites, ficheSlugs(of.movies), options);
+) => programme(crawl, sites, ficheSlugs(crawl.movies), options);
 
 /** Saturday 10 October 2026, 19:00 in Paris. */
 const now = new Date("2026-10-10T17:00:00Z");
