@@ -22,7 +22,7 @@ The crawl keeps the movies of each source. Enrich and the site read the crawls m
 
 ## Enrich pass
 
-For each movie of all cities, `data/external.json` has, by movie ID (a movie on in several cities is looked up once). The pass looks up only the movies that the earlier `data/external.json` does not have (`reuse.ts`), and keeps the earlier results of the others:
+For each movie of all cities, `data/external.json` has, by movie ID (a movie on in several cities is looked up once):
 
 | Site            | Data                                                                                |
 | --------------- | ----------------------------------------------------------------------------------- |
@@ -33,6 +33,8 @@ For each movie of all cities, `data/external.json` has, by movie ID (a movie on 
 | Wikipedia       | English and French article, from the Wikidata item                                  |
 
 A site is `null` when no film on it passes the identity check. A wrong film is worse than none.
+
+The pass looks up only the movies that the earlier `data/external.json` does not have (`reuse.ts`), and keeps the earlier results of the others. With `--refresh`, it looks up all movies again: ratings change, and sites add films.
 
 The French synopsis and the genres come from the crawl, in `data/showtimes/<city>.json`. TMDB's are the fallback: the Institut Lumière gives no genres. On a page in French, TMDB shows the English overview when it has no French one: an overview that is the same on both pages is not French.
 
@@ -49,13 +51,15 @@ The session sites run one site after the other (all Letterboxd, then all Rotten 
 
 ### Where the IDs come from
 
+The film's pages in the earlier `data/external.json` load first: they passed the check before. A page that no longer passes leads to the steps below.
+
 1. **Wikidata.** The item gives the TMDB (P4947), Rotten Tomatoes (P1258) and SensCritique (P10100) IDs, and the Wikipedia articles.
    - SPARQL queries find the items with the AlloCiné ID (P1265) of every AlloCiné film, 100 IDs per query: Wikimedia refuses a longer URL. This finds most films, also recent ones.
    - For a film without such an item, and for a film from another source: a search by title, original title first, for items with a director (P57). One SPARQL query loads the results. The first one that passes the identity check is the item. For an AlloCiné film, an item with another AlloCiné ID is another film.
 
    Wikidata can be wrong, so its IDs go through the same check as search results.
 
-2. **Search**, only when Wikidata has no ID, or none that passes the check:
+2. **Search**, only when no earlier page or Wikidata ID passes the check:
    - TMDB: the search page. TMDB searches all translated titles.
    - Rotten Tomatoes: the search page, films only. The English title from TMDB goes first: Rotten Tomatoes knows most foreign films by it.
    - SensCritique: GraphQL `searchProductExplorer` (the search page), films only (`universe` 1). The results carry titles, year and directors, so no page load is needed.

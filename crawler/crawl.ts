@@ -1,6 +1,6 @@
 import { Session } from "pantomime";
 import type { City } from "../shared/cities.ts";
-import { datesBetween, nextTuesday } from "../shared/dates.ts";
+import { addDays, datesBetween } from "../shared/dates.ts";
 import { mapSequential } from "../shared/lists.ts";
 import { moviesOf, type ShowtimeRow } from "../shared/rows.ts";
 import type { Crawl, Theater } from "../shared/schema.ts";
@@ -9,7 +9,7 @@ import { pacedHttp } from "./http.ts";
 import { lumiereShowtimes } from "./lumiere.ts";
 
 /**
- * All showtimes from today to the next Tuesday in a city's theaters,
+ * All showtimes of the next seven days in a city's theaters,
  * grouped by movie. Fails as a whole or not at all.
  */
 export async function crawlCity(city: City, today: string): Promise<Crawl> {
@@ -36,9 +36,12 @@ export async function crawlCity(city: City, today: string): Promise<Crawl> {
   ]);
 }
 
-/** From today on: AlloCiné does not serve past days. */
+/**
+ * Seven days from today: AlloCiné does not serve past days. Chains publish one cinema week
+ * at a time, from Wednesday to Tuesday, so the last days can be partial.
+ */
 export function crawlDates(today: string): string[] {
-  return datesBetween(today, nextTuesday(today));
+  return datesBetween(today, addDays(today, 6));
 }
 
 /** The rows of each source, each movie with its screenings. */

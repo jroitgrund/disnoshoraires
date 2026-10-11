@@ -32,8 +32,9 @@ export async function enrich(
   session: Session,
   http: Http,
   movies: readonly MovieInfo[],
+  earlier: Enrichment["movies"],
 ): Promise<Enrichment["movies"]> {
-  const all = await wikidataPass(http, targets(movies));
+  const all = await wikidataPass(http, targets(movies, earlier));
   const [withSessionSites, sensCritique] = await Promise.all([
     tmdbPass(http, all).then((list) => sessionPass(session, list)),
     sensCritiquePass(http, all),

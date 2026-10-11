@@ -88,6 +88,11 @@ export function parseSensCritiqueSearch(
 }
 
 /** `null` when there is no such film. */
+/** `https://www.senscritique.com/film/aprile/457173` → `457173`. */
+export function sensCritiqueIdOf(url: string): string | null {
+  return /\/(\d+)\/?$/.exec(url)?.[1] ?? null;
+}
+
 async function sensCritiqueFilm(
   http: Http,
   id: string,

@@ -14,7 +14,7 @@ const IDS_PER_QUERY = 100;
 /** Joins the values of one column. A title can hold any printable character. */
 const SEPARATOR = "\u001f";
 
-/** IDs that Wikidata links to a film. Each list can hold more than one ID when Wikidata disagrees with itself. */
+/** A film's IDs on the sites. Each list can hold more than one ID when Wikidata disagrees with itself. */
 export interface KnownIds {
   readonly tmdb: readonly string[];
   readonly rottenTomatoes: readonly string[];

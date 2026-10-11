@@ -3,12 +3,16 @@ import { parseShowtimesPage, parseTheaters, showtimeRows } from "./allocine.ts";
 import { assembleCrawl, crawlDates } from "./crawl.ts";
 import { fixture } from "./test/fixture.ts";
 
-test.each([
-  ["Wednesday", "2026-10-07"],
-  ["Saturday", "2026-10-10"],
-  ["Tuesday", "2026-10-13"],
-])("dates from a %s", (_, today) => {
-  expect(crawlDates(today)).toMatchSnapshot();
+test("seven dates from today, across a month", () => {
+  expect(crawlDates("2026-10-28")).toEqual([
+    "2026-10-28",
+    "2026-10-29",
+    "2026-10-30",
+    "2026-10-31",
+    "2026-11-01",
+    "2026-11-02",
+    "2026-11-03",
+  ]);
 });
 
 test("crawl", () => {

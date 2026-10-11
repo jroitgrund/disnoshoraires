@@ -29,5 +29,5 @@ const beloved = movie(325965, "L’Être Aimé", "El ser querido", 2026, [
 const surprise = movie(35275, "Film surprise", "Film surprise", 2026, []);
 
 test("targets", () => {
-  expect(targets([fjord, beloved, surprise])).toMatchSnapshot();
+  expect(targets([fjord, beloved, surprise], {})).toMatchSnapshot();
 });

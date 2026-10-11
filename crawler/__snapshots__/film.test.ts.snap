@@ -3,6 +3,11 @@
 exports[`targets 1`] = `
 [
   {
+    "earlier": {
+      "rottenTomatoes": [],
+      "sensCritique": [],
+      "tmdb": [],
+    },
     "identity": {
       "directors": [
         "Cristian Mungiu",
@@ -28,6 +33,11 @@ exports[`targets 1`] = `
     },
   },
   {
+    "earlier": {
+      "rottenTomatoes": [],
+      "sensCritique": [],
+      "tmdb": [],
+    },
     "identity": {
       "directors": [
         "Rodrigo Sorogoyen",

@@ -8,11 +8,11 @@ web
 
 ## Users
 
-Anyone in one of the covered French cities who looks for a film to see, from today to the end of the cinema week. Most visitors use a phone.
+Anyone in one of the covered French cities who looks for a film to see in the next seven days. Most visitors use a phone.
 
 ## Product Purpose
 
-Each city has one page per day, from today to the next Tuesday. A page shows every cinema screening in the city that day (French cinemas change their programme on Wednesdays). The visitor finds a film, a time and a theater, and how to get there. The root page lets the visitor choose a city.
+Each city has one page per day, for seven days from today. A page shows every cinema screening in the city that day. The visitor finds a film, a time and a theater, and how to get there. The root page lets the visitor choose a city.
 
 ## Positioning
 

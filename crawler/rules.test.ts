@@ -59,11 +59,10 @@ const item = (items: readonly WikidataFilm[], qid: string): WikidataFilm => {
   return found;
 };
 
-const [fjordTarget, belovedTarget, akiraTarget] = targets([
-  fjord,
-  beloved,
-  akira,
-]).map((target): Linked => ({
+const [fjordTarget, belovedTarget, akiraTarget] = targets(
+  [fjord, beloved, akira],
+  {},
+).map((target): Linked => ({
   ...target,
   wikidata:
     byAllocineId.find((i) =>
@@ -76,7 +75,7 @@ if (fjordTarget == null || belovedTarget == null || akiraTarget == null) {
 
 test("Wikidata lookup", () => {
   const lookup = wikidataLookup(fjordTarget);
-  const [other] = targets([{ ...fjord, id: "allocine:1" }]);
+  const [other] = targets([{ ...fjord, id: "allocine:1" }], {});
   if (other == null) {
     throw new Error("targets");
   }
@@ -184,6 +183,14 @@ test("TMDB lookup", () => {
       ],
     }
   `);
+});
+
+test("TMDB lookup loads the earlier page first", () => {
+  const lookup = tmdbLookup({
+    ...fjordTarget,
+    earlier: { ...fjordTarget.earlier, tmdb: ["7"] },
+  });
+  expect(lookup.known).toEqual(["7", "1401459"]);
 });
 
 test("Letterboxd lookup", () => {

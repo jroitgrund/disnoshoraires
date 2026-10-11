@@ -23,15 +23,6 @@ function parisTime(now: Date): string {
 }
 
 /**
- * The first Tuesday after `today`: French cinemas change their programme on Wednesdays.
- * On a Tuesday, the new programme is out: the next one ends the cinema week to come.
- */
-export function nextTuesday(today: string): string {
-  const untilTuesday = (2 - new Date(`${today}T00:00:00Z`).getUTCDay() + 7) % 7;
-  return addDays(today, untilTuesday === 0 ? 7 : untilTuesday);
-}
-
-/**
  * The day whose programme a screening belongs to. A show that starts before 06:00 is the
  * late show of the evening before: theaters list it on that day.
  */

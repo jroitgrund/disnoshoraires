@@ -1,4 +1,8 @@
-import type { Enrichment, MovieInfo } from "../shared/schema.ts";
+import type { Enrichment, External, MovieInfo } from "../shared/schema.ts";
+import { rottenTomatoesIdOf } from "./rottentomatoes.ts";
+import { sensCritiqueIdOf } from "./senscritique.ts";
+import { tmdbIdOf } from "./tmdb.ts";
+import type { KnownIds } from "./wikidata.ts";
 
 /** The movies that the earlier enrichment does not have: only these are looked up. */
 export function newMovies(
@@ -20,4 +24,21 @@ export function merged(
       return sites == null ? [] : [[movie.id, sites]];
     }),
   );
+}
+
+/** The film's pages in the earlier enrichment. A refresh loads them before any search. */
+export function earlierIds(external: External | undefined): KnownIds {
+  return {
+    tmdb: idOf(external?.tmdb, tmdbIdOf),
+    rottenTomatoes: idOf(external?.rottenTomatoes, rottenTomatoesIdOf),
+    sensCritique: idOf(external?.sensCritique, sensCritiqueIdOf),
+  };
+}
+
+function idOf(
+  page: { readonly url: string } | null | undefined,
+  parse: (url: string) => string | null,
+): string[] {
+  const id = page == null ? null : parse(page.url);
+  return id == null ? [] : [id];
 }

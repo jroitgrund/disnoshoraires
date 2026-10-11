@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 import { movieId } from "../shared/ids.ts";
 import { type External, type MovieInfo, NOTHING } from "../shared/schema.ts";
-import { merged, newMovies } from "./reuse.ts";
+import { earlierIds, merged, newMovies } from "./reuse.ts";
 
 const movie = (id: number) =>
   ({ id: movieId("allocine", String(id)) }) as MovieInfo;
@@ -25,4 +25,34 @@ test("merged keeps the earlier results of the movies still on", () => {
       { "allocine:2": NOTHING },
     ),
   ).toEqual({ "allocine:1": found, "allocine:2": NOTHING });
+});
+
+test("earlierIds gives the ID of each page of the earlier enrichment", () => {
+  expect(
+    earlierIds({
+      ...NOTHING,
+      tmdb: {
+        url: "https://www.themoviedb.org/movie/32117-aprile",
+        rating: 7,
+        ratingCount: 100,
+        backdrop: null,
+        synopsis: null,
+        genres: [],
+      },
+      rottenTomatoes: {
+        url: "https://www.rottentomatoes.com/m/aprile",
+        critics: null,
+        audience: null,
+      },
+    }),
+  ).toEqual({
+    tmdb: ["32117"],
+    rottenTomatoes: ["m/aprile"],
+    sensCritique: [],
+  });
+  expect(earlierIds(undefined)).toEqual({
+    tmdb: [],
+    rottenTomatoes: [],
+    sensCritique: [],
+  });
 });

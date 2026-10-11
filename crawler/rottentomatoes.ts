@@ -67,12 +67,17 @@ export function parseRottenTomatoesSearch(
     .querySelectorAll('search-page-result[type="movie"] search-page-media-row')
     .map((row) => ({
       id:
-        /\/(m\/[^/?#]+)/.exec(
+        rottenTomatoesIdOf(
           row.querySelector('a[slot="title"]')?.getAttribute("href") ?? "",
-        )?.[1] ?? "",
+        ) ?? "",
       year: Number(row.getAttribute("release-year")) || null,
     }))
     .filter((result) => result.id !== "");
+}
+
+/** `https://www.rottentomatoes.com/m/aprile` → `m/aprile`. */
+export function rottenTomatoesIdOf(url: string): string | null {
+  return /\/(m\/[^/?#]+)/.exec(url)?.[1] ?? null;
 }
 
 /** `null` when there is no such page. */

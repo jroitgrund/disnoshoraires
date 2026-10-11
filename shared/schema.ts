@@ -87,7 +87,7 @@ export const MovieSchema = MovieInfoSchema.extend({
 export const CrawlSchema = z.object({
   /** Today. */
   from: z.iso.date(),
-  /** The first Tuesday after today. */
+  /** Six days after today. */
   to: z.iso.date(),
   crawledAt: z.iso.datetime(),
   theaters: z.array(TheaterSchema),

@@ -3,6 +3,7 @@ import { fixture } from "./test/fixture.ts";
 import {
   parseRottenTomatoesFilm,
   parseRottenTomatoesSearch,
+  rottenTomatoesIdOf,
 } from "./rottentomatoes.ts";
 
 test("search", () => {
@@ -11,6 +12,12 @@ test("search", () => {
       fixture("rottentomatoes/search-the-beloved.html"),
     ),
   ).toMatchSnapshot();
+});
+
+test("ID of a film page", () => {
+  expect(
+    rottenTomatoesIdOf("https://www.rottentomatoes.com/m/the_beloved_2026"),
+  ).toBe("m/the_beloved_2026");
 });
 
 test("film page with a Tomatometer", () => {

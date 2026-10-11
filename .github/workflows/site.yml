@@ -2,9 +2,7 @@ name: site
 
 on:
   schedule:
-    # Tuesday 09:00 in Paris in summer time, 08:00 in winter time.
-    - cron: "0 7 * * 2"
-    # 00:01 in Paris in winter time, 01:01 in summer time: always after midnight, so past days drop.
+    # 00:01 in Paris in winter time, 01:01 in summer time: always after midnight, so the crawl starts on the new day.
     - cron: "1 23 * * *"
   workflow_dispatch:
     inputs:
@@ -16,12 +14,16 @@ on:
         description: Slugs of the cities to crawl, separated by spaces. Empty crawls all. The other cities keep the latest data.
         required: false
         default: ""
+      refresh:
+        description: Look up all movies again, not only the new ones.
+        type: boolean
+        default: false
   push:
     branches-ignore: [main]
 
 jobs:
   cities:
-    if: github.event_name != 'push' && github.event.schedule != '1 23 * * *' && github.ref == 'refs/heads/main' && !inputs.crawl_run
+    if: github.event_name != 'push' && github.ref == 'refs/heads/main' && !inputs.crawl_run
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -72,10 +74,10 @@ jobs:
           path: data/showtimes/
           retention-days: 1
 
-  # Runs only when all cities to crawl are crawled, or on the crawl of an earlier run: a city without data has no page.
+  # Runs when the crawl jobs are done, also after a failed city: it keeps its latest data, and the past days drop.
   production:
     needs: crawl
-    if: ${{ !cancelled() && github.ref == 'refs/heads/main' && (needs.crawl.result == 'success' || inputs.crawl_run) }}
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' && (needs.crawl.result == 'success' || needs.crawl.result == 'failure' || inputs.crawl_run) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 240
     concurrency: data
@@ -99,7 +101,7 @@ jobs:
           merge-multiple: true
           run-id: ${{ inputs.crawl_run || github.run_id }}
           github-token: ${{ github.token }}
-      # Enrich looks up only the movies that the last data does not have.
+      # Enrich reuses the results of the last data.
       - uses: dawidd6/action-download-artifact@v27
         with:
           name: data
@@ -107,10 +109,19 @@ jobs:
           search_artifacts: true
           workflow_conclusion: ""
           if_no_artifact_found: warn
-      # The cities not crawled in this run keep the latest data.
+      # The cities not crawled in this run, or whose crawl failed, keep the latest data.
       - run: test ! -d earlier/showtimes || cp -n earlier/showtimes/*.json data/showtimes/
       - run: test ! -f earlier/external.json || cp earlier/external.json data/external.json
-      - run: xvfb-run --auto-servernum npm run enrich
+      # Every Monday in Paris, the ratings include the weekend after Wednesday's releases.
+      - env:
+          REFRESH: ${{ inputs.refresh }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$REFRESH" = true ] || { [ "$EVENT" = schedule ] && [ "$(TZ=Europe/Paris date +%u)" = 1 ]; }; then
+            xvfb-run --auto-servernum npm run enrich -- --refresh
+          else
+            xvfb-run --auto-servernum npm run enrich
+          fi
       - uses: actions/upload-artifact@v5
         with:
           name: data
@@ -121,33 +132,6 @@ jobs:
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=data&per_page=100"
           --jq ".artifacts[] | select(.workflow_run.id != $GITHUB_RUN_ID) | .id"
           | xargs -r -I{} gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/{}"
-      - run: npm run build
-      - run: npx wrangler deploy
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
-  # The site shows what is left at build time: a daily build drops the past days and screenings.
-  rebuild:
-    if: github.event.schedule == '1 23 * * *'
-    runs-on: ubuntu-24.04
-    concurrency: data
-    permissions:
-      contents: read
-      actions: read
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
-      - uses: dawidd6/action-download-artifact@v27
-        with:
-          name: data
-          path: data
-          search_artifacts: true
-          workflow_conclusion: ""
       - run: npm run build
       - run: npx wrangler deploy
         env:

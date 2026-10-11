@@ -46,7 +46,7 @@ export function preloaded(
     .map((item) => ({ kind: "loaded", id: item.id, film: item }));
 }
 
-/** Wikidata's IDs first. Search only when Wikidata has none, or none that passes the check. */
+/** The earlier page and Wikidata's IDs first. Search only when none passes the check. */
 export function tmdbLookup(target: Linked): Lookup<TmdbFilm> {
   return {
     known: known(target).tmdb,
@@ -109,8 +109,20 @@ function closeTo(
   return (result) => closeYear(target.movie.productionYear, result.year);
 }
 
+/** The earlier page first: it passed the check before. */
 function known(target: Linked): KnownIds {
-  return target.wikidata?.known ?? NONE;
+  const wikidata = target.wikidata?.known ?? NONE;
+  return {
+    tmdb: unique([...target.earlier.tmdb, ...wikidata.tmdb]),
+    rottenTomatoes: unique([
+      ...target.earlier.rottenTomatoes,
+      ...wikidata.rottenTomatoes,
+    ]),
+    sensCritique: unique([
+      ...target.earlier.sensCritique,
+      ...wikidata.sensCritique,
+    ]),
+  };
 }
 
 function sameAs(identity: Identity): (other: Identity) => boolean {

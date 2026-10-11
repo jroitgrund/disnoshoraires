@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { parseArgs } from "node:util";
 import { Session } from "pantomime";
 import { ENRICHMENT_FILE, readCrawls } from "../shared/data.ts";
 import {
@@ -11,6 +12,10 @@ import { pacedHttp } from "./http.ts";
 import { writeJson } from "./output.ts";
 import { merged, newMovies } from "./reuse.ts";
 
+// With --refresh, every movie is looked up again: ratings change, and sites add films.
+const { refresh } = parseArgs({
+  options: { refresh: { type: "boolean", default: false } },
+}).values;
 const crawls = readCrawls().map(({ crawl }) => crawl);
 // A film on in several cities is looked up once.
 const movies = [
@@ -19,11 +24,12 @@ const movies = [
   ).values(),
 ];
 const earlier = await readEarlier(ENRICHMENT_FILE);
-const toEnrich = newMovies(movies, earlier);
+const toEnrich = refresh ? movies : newMovies(movies, earlier);
 console.error(
-  `${toEnrich.length} new movies, ${movies.length - toEnrich.length} from ${ENRICHMENT_FILE}`,
+  `${toEnrich.length} movies to look up, ${movies.length - toEnrich.length} from ${ENRICHMENT_FILE}`,
 );
-const fresh = toEnrich.length === 0 ? {} : await enrichWithSession(toEnrich);
+const fresh =
+  toEnrich.length === 0 ? {} : await enrichWithSession(toEnrich, earlier);
 // Parsed before it is written, so the file always matches its schema.
 await writeJson(
   ENRICHMENT_FILE,
@@ -33,9 +39,12 @@ await writeJson(
   }),
 );
 
-async function enrichWithSession(list: readonly MovieInfo[]) {
+async function enrichWithSession(
+  list: readonly MovieInfo[],
+  earlier: Enrichment["movies"],
+) {
   await using session = await Session.launch();
-  return await enrich(session, pacedHttp(), list);
+  return await enrich(session, pacedHttp(), list, earlier);
 }
 
 /** The output of the last run. Without it, or in an older schema, or not JSON, every movie is new. */

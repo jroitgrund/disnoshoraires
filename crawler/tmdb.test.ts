@@ -6,6 +6,7 @@ import {
   parseTmdbFilm,
   parseTmdbSearch,
   pickBackdrop,
+  tmdbIdOf,
 } from "./tmdb.ts";
 
 test("search", () => {
@@ -20,6 +21,15 @@ test("film page", () => {
       fixture("tmdb/fjord-fr.html"),
     ),
   ).toMatchSnapshot();
+});
+
+test("ID of a film page", () => {
+  const film = parseTmdbFilm(
+    "1401459",
+    fixture("tmdb/fjord-en.html"),
+    fixture("tmdb/fjord-fr.html"),
+  );
+  expect(tmdbIdOf(film.url)).toBe("1401459");
 });
 
 test("film page that shares only the French title with AlloCiné", () => {

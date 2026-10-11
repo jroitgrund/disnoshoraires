@@ -69,17 +69,22 @@ export function parseTmdbSearch(html: string): SearchResult<TmdbFilm>[] {
     .querySelectorAll("#movie_results [data-object-id]")
     .map((card) => ({
       id:
-        /^\/movie\/(\d+)/.exec(
+        tmdbIdOf(
           card
             .querySelector("a[data-media-type=movie]")
             ?.getAttribute("href") ?? "",
-        )?.[1] ?? "",
+        ) ?? "",
       year: yearIn(card.querySelector(".release_date")?.text ?? ""),
     }))
     .filter((result) => result.id !== "");
 }
 
 /** `null` when TMDB has no such film. */
+/** `/movie/32117-aprile` → `32117`. */
+export function tmdbIdOf(url: string): string | null {
+  return /\/movie\/(\d+)/.exec(url)?.[1] ?? null;
+}
+
 async function tmdbFilm(http: Http, id: string): Promise<TmdbFilm | null> {
   const response = await http.request(`${ORIGIN}/movie/${id}?language=en-US`);
   if (response == null) {
