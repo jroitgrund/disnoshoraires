@@ -65,12 +65,21 @@
   box-sizing: border-box;
 }
 
+/* A short page still fills the screen: the main part takes the room left,
+   and the footer stays at the bottom. */
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
   margin: 0;
   background: var(--paper);
   color: var(--ink);
   font: var(--t-body) / 1.5 var(--mono);
   overflow-wrap: break-word;
+}
+
+main {
+  flex: 1;
 }
 
 ::selection {
