@@ -37,7 +37,8 @@ export function moviesOf(rows: readonly ShowtimeRow[]): Movie[] {
 /**
  * Each film once, in all `crawls`: a movie that passes the identity check with a movie of a source earlier in
  * `SOURCES`, in any crawl, becomes that movie and shows with that source's data. Two movies of one source stay
- * two films: the source's IDs tell them apart. Gives the merge to apply to each crawl.
+ * two films: the source's IDs tell them apart. A screening that an earlier source also gives, for the same film
+ * in the same theater at the same time, keeps the earlier source's data. Gives the merge to apply to each crawl.
  */
 export function sourceMerge(crawls: readonly Crawl[]): (crawl: Crawl) => Crawl {
   const movies = [
@@ -81,17 +82,29 @@ export function sourceMerge(crawls: readonly Crawl[]): (crawl: Crawl) => Crawl {
       (twin(roots, movie) ?? movie).movie,
     ]),
   );
-  return (crawl) => ({
-    ...crawl,
-    movies: moviesOf(
-      crawl.movies.flatMap((movie) =>
-        movie.screenings.map((screening) => ({
-          movie: into.get(movie.id) ?? info(movie),
-          screening,
-        })),
+  return (crawl) => {
+    const rows = crawl.movies.flatMap((movie) =>
+      movie.screenings.map((screening) => ({
+        movie: into.get(movie.id) ?? info(movie),
+        screening,
+        rank: sourceRank(movie.id),
+      })),
+    );
+    const slot = ({ movie, screening }: (typeof rows)[number]) =>
+      `${movie.id} ${screening.theaterId} ${screening.startsAt}`;
+    const firstRank = new Map(
+      [...Map.groupBy(rows, slot)].map(([key, group]) => [
+        key,
+        Math.min(...group.map((row) => row.rank)),
+      ]),
+    );
+    return {
+      ...crawl,
+      movies: moviesOf(
+        rows.filter((row) => row.rank === firstRank.get(slot(row))),
       ),
-    ),
-  });
+    };
+  };
 }
 
 function info({ screenings, ...movieInfo }: Movie): MovieInfo {

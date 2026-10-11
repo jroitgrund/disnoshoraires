@@ -7,7 +7,7 @@ Two passes. Each pass writes its own file with its own schema (`shared/schema.ts
 | `npm run crawl`  | AlloCiné, Institut Lumière | `data/showtimes/<city>.json` | `CrawlSchema`      |
 | `npm run enrich` | `data/showtimes/`          | `data/external.json`         | `EnrichmentSchema` |
 
-Each movie has an ID of its source and the source's own key (`shared/ids.ts`): `allocine:<id>`, `lumiere:<slug>`.
+Each movie has an ID of its source and the source’s own key (`shared/ids.ts`): `allocine:<id>`, `lumiere:<slug>`, `festival:<slug>`.
 
 ## Institut Lumière
 
@@ -18,7 +18,15 @@ AlloCiné lists the Institut Lumière (Lyon) without showtimes. The crawl reads 
 - A line whose link leads to no film block (a talk, an exhibition, a ticketing site) is left out.
 - Films are in French, or in the original version with French subtitles. Cinématokid shows are dubbed.
 
-The crawl keeps the movies of each source. Enrich and the site read the crawls merged (`shared/rows.ts`): a movie that passes the identity check with a movie of a source earlier in `SOURCES`, in any city, becomes that movie. It shows once, with the data of the earlier source. Two movies of one source stay two films. The calendar often gives first names as initials: "M. Forman" and "Milos Forman" are the same person.
+## Festival Lumière 2026
+
+`shared/festival-lumiere-2026.json` holds the festival's screenings (10 to 18 October), taken once from its printed programme. The festival's site gives the synopsis and the countries. Each film has the ID `festival:<slug>`. Only the theaters of AlloCiné's Lyon list are kept: the Halle Tony Garnier, the Auditorium and the cinemas of the suburbs are left out. Talks and master classes are left out.
+
+The crawl does not read it. Enrich and the site add it to the Lyon crawl, on the crawl's dates (`shared/festival.ts`).
+
+## Sources merged
+
+The crawl keeps the movies of each source. Enrich and the site read the crawls merged (`shared/rows.ts`): a movie that passes the identity check with a movie of a source earlier in `SOURCES`, in any city, becomes that movie. It shows once, with the data of the earlier source. Two movies of one source stay two films. A screening that an earlier source also gives (same film, theater and start) shows once. The calendar often gives first names as initials: "M. Forman" and "Milos Forman" are the same person.
 
 ## Enrich pass
 

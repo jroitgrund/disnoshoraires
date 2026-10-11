@@ -1,11 +1,14 @@
 import { z } from "zod";
 
 /** The sources of showtimes. A film in several sources keeps the data of the first. */
-export const SOURCES = ["allocine", "lumiere"] as const;
+export const SOURCES = ["allocine", "lumiere", "festival"] as const;
 
 export type Source = (typeof SOURCES)[number];
 
-/** The source and the source's own key for the film: `allocine:188280`, `lumiere:programme-milos-forman-amadeus`. */
+/**
+ * The source and the source's own key for the film: `allocine:188280`, `lumiere:programme-milos-forman-amadeus`,
+ * `festival:fargo`.
+ */
 export const MovieIdSchema = z.templateLiteral([
   z.enum(SOURCES),
   ":",

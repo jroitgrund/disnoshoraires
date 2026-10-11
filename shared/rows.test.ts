@@ -92,3 +92,21 @@ test("two movies of one source stay two films", () => {
     ]
   `);
 });
+
+test("a screening that an earlier source also gives shows once", () => {
+  expect(
+    outline([
+      crawl([
+        movie("allocine:67", "Amadeus", ["Milos Forman"], ["P1", "P1"]),
+        movie("lumiere:amadeus", "Amadeus", ["M. Forman"], ["P0050"]),
+        movie("festival:amadeus", "Amadeus", ["Miloš Forman"], ["P0050", "P1"]),
+      ]),
+    ]),
+  ).toMatchInlineSnapshot(`
+    [
+      [
+        "allocine:67 Milos Forman: P0050 P1 P1",
+      ],
+    ]
+  `);
+});
