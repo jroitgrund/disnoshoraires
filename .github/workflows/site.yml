@@ -12,6 +12,10 @@ on:
         description: ID of a run whose crawl to reuse (within a day). Empty crawls again.
         required: false
         default: ""
+      cities:
+        description: Slugs of the cities to crawl, separated by spaces. Empty crawls all. The other cities keep the latest data.
+        required: false
+        default: ""
   push:
     branches-ignore: [main]
 
@@ -30,9 +34,13 @@ jobs:
           node-version: 24
       # The longest crawls first: Paris takes 23 min, the other cities 1 to 4 min each.
       - id: list
+        env:
+          CITIES: ${{ inputs.cities }}
         run: >
-          echo "slugs=$(node --input-type=module -e "const { CITIES } = await import('./shared/cities.ts');
-          console.log(JSON.stringify(CITIES.toSorted((a, b) => b.crawlSeconds - a.crawlSeconds)
+          echo "slugs=$(node --input-type=module -e "const { CITIES, cityBySlug } = await import('./shared/cities.ts');
+          const wanted = (process.env.CITIES ?? '').split(' ').filter((slug) => slug !== '');
+          const cities = wanted.length === 0 ? CITIES : wanted.map(cityBySlug);
+          console.log(JSON.stringify(cities.toSorted((a, b) => b.crawlSeconds - a.crawlSeconds)
           .map((city) => city.slug)))")" >> "$GITHUB_OUTPUT"
 
   # One job per city, in parallel: one after the other, the crawl takes over an hour.
@@ -64,7 +72,7 @@ jobs:
           path: data/showtimes/
           retention-days: 1
 
-  # Runs only when all cities are crawled, or on the crawl of an earlier run: a city without data has no page.
+  # Runs only when all cities to crawl are crawled, or on the crawl of an earlier run: a city without data has no page.
   production:
     needs: crawl
     if: ${{ !cancelled() && github.ref == 'refs/heads/main' && (needs.crawl.result == 'success' || inputs.crawl_run) }}
@@ -99,6 +107,20 @@ jobs:
           search_artifacts: true
           workflow_conclusion: ""
           if_no_artifact_found: warn
+      # TEMPORARY: movie IDs became strings with their source, and TMDB entries got genres.
+      - name: Migrate the earlier data to string movie IDs
+        run: |
+          test -d earlier || exit 0
+          for file in earlier/showtimes/*.json; do
+            jq '.movies |= map(if (.id | type) == "number" then .id = "allocine:\(.id)" else . end)' "$file" > "$file.tmp"
+            mv "$file.tmp" "$file"
+          done
+          jq '.movies |= with_entries(if (.key | test("^[0-9]+$")) then .key = "allocine:\(.key)" else . end
+            | if .value.tmdb != null and .value.tmdb.genres == null then .value.tmdb.genres = [] else . end)' \
+            earlier/external.json > earlier/external.json.tmp
+          mv earlier/external.json.tmp earlier/external.json
+      # The cities not crawled in this run keep the latest data.
+      - run: test ! -d earlier/showtimes || cp -n earlier/showtimes/*.json data/showtimes/
       - run: test ! -f earlier/external.json || cp earlier/external.json data/external.json
       - run: xvfb-run --auto-servernum npm run enrich
       - uses: actions/upload-artifact@v5
