@@ -1,3 +1,4 @@
+import { allocineIdOf } from "./allocine.ts";
 import type { Identity, Target } from "./film.ts";
 import type { LetterboxdFilm } from "./letterboxd.ts";
 import { unique } from "./lists.ts";
@@ -15,17 +16,19 @@ export interface Linked extends Target {
 
 /**
  * The item with the AlloCiné ID, which the batch query has loaded. Else a search by title.
- * An item with another AlloCiné ID is another film.
+ * For an AlloCiné movie, an item with another AlloCiné ID is another film.
  */
 export function wikidataLookup(target: Target): Lookup<WikidataFilm> {
-  const allocineId = String(target.movie.id);
+  const allocineId = allocineIdOf(target.movie.id);
   return {
     known: [],
     titles: target.identity.titles,
     consider: () => true,
     accept: (item) =>
-      item.allocineIds.includes(allocineId) ||
-      (item.allocineIds.length === 0 && sameFilm(target.identity, item)),
+      allocineId == null
+        ? sameFilm(target.identity, item)
+        : item.allocineIds.includes(allocineId) ||
+          (item.allocineIds.length === 0 && sameFilm(target.identity, item)),
   };
 }
 
@@ -34,8 +37,11 @@ export function preloaded(
   target: Target,
   items: readonly WikidataFilm[],
 ): Event<WikidataFilm>[] {
+  const allocineId = allocineIdOf(target.movie.id);
   return items
-    .filter((item) => item.allocineIds.includes(String(target.movie.id)))
+    .filter(
+      (item) => allocineId != null && item.allocineIds.includes(allocineId),
+    )
     .map((item) => ({ kind: "loaded", id: item.id, film: item }));
 }
 

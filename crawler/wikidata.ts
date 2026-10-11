@@ -40,7 +40,7 @@ export interface WikidataFilm extends Identity {
 
 /** The items with one of these AlloCiné IDs, or these items. */
 export type FilmsBy =
-  | { readonly allocineIds: readonly number[] }
+  | { readonly allocineIds: readonly string[] }
   | { readonly qids: readonly string[] };
 
 const ColumnSchema = z
@@ -91,7 +91,7 @@ export async function wikidataFilms(
 /** The items with one of these AlloCiné IDs, one query per 100 IDs. */
 export async function wikidataFilmsByAllocineIds(
   http: Http,
-  allocineIds: readonly number[],
+  allocineIds: readonly string[],
 ): Promise<WikidataFilm[]> {
   const items = await Promise.all(
     chunks(allocineIds, IDS_PER_QUERY).map((chunk) =>
@@ -153,7 +153,7 @@ export function searchResults(
 export function filmsQuery(by: FilmsBy): string {
   const selector =
     "allocineIds" in by
-      ? `VALUES ?wanted { ${by.allocineIds.map((id) => `"${String(id)}"`).join(" ")} }
+      ? `VALUES ?wanted { ${by.allocineIds.map((id) => `"${id}"`).join(" ")} }
     ?item wdt:P1265 ?wanted.`
       : `VALUES ?item { ${by.qids.map((qid) => `wd:${qid}`).join(" ")} }`;
   const all = (column: string, name: string): string =>

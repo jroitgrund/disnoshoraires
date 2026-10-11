@@ -22,6 +22,8 @@ export interface TmdbFilm extends Identity {
   readonly ratingCount: number;
   /** The French overview. `null` when TMDB has none in French. */
   readonly synopsis: string | null;
+  /** In French. */
+  readonly genres: readonly string[];
 }
 
 export interface Backdrop {
@@ -139,6 +141,10 @@ export function parseTmdbFilm(
     ratingCount,
     // Without a French overview, the French page shows the English one.
     synopsis: frenchOverview === overview(root) ? null : frenchOverview,
+    genres:
+      french
+        ?.querySelectorAll(".facts .genres a")
+        .map((genre) => genre.text.trim()) ?? [],
   };
 }
 

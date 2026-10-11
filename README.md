@@ -4,14 +4,14 @@ A static site with all cinema showtimes of 20 French cities, one page per city, 
 
 ## Scripts
 
-| Script               | Does                                                                                                                                                                    |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run crawl`      | Crawls AlloCiné with [pantomime](../pantomime) and writes `data/showtimes/<city>.json`. `npm run crawl -- paris lyon` crawls only these cities. About 15 s per theater. |
-| `npm run enrich`     | Finds each movie of all cities on TMDB, Letterboxd, Rotten Tomatoes and SensCritique and writes `data/external.json`. See [crawler/README.md](crawler/README.md).       |
-| `npm run build`      | Builds the static site in `dist/` from `data/`. Each city needs its file.                                                                                               |
-| `npm run build:full` | `crawl`, `enrich`, then `build`.                                                                                                                                        |
-| `npm run preview`    | Serves `dist/`.                                                                                                                                                         |
-| `npm run check`      | Type-checks the crawler and the site.                                                                                                                                   |
+| Script               | Does                                                                                                                                                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `npm run crawl`      | Crawls AlloCiné with [pantomime](../pantomime), and the Institut Lumière's site for Lyon, and writes `data/showtimes/<city>.json`. `npm run crawl -- paris lyon` crawls only these cities. About 15 s per theater. |
+| `npm run enrich`     | Finds each movie of all cities on TMDB, Letterboxd, Rotten Tomatoes and SensCritique and writes `data/external.json`. See [crawler/README.md](crawler/README.md).                                                  |
+| `npm run build`      | Builds the static site in `dist/` from `data/`. Each city needs its file.                                                                                                                                          |
+| `npm run build:full` | `crawl`, `enrich`, then `build`.                                                                                                                                                                                   |
+| `npm run preview`    | Serves `dist/`.                                                                                                                                                                                                    |
+| `npm run check`      | Type-checks the crawler and the site.                                                                                                                                                                              |
 
 ## Layout
 
@@ -22,12 +22,13 @@ A static site with all cinema showtimes of 20 French cities, one page per city, 
   - `sites.ts`: the external sites: name, rating scale, search page.
 - `crawler/`: runs directly with Node (type stripping, no build step).
   - `allocine.ts`: the theater list from the city pages, and showtimes from the endpoint that the theater pages call.
+  - `lumiere.ts`: the Institut Lumière's showtimes, from its calendar. AlloCiné lists the theater without showtimes.
   - `crawl.ts`: one atomic crawl of a city: all theaters, all days, grouped by movie.
   - `enrich.ts`: the enrich pass. It runs the lookups of `rules.ts` with `lookup.ts` against one module per site, and maps the results with `external.ts`.
-  - `film.ts`: the identity of a film, and the AlloCiné movies to look up. `match.ts` compares two identities. `wikidata.ts` gives known IDs.
+  - `film.ts`: the identity of a film, and the movies to look up. `match.ts` compares two identities. `wikidata.ts` gives known IDs.
 - `src/`: the Astro site. Preact components render at build time. The root page has one script that filters the cities as the visitor types.
   - `load.ts` reads `data/`. `programme.ts` turns it into days, films and theaters. The components only render that.
-  - Each film has its page, `/fiche/<id>/`. A day page has only the title of each film card: its script loads the rest from the film's page when the card opens. Without JavaScript, the card links to that page.
+  - Each film has its page, `/fiche/<source>-<id>/`, such as `/fiche/allocine-188280/`. A day page has only the title of each film card: its script loads the rest from the film's page when the card opens. Without JavaScript, the card links to that page.
 
 ## Deploy
 

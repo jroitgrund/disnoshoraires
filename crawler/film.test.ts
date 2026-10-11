@@ -9,7 +9,7 @@ const movie = (
   productionYear: number | null,
   directors: string[],
 ): MovieInfo => ({
-  id,
+  id: `allocine:${String(id)}`,
   title,
   originalTitle,
   synopsis: null,

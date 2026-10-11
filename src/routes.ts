@@ -16,7 +16,12 @@ export function dayHref(
 
 /** One page per film, for all cities and days. */
 export function ficheHref(movie: Movie): string {
-  return `/fiche/${String(movie.id)}/`;
+  return `/fiche/${ficheId(movie)}/`;
+}
+
+/** `allocine:123` → `allocine-123`: a colon in a path reads as a URL scheme. */
+export function ficheId(movie: Movie): string {
+  return movie.id.replace(":", "-");
 }
 
 function cityProgrammes(oldOnly: boolean) {
@@ -53,7 +58,7 @@ export function fichePaths() {
   return [
     ...new Map(showings.map((showing) => [showing.movie.id, showing])).values(),
   ].map((showing) => ({
-    params: { id: String(showing.movie.id) },
+    params: { id: ficheId(showing.movie) },
     props: { showing },
   }));
 }

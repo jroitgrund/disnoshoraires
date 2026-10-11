@@ -9,7 +9,7 @@ export interface Identity {
   readonly directors: readonly string[];
 }
 
-/** An AlloCiné movie to find on the other sites. */
+/** A movie to find on the other sites. */
 export interface Target {
   readonly movie: MovieInfo;
   /** Original title first: most sites know a film by it. */
@@ -22,12 +22,13 @@ export function targets(movies: readonly MovieInfo[]): Target[] {
     .filter(
       (movie) => movie.productionYear != null && movie.directors.length > 0,
     )
-    .map((movie) => ({
-      movie,
-      identity: {
-        titles: unique([movie.originalTitle, movie.title]),
-        year: movie.productionYear,
-        directors: movie.directors,
-      },
-    }));
+    .map((movie) => ({ movie, identity: identity(movie) }));
+}
+
+export function identity(movie: MovieInfo): Identity {
+  return {
+    titles: unique([movie.originalTitle, movie.title]),
+    year: movie.productionYear,
+    directors: movie.directors,
+  };
 }

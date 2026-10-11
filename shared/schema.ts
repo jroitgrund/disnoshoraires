@@ -8,7 +8,8 @@ export const TheaterSchema = z.object({
 });
 
 export const MovieInfoSchema = z.object({
-  id: z.number(),
+  /** The source and its ID: `allocine:<id>`, `lumiere:<slug>`. */
+  id: z.string(),
   title: z.string(),
   originalTitle: z.string(),
   /** In French. */
@@ -27,7 +28,7 @@ export const ScreeningSchema = z.object({
   language: z.enum(["dubbed", "original", "local"]),
   subtitles: z.enum(["none", "standard", "deaf"]),
   experiences: z.array(z.string()),
-  /** The ticketing site of the theater, or `null` when AlloCiné has none. */
+  /** The ticketing site of the theater, or `null` when the source has none. */
   bookingUrl: z.string().nullable(),
 });
 
@@ -43,6 +44,8 @@ export const ExternalSchema = z.object({
       backdrop: z.string().nullable(),
       /** In French. `null` when TMDB has none in French. */
       synopsis: z.string().nullable(),
+      /** In French. */
+      genres: z.array(z.string()),
     })
     .nullable(),
   letterboxd: z
@@ -93,7 +96,7 @@ export const CrawlSchema = z.object({
 /** The output of the enrich pass, for the crawls of all cities. */
 export const EnrichmentSchema = z.object({
   enrichedAt: z.string(),
-  /** By AlloCiné movie ID, for every movie of the crawls. */
+  /** By movie ID, for every movie of the crawls. */
   movies: z.record(z.string(), ExternalSchema),
 });
 

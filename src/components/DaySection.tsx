@@ -6,7 +6,7 @@ import {
   versionLabel,
 } from "../format.ts";
 import type { Day, Showing, Venue } from "../programme.ts";
-import { ficheHref } from "../routes.ts";
+import { ficheHref, ficheId } from "../routes.ts";
 
 interface Props {
   day: Day;
@@ -38,7 +38,7 @@ export function DaySection({ day }: Props) {
 function FilmEntry({ date, showing }: { date: string; showing: Showing }) {
   const { movie, old, venues } = showing;
   // A film shows once per day: the date keeps the IDs unique on the page.
-  const cardId = `fiche-${date}-${movie.id}`;
+  const cardId = `fiche-${date}-${ficheId(movie)}`;
   const cardTitleId = `${cardId}-titre`;
   const title = formatTitle(movie.title);
   const fiche = ficheHref(movie);

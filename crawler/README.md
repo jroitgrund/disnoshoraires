@@ -2,18 +2,31 @@
 
 Two passes. Each pass writes its own file with its own schema (`shared/schema.ts`), and parses its output with that schema before it writes the file.
 
-| Pass             | Reads             | Writes                       | Schema             |
-| ---------------- | ----------------- | ---------------------------- | ------------------ |
-| `npm run crawl`  | AlloCiné          | `data/showtimes/<city>.json` | `CrawlSchema`      |
-| `npm run enrich` | `data/showtimes/` | `data/external.json`         | `EnrichmentSchema` |
+| Pass             | Reads                      | Writes                       | Schema             |
+| ---------------- | -------------------------- | ---------------------------- | ------------------ |
+| `npm run crawl`  | AlloCiné, Institut Lumière | `data/showtimes/<city>.json` | `CrawlSchema`      |
+| `npm run enrich` | `data/showtimes/`          | `data/external.json`         | `EnrichmentSchema` |
+
+Each movie has a string ID with its source: `allocine:<id>`, `lumiere:<slug>`.
+
+## Institut Lumière
+
+AlloCiné lists the Institut Lumière (Lyon) without showtimes. The crawl reads its calendar (`institut-lumiere.org/calendrier`, and the next month when the dates reach into it), plain HTTP (`lumiere.ts`). The calendar is hand-written HTML:
+
+- A line starts with its times in bold ("9h et 9h15" is one film in two rooms), then the cycle, a link to the film, and the credits: "(M. Forman, 2h40)", or during the festival "de Jules Dassin (1h32)".
+- The link leads to the film's block on a programme page (`#anchor`): title, "(France, États-Unis, 1984, 2h40, coul.)", synopsis, and a ticketing link per date. During the festival it leads to the film's page on `festival-lumiere.org`: title, original title, "de Jules Dassin · Grèce · 1960 · 1h32", synopsis.
+- A line whose link leads to no film block (a talk, an exhibition, a ticketing site) is left out.
+- Films are in French, or in the original version with French subtitles. Cinématokid shows are dubbed.
+
+A Lumière film that passes the identity check with an AlloCiné movie of the same crawl becomes that movie: it shows once, with AlloCiné's data. The calendar often gives first names as initials: "M. Forman" and "Milos Forman" are the same person.
 
 ## Enrich pass
 
-For each movie of all cities, `data/external.json` has, by AlloCiné ID (a movie on in several cities is looked up once). The pass looks up only the movies that the earlier `data/external.json` does not have (`reuse.ts`), and keeps the earlier results of the others:
+For each movie of all cities, `data/external.json` has, by movie ID (a movie on in several cities is looked up once). The pass looks up only the movies that the earlier `data/external.json` does not have (`reuse.ts`), and keeps the earlier results of the others:
 
 | Site            | Data                                                                                |
 | --------------- | ----------------------------------------------------------------------------------- |
-| TMDB            | URL, rating /10, rating count, one backdrop, French synopsis                        |
+| TMDB            | URL, rating /10, rating count, one backdrop, French synopsis, French genres         |
 | Letterboxd      | URL, rating /5, rating count                                                        |
 | Rotten Tomatoes | URL, Tomatometer % (critics), Popcornmeter % (audience), each `null` when not shown |
 | SensCritique    | URL, rating /10, rating count                                                       |
@@ -21,7 +34,7 @@ For each movie of all cities, `data/external.json` has, by AlloCiné ID (a movie
 
 A site is `null` when no film on it passes the identity check. A wrong film is worse than none.
 
-The French synopsis comes from AlloCiné, in `data/showtimes/<city>.json`. TMDB's French overview is the fallback. On a page in French, TMDB shows the English overview when it has no French one: an overview that is the same on both pages is not French.
+The French synopsis and the genres come from the crawl, in `data/showtimes/<city>.json`. TMDB's are the fallback: the Institut Lumière gives no genres. On a page in French, TMDB shows the English overview when it has no French one: an overview that is the same on both pages is not French.
 
 ### Transport
 
@@ -37,8 +50,8 @@ The session sites run one site after the other (all Letterboxd, then all Rotten 
 ### Where the IDs come from
 
 1. **Wikidata.** The item gives the TMDB (P4947), Rotten Tomatoes (P1258) and SensCritique (P10100) IDs, and the Wikipedia articles.
-   - SPARQL queries find the items with the AlloCiné ID (P1265) of every film, 100 IDs per query: Wikimedia refuses a longer URL. This finds most films, also recent ones.
-   - For a film without such an item: a search by title, original title first, for items with a director (P57). One SPARQL query loads the results. The first one that passes the identity check is the item. An item with another AlloCiné ID is another film.
+   - SPARQL queries find the items with the AlloCiné ID (P1265) of every AlloCiné film, 100 IDs per query: Wikimedia refuses a longer URL. This finds most films, also recent ones.
+   - For a film without such an item, and for a film from another source: a search by title, original title first, for items with a director (P57). One SPARQL query loads the results. The first one that passes the identity check is the item. For an AlloCiné film, an item with another AlloCiné ID is another film.
 
    Wikidata can be wrong, so its IDs go through the same check as search results.
 
@@ -65,6 +78,7 @@ A film on another site is the AlloCiné film when all three are true (`match.ts`
   - they have the same words in any order (`Bong Joon Ho`, `Joon-ho Bong`), or
   - each word of the shorter name (2+ words) is close to a word of the longer one: bigram similarity ≥ 0.6. This covers transliterations (`Andreï Zviaguintsev`, `Andrey Zvyagintsev`) and a second family name (`Alberto Rodriguez`, `Alberto Rodríguez Librero`), or
   - the whole names have a bigram similarity ≥ 0.8 (typos).
+  - they have the same number of words, one has an initial, and word by word each initial starts the other word or the words are close (`M. Forman`, `Miloš Forman`; `H-G. Clouzot`, `Henri-Georges Clouzot`).
 - **Two titles alike.** Every title on one side against every title on the other. Two titles are alike when:
   - they carry no different sequel numbers (a year such as "(2026)" does not count), and
   - one holds the other (`The Kid in the Photo : Carlos Saura`, `Carlos Saura`), or

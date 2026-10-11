@@ -9,7 +9,7 @@ import { parseTmdbFilm } from "./tmdb.ts";
 import { parseWikidataFilms } from "./wikidata.ts";
 
 const fjord: MovieInfo = {
-  id: 188280,
+  id: "allocine:188280",
   title: "Fjord",
   originalTitle: "Fjord",
   synopsis: null,

@@ -9,7 +9,7 @@ import {
 } from "./wikidata.ts";
 
 test("query by AlloCiné ID", () => {
-  expect(filmsQuery({ allocineIds: [188280, 6429] })).toMatchSnapshot();
+  expect(filmsQuery({ allocineIds: ["188280", "6429"] })).toMatchSnapshot();
 });
 
 test("query by item", () => {

@@ -15,6 +15,6 @@ await mapSequential(cities, async (city) => {
   // The site reads the file with the same schema: a crawl that does not match it is not written.
   await writeJson(
     join(dir, `${city.slug}.json`),
-    CrawlSchema.parse(await crawlCity(city.allocineId)),
+    CrawlSchema.parse(await crawlCity(city)),
   );
 });

@@ -13,7 +13,7 @@ exports[`showtimes 1`] = `
       "genres": [
         "Documentaire",
       ],
-      "id": 318226,
+      "id": "allocine:318226",
       "originalTitle": "Les Survivants du Che",
       "productionYear": 2026,
       "runtime": "1h 38min",
@@ -44,7 +44,7 @@ exports[`showtimes 1`] = `
         "Fantastique",
         "Science Fiction",
       ],
-      "id": 276608,
+      "id": "allocine:276608",
       "originalTitle": "Spider-Man: Brand New Day",
       "productionYear": 2026,
       "runtime": "2h 25min",

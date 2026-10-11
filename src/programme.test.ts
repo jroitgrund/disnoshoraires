@@ -17,7 +17,7 @@ const movie = (
   productionYear: number | null,
   screenings: Screening[],
 ): Movie => ({
-  id,
+  id: `allocine:${String(id)}`,
   title,
   originalTitle: title,
   synopsis: null,
@@ -64,9 +64,10 @@ const tmdb = {
   ratingCount: 0,
   backdrop: null,
   synopsis: null,
+  genres: [],
 };
 
-const external = { "2": nothing };
+const external = { "allocine:2": nothing };
 
 /** Saturday 10 October 2026, 19:00 in Paris. */
 const now = new Date("2026-10-10T17:00:00Z");
@@ -123,8 +124,8 @@ test("the synopsis is AlloCiné's, else TMDB's", () => {
       ],
     },
     {
-      "1": { ...nothing, tmdb: { ...tmdb, synopsis: "TMDB" } },
-      "2": { ...nothing, tmdb: { ...tmdb, synopsis: "TMDB" } },
+      "allocine:1": { ...nothing, tmdb: { ...tmdb, synopsis: "TMDB" } },
+      "allocine:2": { ...nothing, tmdb: { ...tmdb, synopsis: "TMDB" } },
     },
     { oldOnly: false, now },
   );
@@ -137,6 +138,36 @@ test("the synopsis is AlloCiné's, else TMDB's", () => {
       "Akira: TMDB",
       "Cars: null",
       "Fjord: AlloCiné",
+    ]
+  `);
+});
+
+test("the genres are the source's, else TMDB's", () => {
+  const [day] = programme(
+    {
+      ...crawl,
+      movies: [
+        {
+          ...movie(1, "Fjord", 2026, [screening("P1", "2026-10-10T21:00:00")]),
+          genres: ["Drame"],
+        },
+        movie(2, "Akira", 1988, [screening("P1", "2026-10-10T22:00:00")]),
+      ],
+    },
+    {
+      "allocine:1": { ...nothing, tmdb: { ...tmdb, genres: ["Comédie"] } },
+      "allocine:2": { ...nothing, tmdb: { ...tmdb, genres: ["Animation"] } },
+    },
+    { oldOnly: false, now },
+  );
+  expect(
+    day?.showings.map(
+      ({ movie, genres }) => `${movie.title}: ${genres.join(", ")}`,
+    ),
+  ).toMatchInlineSnapshot(`
+    [
+      "Akira: Animation",
+      "Fjord: Drame",
     ]
   `);
 });

@@ -49,6 +49,12 @@ test("people", () => {
       ["Christophe Honoré (II)", "Christophe Honoré"],
       ["Joe Russo", "Anthony Russo"],
       ["Cristian Mungiu", "Rodrigo Sorogoyen"],
+      ["M. Forman", "Miloš Forman"],
+      ["H-G. Clouzot", "Henri-Georges Clouzot"],
+      ["J. L. Mankiewicz", "Joseph L. Mankiewicz"],
+      ["A. Hitchock", "Alfred Hitchcock"],
+      ["J. Coen", "Ethan Coen"],
+      ["M. Forman", "Marc Forster"],
     ]),
   ).toMatchInlineSnapshot(`
     [
@@ -59,6 +65,12 @@ test("people", () => {
       "Christophe Honoré (II) | Christophe Honoré: true",
       "Joe Russo | Anthony Russo: false",
       "Cristian Mungiu | Rodrigo Sorogoyen: false",
+      "M. Forman | Miloš Forman: true",
+      "H-G. Clouzot | Henri-Georges Clouzot: true",
+      "J. L. Mankiewicz | Joseph L. Mankiewicz: true",
+      "A. Hitchock | Alfred Hitchcock: true",
+      "J. Coen | Ethan Coen: false",
+      "M. Forman | Marc Forster: false",
     ]
   `);
 });

@@ -3,7 +3,7 @@ import type { External, MovieInfo } from "../shared/schema.ts";
 import { NOTHING } from "./external.ts";
 import { merged, newMovies } from "./reuse.ts";
 
-const movie = (id: number) => ({ id }) as MovieInfo;
+const movie = (id: number) => ({ id: String(id) }) as MovieInfo;
 const found: External = {
   ...NOTHING,
   wikipedia: { en: null, fr: "https://fr.wikipedia.org/wiki/Cars" },

@@ -33,6 +33,7 @@ export function toExternal(found: Found): External {
         ? null
         : {
             ...pick(tmdb, ["url", "rating", "ratingCount", "synopsis"]),
+            genres: [...tmdb.genres],
             backdrop: found.backdrop,
           },
     letterboxd:

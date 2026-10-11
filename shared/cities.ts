@@ -8,6 +8,8 @@ export interface City {
   readonly allocineId: number;
   /** How long the crawl took in CI on 2026-10-10. CI starts the longest crawls first. */
   readonly crawlSeconds: number;
+  /** The AlloCiné theater ID of the Institut Lumière: AlloCiné lists it without showtimes. */
+  readonly institutLumiere?: string;
 }
 
 export const CITIES: readonly City[] = [
@@ -73,6 +75,7 @@ export const CITIES: readonly City[] = [
     at: "à Lyon",
     allocineId: 113315,
     crawlSeconds: 252,
+    institutLumiere: "P0050",
   },
   {
     slug: "marseille",

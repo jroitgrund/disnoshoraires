@@ -5,7 +5,7 @@ export function newMovies(
   movies: readonly MovieInfo[],
   earlier: Enrichment["movies"],
 ): MovieInfo[] {
-  return movies.filter((movie) => earlier[String(movie.id)] == null);
+  return movies.filter((movie) => earlier[movie.id] == null);
 }
 
 /** The earlier results of the movies still on, with the new ones. A movie no longer on drops out. */
@@ -16,9 +16,8 @@ export function merged(
 ): Enrichment["movies"] {
   return Object.fromEntries(
     movies.flatMap((movie) => {
-      const id = String(movie.id);
-      const sites = fresh[id] ?? earlier[id];
-      return sites == null ? [] : [[id, sites]];
+      const sites = fresh[movie.id] ?? earlier[movie.id];
+      return sites == null ? [] : [[movie.id, sites]];
     }),
   );
 }

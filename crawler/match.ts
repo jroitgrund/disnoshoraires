@@ -99,7 +99,29 @@ export function samePerson(a: string, b: string): boolean {
       shorter.every((t) =>
         longer.some((u) => similarity(t, u) >= NAME_PART_SIMILARITY),
       )) ||
-    similarity(sorted(ta), sorted(tb)) >= NAME_SIMILARITY
+    similarity(sorted(ta), sorted(tb)) >= NAME_SIMILARITY ||
+    initialed(ta, tb)
+  );
+}
+
+/**
+ * The same name with first names as initials on one side: "M. Forman", "Milos Forman";
+ * "H-G. Clouzot", "Henri-Georges Clouzot". Word by word, in order.
+ */
+function initialed(a: readonly string[], b: readonly string[]): boolean {
+  const initial = (t: string, u: string): boolean =>
+    t.length === 1 && u.startsWith(t);
+  return (
+    a.length === b.length &&
+    [...a, ...b].some((t) => t.length === 1) &&
+    a.every((t, i) => {
+      const u = b[i] ?? "";
+      return (
+        initial(t, u) ||
+        initial(u, t) ||
+        similarity(t, u) >= NAME_PART_SIMILARITY
+      );
+    })
   );
 }
 

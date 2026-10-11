@@ -21,7 +21,7 @@ export function loadCrawl(slug: string): Crawl {
   );
 }
 
-/** Other sites' pages of each movie, by AlloCiné movie ID. Empty without an enrich pass. */
+/** Other sites' pages of each movie, by movie ID. Empty without an enrich pass. */
 export function loadExternal(): Enrichment["movies"] {
   if (!existsSync(ENRICHMENT_FILE)) {
     return {};

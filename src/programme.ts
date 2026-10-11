@@ -25,6 +25,8 @@ export interface Showing {
   readonly external: External | undefined;
   /** AlloCiné's, else TMDB's: both in French. */
   readonly synopsis: string | null;
+  /** The source's, else TMDB's. */
+  readonly genres: readonly string[];
   readonly old: boolean;
   /** In alphabetical order. */
   readonly venues: readonly Venue[];
@@ -67,11 +69,13 @@ export function programme(
           : [
               {
                 movie,
-                external: external[String(movie.id)],
+                external: external[movie.id],
                 synopsis:
-                  movie.synopsis ??
-                  external[String(movie.id)]?.tmdb?.synopsis ??
-                  null,
+                  movie.synopsis ?? external[movie.id]?.tmdb?.synopsis ?? null,
+                genres:
+                  movie.genres.length > 0
+                    ? movie.genres
+                    : (external[movie.id]?.tmdb?.genres ?? []),
                 old: isOld(movie, today),
                 venues: venues(screenings, theaters),
               },

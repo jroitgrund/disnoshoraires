@@ -1,0 +1,2552 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`calendar 1`] = `
+[
+  {
+    "date": "2026-09-01",
+    "deaf": false,
+    "directors": [
+      "J. L. Mankiewicz",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#eve",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-01",
+    "deaf": false,
+    "directors": [
+      "M. Carné",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#raquin",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-09-02",
+    "deaf": false,
+    "directors": [
+      "O. Welles",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#citizen",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-02",
+    "deaf": false,
+    "directors": [
+      "P. Granier-Deferre",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#couderc",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-02",
+    "deaf": false,
+    "directors": [
+      "Costa-Gavras",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#aveu",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-02",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#valmont",
+    "times": [
+      "21:00",
+    ],
+  },
+  {
+    "date": "2026-09-03",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#goya",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-03",
+    "deaf": false,
+    "directors": [
+      "H-G. Clouzot",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#quai",
+    "times": [
+      "16:15",
+    ],
+  },
+  {
+    "date": "2026-09-03",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.institut-lumiere.org/en-attendant-le-festival-lumiere-2026",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-03",
+    "deaf": false,
+    "directors": [
+      "J. Coen",
+    ],
+    "link": "https://www.institut-lumiere.org/en-attendant-le-festival-lumiere-2026",
+    "times": [
+      "20:30",
+    ],
+  },
+  {
+    "date": "2026-09-04",
+    "deaf": false,
+    "directors": [
+      "J. L. Mankiewicz",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#eve",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-04",
+    "deaf": false,
+    "directors": [
+      "J-P. Melville",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#armee",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-09-04",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#ragtime",
+    "times": [
+      "19:45",
+    ],
+  },
+  {
+    "date": "2026-09-05",
+    "deaf": false,
+    "directors": [
+      "M. Mizrahi",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#devant",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-09-05",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#pompiers",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-05",
+    "deaf": false,
+    "directors": [
+      "I. Bergman",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#fraises",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-09-05",
+    "deaf": false,
+    "directors": [
+      "E. Kazan",
+    ],
+    "link": "https://www.institut-lumiere.org/les-classiques-du-mois-septembre-2026#eden",
+    "times": [
+      "18:00",
+    ],
+  },
+  {
+    "date": "2026-09-05",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#amadeus",
+    "times": [
+      "20:15",
+    ],
+  },
+  {
+    "date": "2026-09-06",
+    "deaf": false,
+    "directors": [
+      "J. Becker",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#casque",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-09-06",
+    "deaf": false,
+    "directors": [
+      "F. Lang",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#maudit",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-09-06",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#moon",
+    "times": [
+      "19:00",
+    ],
+  },
+  {
+    "date": "2026-09-08",
+    "deaf": false,
+    "directors": [
+      "P. Chéreau",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#judith",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-08",
+    "deaf": false,
+    "directors": [
+      "A. Kurosawa",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#yojimbo",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-08",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.institut-lumiere.org/cine-conference-milos-forman",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-08",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-conference-milos-forman",
+    "times": [
+      "20:30",
+    ],
+  },
+  {
+    "date": "2026-09-09",
+    "deaf": false,
+    "directors": [
+      "A. Hitchcock",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#doute",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-09",
+    "deaf": false,
+    "directors": [
+      "J. Becker",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#casque",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-09",
+    "deaf": false,
+    "directors": [
+      "Y. Allégret",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#maneges",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-09",
+    "deaf": false,
+    "directors": [
+      "S. Kubrick",
+    ],
+    "link": "https://www.institut-lumiere.org/les-classiques-du-mois-septembre-2026#lolita",
+    "times": [
+      "20:15",
+    ],
+  },
+  {
+    "date": "2026-09-10",
+    "deaf": false,
+    "directors": [
+      "A. Hitchcock",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#doute",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-10",
+    "deaf": false,
+    "directors": [
+      "M. Mizrahi",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#devant",
+    "times": [
+      "16:15",
+    ],
+  },
+  {
+    "date": "2026-09-10",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.institut-lumiere.org/invitation-a-marina-fois",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-11",
+    "deaf": false,
+    "directors": [
+      "J. L. Mankiewicz",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#eve",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-11",
+    "deaf": false,
+    "directors": [
+      "J. Clayon",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#ville",
+    "times": [
+      "16:15",
+    ],
+  },
+  {
+    "date": "2026-09-11",
+    "deaf": false,
+    "directors": [
+      "E. Kazan",
+    ],
+    "link": "https://www.institut-lumiere.org/les-classiques-du-mois-septembre-2026#eden",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-11",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#moon",
+    "times": [
+      "20:45",
+    ],
+  },
+  {
+    "date": "2026-09-12",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#pique",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-09-12",
+    "deaf": false,
+    "directors": [
+      "R. Rouleau",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#salem",
+    "times": [
+      "16:15",
+    ],
+  },
+  {
+    "date": "2026-09-12",
+    "deaf": false,
+    "directors": [
+      "A. Kurosawa",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#yojimbo",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-09-12",
+    "deaf": false,
+    "directors": [
+      "Costa-Gavras",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#tueurs",
+    "times": [
+      "19:00",
+    ],
+  },
+  {
+    "date": "2026-09-12",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#coucou",
+    "times": [
+      "20:45",
+    ],
+  },
+  {
+    "date": "2026-09-13",
+    "deaf": false,
+    "directors": [
+      "A. Rota",
+      "C. Murrell",
+    ],
+    "link": "https://www.institut-lumiere.org/programme-cinematokid#billy",
+    "times": [
+      "10:30",
+    ],
+  },
+  {
+    "date": "2026-09-13",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.institut-lumiere.org/cine-concerts-et-cinema-muet-septembre-2026",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-09-13",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#amadeus",
+    "times": [
+      "16:45",
+    ],
+  },
+  {
+    "date": "2026-09-13",
+    "deaf": false,
+    "directors": [
+      "I. Bergman",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#fraises",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-09-15",
+    "deaf": false,
+    "directors": [
+      "O. Welles",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#citizen",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-15",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.institut-lumiere.org/en-attendant-le-festival-lumiere-2026",
+    "times": [
+      "17:30",
+    ],
+  },
+  {
+    "date": "2026-09-15",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.institut-lumiere.org/en-attendant-le-festival-lumiere-2026",
+    "times": [
+      "19:15",
+    ],
+  },
+  {
+    "date": "2026-09-15",
+    "deaf": false,
+    "directors": [
+      "P. Granier-Deferre",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#couderc",
+    "times": [
+      "20:45",
+    ],
+  },
+  {
+    "date": "2026-09-16",
+    "deaf": false,
+    "directors": [
+      "A. Lanciaux (77mn",
+    ],
+    "link": "https://www.institut-lumiere.org/programme-cinematokid#mesanges",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-09-16",
+    "deaf": false,
+    "directors": [
+      "H-G. Clouzot",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#quai",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-16",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.institut-lumiere.org/en-attendant-le-festival-lumiere-2026",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-09-16",
+    "deaf": false,
+    "directors": [
+      "J. Coen",
+    ],
+    "link": "https://www.institut-lumiere.org/en-attendant-le-festival-lumiere-2026",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-17",
+    "deaf": false,
+    "directors": [
+      "J. L. Mankiewicz",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#eve",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-17",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#blonde",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-17",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.institut-lumiere.org/en-attendant-le-festival-lumiere-2026",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-17",
+    "deaf": false,
+    "directors": [
+      "J-P. Melville",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#armee",
+    "times": [
+      "20:00",
+    ],
+  },
+  {
+    "date": "2026-09-18",
+    "deaf": false,
+    "directors": [
+      "A. Kurosawa",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#yojimbo",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-18",
+    "deaf": false,
+    "directors": [
+      "A. Pietrangeli",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#compagnes",
+    "times": [
+      "16:15",
+    ],
+  },
+  {
+    "date": "2026-09-18",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#taking",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-18",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#moon",
+    "times": [
+      "20:30",
+    ],
+  },
+  {
+    "date": "2026-09-19",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.institut-lumiere.org/en-attendant-le-festival-lumiere-2026",
+    "times": [
+      "11:15",
+    ],
+  },
+  {
+    "date": "2026-09-19",
+    "deaf": false,
+    "directors": [
+      "M. Ophuls",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#ronde",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-09-19",
+    "deaf": false,
+    "directors": [
+      "S. Kubrick",
+    ],
+    "link": "https://www.institut-lumiere.org/les-classiques-du-mois-septembre-2026#lolita",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-19",
+    "deaf": false,
+    "directors": [
+      "A. Hitchcock",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#doute",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-09-19",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#ragtime",
+    "times": [
+      "19:45",
+    ],
+  },
+  {
+    "date": "2026-09-20",
+    "deaf": false,
+    "directors": [
+      "C. Rivière",
+    ],
+    "link": "https://www.institut-lumiere.org/programme-cinematokid#cabane",
+    "times": [
+      "10:30",
+    ],
+  },
+  {
+    "date": "2026-09-20",
+    "deaf": false,
+    "directors": [
+      "E. Kazan",
+    ],
+    "link": "https://www.institut-lumiere.org/les-classiques-du-mois-septembre-2026#eden",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-09-20",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#hair",
+    "times": [
+      "16:45",
+    ],
+  },
+  {
+    "date": "2026-09-20",
+    "deaf": false,
+    "directors": [
+      "O. Welles",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#citizen",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-09-20",
+    "deaf": false,
+    "directors": [
+      "H-G. Clouzot",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#diaboliques",
+    "times": [
+      "19:00",
+    ],
+  },
+  {
+    "date": "2026-09-22",
+    "deaf": false,
+    "directors": [
+      "R. Walsh",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#vallee",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-22",
+    "deaf": false,
+    "directors": [
+      "H. Calef",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#ombre",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-22",
+    "deaf": false,
+    "directors": [
+      "J. Chapot",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#granges",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-22",
+    "deaf": false,
+    "directors": [
+      "D. Kurys",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#moi",
+    "times": [
+      "19:00",
+    ],
+  },
+  {
+    "date": "2026-09-22",
+    "deaf": false,
+    "directors": [
+      "A. Hitchock",
+    ],
+    "link": "https://www.institut-lumiere.org/les-classiques-du-mois-septembre-2026#oiseaux",
+    "times": [
+      "20:30",
+    ],
+  },
+  {
+    "date": "2026-09-23",
+    "deaf": false,
+    "directors": [
+      "P. Grimault",
+    ],
+    "link": "https://www.institut-lumiere.org/programme-cinematokid#roi",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-09-23",
+    "deaf": false,
+    "directors": [
+      "F. Lang",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#maudit",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-23",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#audition",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-23",
+    "deaf": false,
+    "directors": [
+      "env. 1h",
+    ],
+    "link": "https://www.institut-lumiere.org/voyage-a-travers-le-cinema-de-simone-signoret",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-23",
+    "deaf": false,
+    "directors": [
+      "P. Granier-Deferre",
+    ],
+    "link": "https://www.institut-lumiere.org/voyage-a-travers-le-cinema-de-simone-signoret",
+    "times": [
+      "20:00",
+    ],
+  },
+  {
+    "date": "2026-09-24",
+    "deaf": false,
+    "directors": [
+      "I. Bergman",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#fraises",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-24",
+    "deaf": false,
+    "directors": [
+      "R. Rouleau",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#salem",
+    "times": [
+      "16:15",
+    ],
+  },
+  {
+    "date": "2026-09-24",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#larry",
+    "times": [
+      "19:00",
+    ],
+  },
+  {
+    "date": "2026-09-25",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#valmont",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-25",
+    "deaf": false,
+    "directors": [
+      "Y. Allégret",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#anvers",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-25",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#coucou",
+    "times": [
+      "20:30",
+    ],
+  },
+  {
+    "date": "2026-09-26",
+    "deaf": false,
+    "directors": [
+      "P. Granier-Deferre",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#chat",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-09-26",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#pompiers",
+    "times": [
+      "16:15",
+    ],
+  },
+  {
+    "date": "2026-09-26",
+    "deaf": false,
+    "directors": [
+      "O. Welles",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#citizen",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-09-26",
+    "deaf": false,
+    "directors": [
+      "J. Clayon",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#ville",
+    "times": [
+      "17:45",
+    ],
+  },
+  {
+    "date": "2026-09-26",
+    "deaf": false,
+    "directors": [
+      "A. Hitchock",
+    ],
+    "link": "https://www.institut-lumiere.org/les-classiques-du-mois-septembre-2026#oiseaux",
+    "times": [
+      "20:00",
+    ],
+  },
+  {
+    "date": "2026-09-27",
+    "deaf": false,
+    "directors": [
+      "Collectif",
+    ],
+    "link": "https://www.institut-lumiere.org/programme-cinematokid#ourse",
+    "times": [
+      "10:30",
+    ],
+  },
+  {
+    "date": "2026-09-27",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.institut-lumiere.org/cine-concerts-et-cinema-muet-septembre-2026",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-09-27",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#ragtime",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-27",
+    "deaf": false,
+    "directors": [
+      "H-G. Clouzot",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#quai",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-09-29",
+    "deaf": false,
+    "directors": [
+      "R. Walsh",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#vallee",
+    "times": [
+      "15:00",
+    ],
+  },
+  {
+    "date": "2026-09-29",
+    "deaf": false,
+    "directors": [
+      "Costa-Gavras",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#tueurs",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-29",
+    "deaf": false,
+    "directors": [
+      "P. Weir",
+    ],
+    "link": "https://www.institut-lumiere.org/le-cercle-des-poetes-disparus",
+    "times": [
+      "21:00",
+    ],
+  },
+  {
+    "date": "2026-09-30",
+    "deaf": false,
+    "directors": [
+      "I. Bergman",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#fraises",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-09-30",
+    "deaf": false,
+    "directors": [
+      "M. Carné",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#raquin",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-09-30",
+    "deaf": false,
+    "directors": [
+      "J. Becker",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#casque",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-09-30",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#hair",
+    "times": [
+      "20:30",
+    ],
+  },
+]
+`;
+
+exports[`calendar during the festival 1`] = `
+[
+  {
+    "date": "2026-10-01",
+    "deaf": false,
+    "directors": [
+      "R. Walsh",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#vallee",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-10-01",
+    "deaf": false,
+    "directors": [
+      "H-G. Clouzot",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#diaboliques",
+    "times": [
+      "16:15",
+    ],
+  },
+  {
+    "date": "2026-10-01",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.institut-lumiere.org/back-to-the-90s-trainspotting",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-10-01",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#blonde",
+    "times": [
+      "20:45",
+    ],
+  },
+  {
+    "date": "2026-10-02",
+    "deaf": false,
+    "directors": [
+      "H-G. Clouzot",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#quai",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-10-02",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#pique",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-10-02",
+    "deaf": false,
+    "directors": [
+      "P. Granier-Deferre",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#chat",
+    "times": [
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-10-02",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#coucou",
+    "times": [
+      "20:15",
+    ],
+  },
+  {
+    "date": "2026-10-03",
+    "deaf": false,
+    "directors": [
+      "H. Calef",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#ombre",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-10-03",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#taking",
+    "times": [
+      "16:15",
+    ],
+  },
+  {
+    "date": "2026-10-03",
+    "deaf": false,
+    "directors": [
+      "F. Lang",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#maudit",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-10-03",
+    "deaf": true,
+    "directors": [
+      "J-P. Melville",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/simone-signoret#armee",
+    "times": [
+      "18:00",
+    ],
+  },
+  {
+    "date": "2026-10-03",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#larry",
+    "times": [
+      "20:45",
+    ],
+  },
+  {
+    "date": "2026-10-04",
+    "deaf": false,
+    "directors": [
+      "G. Bekers",
+      "M.Fenati",
+    ],
+    "link": "https://www.institut-lumiere.org/programme-cinematokid#jack",
+    "times": [
+      "10:30",
+    ],
+  },
+  {
+    "date": "2026-10-04",
+    "deaf": false,
+    "directors": [
+      "A. Hitchock",
+    ],
+    "link": "https://www.institut-lumiere.org/les-classiques-du-mois-septembre-2026#oiseaux",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-10-04",
+    "deaf": false,
+    "directors": [
+      "M. Forman",
+    ],
+    "link": "https://www.institut-lumiere.org/programme/milos-forman#amadeus",
+    "times": [
+      "16:45",
+    ],
+  },
+  {
+    "date": "2026-10-04",
+    "deaf": false,
+    "directors": [
+      "A. Kurosawa",
+    ],
+    "link": "https://www.institut-lumiere.org/cine-club-septembre-octobre-2026#yojimbo",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-10-10",
+    "deaf": false,
+    "directors": [
+      "Louis Daquin",
+    ],
+    "link": "https://www.festival-lumiere.org/film/le-voyageur-de-la-toussaint",
+    "times": [
+      "10:45",
+    ],
+  },
+  {
+    "date": "2026-10-10",
+    "deaf": false,
+    "directors": [
+      "Norman Jewison",
+    ],
+    "link": "https://www.festival-lumiere.org/film/justice-pour-tous",
+    "times": [
+      "14:15",
+    ],
+  },
+  {
+    "date": "2026-10-10",
+    "deaf": false,
+    "directors": [
+      "Joel",
+      "Ethan Coen",
+    ],
+    "link": "https://www.festival-lumiere.org/film/arizona-junior",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-10-10",
+    "deaf": false,
+    "directors": [
+      "Tsui Hark",
+    ],
+    "link": "https://www.festival-lumiere.org/film/peking-opera-blues",
+    "times": [
+      "19:15",
+    ],
+  },
+  {
+    "date": "2026-10-10",
+    "deaf": false,
+    "directors": [
+      "Martin Scorsese",
+    ],
+    "link": "https://www.festival-lumiere.org/film/les-infiltres",
+    "times": [
+      "21:45",
+    ],
+  },
+  {
+    "date": "2026-10-10",
+    "deaf": false,
+    "directors": [
+      "Wendy Toye",
+    ],
+    "link": "https://www.festival-lumiere.org/film/the-teckman-mystery",
+    "times": [
+      "11:15",
+      "11:30",
+    ],
+  },
+  {
+    "date": "2026-10-10",
+    "deaf": false,
+    "directors": [
+      "Ettore Scola",
+    ],
+    "link": "https://www.festival-lumiere.org/film/splendor",
+    "times": [
+      "14:00",
+      "14:15",
+    ],
+  },
+  {
+    "date": "2026-10-10",
+    "deaf": false,
+    "directors": [
+      "Josef von Sternberg",
+    ],
+    "link": "https://www.festival-lumiere.org/film/shanghai-express",
+    "times": [
+      "16:30",
+      "16:45",
+    ],
+  },
+  {
+    "date": "2026-10-10",
+    "deaf": false,
+    "directors": [
+      "Norman Jewison",
+    ],
+    "link": "https://www.festival-lumiere.org/film/eclair-de-lune",
+    "times": [
+      "18:30",
+      "18:45",
+    ],
+  },
+  {
+    "date": "2026-10-10",
+    "deaf": false,
+    "directors": [
+      "Yeon Sang-ho",
+    ],
+    "link": "https://www.festival-lumiere.org/film/dernier-train-pour-busan",
+    "times": [
+      "21:00",
+      "21:15",
+    ],
+  },
+  {
+    "date": "2026-10-11",
+    "deaf": false,
+    "directors": [
+      "Nikos Koundouros",
+    ],
+    "link": "https://www.festival-lumiere.org/film/logre-dathenes",
+    "times": [
+      "09:15",
+    ],
+  },
+  {
+    "date": "2026-10-11",
+    "deaf": false,
+    "directors": [
+      "Ettore Scola",
+    ],
+    "link": "https://www.festival-lumiere.org/film/affreux-sales-et-mechants",
+    "times": [
+      "11:30",
+    ],
+  },
+  {
+    "date": "2026-10-11",
+    "deaf": false,
+    "directors": [
+      "Abel Ferrara",
+    ],
+    "link": "https://www.festival-lumiere.org/film/bad-lieutenant",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-10-11",
+    "deaf": false,
+    "directors": [
+      "Wong Kar-wai",
+    ],
+    "link": "https://www.festival-lumiere.org/film/the-grandmaster",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-10-11",
+    "deaf": false,
+    "directors": [
+      "Tsui Hark",
+    ],
+    "link": "https://www.festival-lumiere.org/film/il-etait-une-fois-en-chine",
+    "times": [
+      "20:00",
+    ],
+  },
+  {
+    "date": "2026-10-11",
+    "deaf": false,
+    "directors": [
+      "Antonio Pietrangeli",
+    ],
+    "link": "https://www.festival-lumiere.org/film/adua-et-ses-compagnes",
+    "times": [
+      "09:00",
+      "09:15",
+    ],
+  },
+  {
+    "date": "2026-10-11",
+    "deaf": false,
+    "directors": [
+      "Marc Allégret",
+    ],
+    "link": "https://www.festival-lumiere.org/film/zouzou",
+    "times": [
+      "11:30",
+      "11:45",
+    ],
+  },
+  {
+    "date": "2026-10-11",
+    "deaf": false,
+    "directors": [
+      "Zvonimir Berkovic",
+    ],
+    "link": "https://www.festival-lumiere.org/film/rondo",
+    "times": [
+      "13:45",
+      "14:00",
+    ],
+  },
+  {
+    "date": "2026-10-11",
+    "deaf": false,
+    "directors": [
+      "Louis Daquin",
+    ],
+    "link": "https://www.festival-lumiere.org/film/les-arrivistes",
+    "times": [
+      "16:00",
+      "16:15",
+    ],
+  },
+  {
+    "date": "2026-10-11",
+    "deaf": false,
+    "directors": [
+      "Elaine May",
+    ],
+    "link": "https://www.festival-lumiere.org/film/mikey-et-nicky",
+    "times": [
+      "18:30",
+      "18:45",
+    ],
+  },
+  {
+    "date": "2026-10-11",
+    "deaf": false,
+    "directors": [
+      "Michael Radford",
+    ],
+    "link": "https://www.festival-lumiere.org/film/1984",
+    "times": [
+      "20:45",
+      "21:00",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Lewis Milestone",
+    ],
+    "link": "https://www.festival-lumiere.org/film/anything-goes-tops-is-the-limit",
+    "times": [
+      "09:00",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Donald Crombie",
+    ],
+    "link": "https://www.festival-lumiere.org/film/caddie",
+    "times": [
+      "11:15",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Tonie Marshall",
+    ],
+    "link": "https://www.festival-lumiere.org/film/souvenirs-de-tonie-marshall",
+    "times": [
+      "14:15",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Jules Dassin",
+    ],
+    "link": "https://www.festival-lumiere.org/film/jamais-le-dimanche",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Todd Haynes",
+    ],
+    "link": "https://www.festival-lumiere.org/film/safe",
+    "times": [
+      "18:45",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Ken Russell",
+    ],
+    "link": "https://www.festival-lumiere.org/film/les-diables",
+    "times": [
+      "21:30",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Louis Daquin",
+    ],
+    "link": "https://www.festival-lumiere.org/film/nous-les-gosses",
+    "times": [
+      "09:00",
+      "09:15",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Ettore Scola",
+    ],
+    "link": "https://www.festival-lumiere.org/film/nous-nous-sommes-tant-aimes",
+    "times": [
+      "11:00",
+      "11:15",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Sandra Marti",
+    ],
+    "link": "https://www.festival-lumiere.org/film/marco-bellocchio-le-cinema-de-la-revolte-a-la-tendresse",
+    "times": [
+      "13:45",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Leopoldo Torre Nilsson",
+    ],
+    "link": "https://www.festival-lumiere.org/film/la-maison-de-lange",
+    "times": [
+      "15:30",
+      "15:45",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Louis Daquin",
+    ],
+    "link": "https://www.festival-lumiere.org/film/les-freres-bouquinquant",
+    "times": [
+      "17:15",
+      "17:30",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Ettore Scola",
+    ],
+    "link": "https://www.festival-lumiere.org/film/quelle-heure-est-il",
+    "times": [
+      "19:30",
+      "19:45",
+    ],
+  },
+  {
+    "date": "2026-10-12",
+    "deaf": false,
+    "directors": [
+      "Norman Jewison",
+    ],
+    "link": "https://www.festival-lumiere.org/film/agnes-de-dieu",
+    "times": [
+      "21:30",
+    ],
+  },
+  {
+    "date": "2026-10-13",
+    "deaf": false,
+    "directors": [
+      "Norman Jewison",
+    ],
+    "link": "https://www.festival-lumiere.org/film/dans-la-chaleur-de-la-nuit",
+    "times": [
+      "09:00",
+    ],
+  },
+  {
+    "date": "2026-10-13",
+    "deaf": false,
+    "directors": [
+      "Gustav Machaty",
+    ],
+    "link": "https://www.festival-lumiere.org/film/erotikon",
+    "times": [
+      "11:30",
+    ],
+  },
+  {
+    "date": "2026-10-13",
+    "deaf": false,
+    "directors": [
+      "Carlo Rim",
+    ],
+    "link": "https://www.festival-lumiere.org/film/la-maison-bonnadieu",
+    "times": [
+      "13:45",
+    ],
+  },
+  {
+    "date": "2026-10-13",
+    "deaf": false,
+    "directors": [
+      "Agnès Jaoui",
+    ],
+    "link": "https://www.festival-lumiere.org/film/comme-une-image",
+    "times": [
+      "16:15",
+    ],
+  },
+  {
+    "date": "2026-10-13",
+    "deaf": false,
+    "directors": [
+      "Javier Calvo",
+      "Javier Ambrossi",
+    ],
+    "link": "https://www.festival-lumiere.org/film/la-bola-negra",
+    "times": [
+      "20:45",
+    ],
+  },
+  {
+    "date": "2026-10-13",
+    "deaf": false,
+    "directors": [
+      "Gilda Abreu",
+    ],
+    "link": "https://www.festival-lumiere.org/film/livrogne",
+    "times": [
+      "09:00",
+      "09:15",
+    ],
+  },
+  {
+    "date": "2026-10-13",
+    "deaf": false,
+    "directors": [
+      "Léo Favier",
+    ],
+    "link": "https://www.festival-lumiere.org/film/le-japon-la-beaute-et-leffondrement",
+    "times": [
+      "11:45",
+      "12:00",
+    ],
+  },
+  {
+    "date": "2026-10-13",
+    "deaf": false,
+    "directors": [
+      "Patrick Jeudy",
+    ],
+    "link": "https://www.festival-lumiere.org/film/jean-gabin-la-guerre-cest-pas-du-cinema",
+    "times": [
+      "14:30",
+      "14:45",
+    ],
+  },
+  {
+    "date": "2026-10-13",
+    "deaf": false,
+    "directors": [
+      "Kun-hou Chen",
+    ],
+    "link": "https://www.festival-lumiere.org/film/lallee-des-osmanthes",
+    "times": [
+      "16:30",
+      "16:45",
+    ],
+  },
+  {
+    "date": "2026-10-13",
+    "deaf": false,
+    "directors": [
+      "Marta Mészaros",
+    ],
+    "link": "https://www.festival-lumiere.org/film/chemins-croises",
+    "times": [
+      "19:00",
+      "19:15",
+    ],
+  },
+  {
+    "date": "2026-10-13",
+    "deaf": false,
+    "directors": [
+      "Sergio Sollima",
+    ],
+    "link": "https://www.festival-lumiere.org/film/saludos-hombre",
+    "times": [
+      "21:30",
+      "21:45",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [
+      "Michael Powell",
+      "Emeric Pressburger",
+    ],
+    "link": "https://www.festival-lumiere.org/film/la-renarde",
+    "times": [
+      "09:00",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [
+      "Claude Lelouch",
+    ],
+    "link": "https://www.festival-lumiere.org/film/un-homme-et-une-femme",
+    "times": [
+      "11:30",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.festival-lumiere.org/programme/invitation-a-agnes-jaoui",
+    "times": [
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [
+      "Brad Bird",
+    ],
+    "link": "https://www.festival-lumiere.org/film/ray-gunn",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [
+      "Joel",
+      "Ethan Coen",
+    ],
+    "link": "https://www.festival-lumiere.org/film/barton-fink",
+    "times": [
+      "19:30",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [
+      "Mamoru Oshii",
+    ],
+    "link": "https://www.festival-lumiere.org/film/ghost-in-the-shell",
+    "times": [
+      "22:15",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [
+      "Gustav Machaty",
+    ],
+    "link": "https://www.festival-lumiere.org/film/du-samedi-au-dimanche",
+    "times": [
+      "09:30",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [
+      "Yves Montmayeur",
+    ],
+    "link": "https://www.festival-lumiere.org/film/twist-shoot-mister-suzuki",
+    "times": [
+      "11:30",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [
+      "Georg Wilhelm Pabst",
+    ],
+    "link": "https://www.festival-lumiere.org/film/les-mysteres-dune-ame",
+    "times": [
+      "14:15",
+      "14:30",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.festival-lumiere.org/programme/invitation-a-agnes-jaoui",
+    "times": [
+      "16:30",
+      "16:45",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [],
+    "link": "https://www.festival-lumiere.org/programme/invitation-a-todd-haynes",
+    "times": [
+      "19:00",
+      "19:15",
+    ],
+  },
+  {
+    "date": "2026-10-14",
+    "deaf": false,
+    "directors": [
+      "Grigoris Grigoriou",
+    ],
+    "link": "https://www.festival-lumiere.org/film/pain-amer",
+    "times": [
+      "21:00",
+      "21:15",
+    ],
+  },
+  {
+    "date": "2026-10-15",
+    "deaf": false,
+    "directors": [
+      "Marco de Gastyne",
+      "Maurice Gleize",
+    ],
+    "link": "https://www.festival-lumiere.org/film/la-madone-des-sleepings",
+    "times": [
+      "10:00",
+    ],
+  },
+  {
+    "date": "2026-10-15",
+    "deaf": false,
+    "directors": [
+      "Kamal Amrohi",
+    ],
+    "link": "https://www.festival-lumiere.org/film/pakeezah",
+    "times": [
+      "13:45",
+    ],
+  },
+  {
+    "date": "2026-10-15",
+    "deaf": false,
+    "directors": [
+      "Nadine Labaki",
+    ],
+    "link": "https://www.festival-lumiere.org/film/caramel",
+    "times": [
+      "17:00",
+    ],
+  },
+  {
+    "date": "2026-10-15",
+    "deaf": false,
+    "directors": [
+      "Lee Chang-dong",
+    ],
+    "link": "https://www.festival-lumiere.org/film/possible-love",
+    "times": [
+      "19:30",
+    ],
+  },
+  {
+    "date": "2026-10-15",
+    "deaf": false,
+    "directors": [
+      "Helmut Käutner",
+    ],
+    "link": "https://www.festival-lumiere.org/film/epilogue",
+    "times": [
+      "09:30",
+      "09:45",
+    ],
+  },
+  {
+    "date": "2026-10-15",
+    "deaf": false,
+    "directors": [
+      "Alexis Damianos",
+    ],
+    "link": "https://www.festival-lumiere.org/film/jusquau-bateau",
+    "times": [
+      "11:15",
+      "11:30",
+    ],
+  },
+  {
+    "date": "2026-10-15",
+    "deaf": false,
+    "directors": [
+      "Gustav Machaty",
+    ],
+    "link": "https://www.festival-lumiere.org/film/extase",
+    "times": [
+      "14:00",
+      "14:15",
+    ],
+  },
+  {
+    "date": "2026-10-15",
+    "deaf": false,
+    "directors": [
+      "Juraj Jakubisko",
+    ],
+    "link": "https://www.festival-lumiere.org/film/les-oiseaux-les-orphelins-et-les-fous",
+    "times": [
+      "16:15",
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-10-15",
+    "deaf": false,
+    "directors": [
+      "Louis Daquin",
+    ],
+    "link": "https://www.festival-lumiere.org/film/les-freres-bouquinquant",
+    "times": [
+      "18:15",
+      "18:30",
+    ],
+  },
+  {
+    "date": "2026-10-15",
+    "deaf": false,
+    "directors": [
+      "Shohei Imamura",
+    ],
+    "link": "https://www.festival-lumiere.org/film/la-femme-insecte",
+    "times": [
+      "20:30",
+      "20:45",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [
+      "Wendy Toye",
+    ],
+    "link": "https://www.festival-lumiere.org/film/the-teckman-mystery",
+    "times": [
+      "09:15",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [
+      "Raymond Bernard",
+    ],
+    "link": "https://www.festival-lumiere.org/film/anne-marie",
+    "times": [
+      "11:15",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [
+      "Sam Taylor",
+    ],
+    "link": "https://www.festival-lumiere.org/film/tempete",
+    "times": [
+      "14:00",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [
+      "Daniel Kamwa",
+    ],
+    "link": "https://www.festival-lumiere.org/film/pousse-pousse",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [
+      "Norman Jewison",
+    ],
+    "link": "https://www.festival-lumiere.org/film/fist",
+    "times": [
+      "19:15",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [],
+    "link": "https://billetterie.seetickets.fr/nuit-robert-eggers-loisirs-cinema-css5-institutlumiere-pg51-ei1133695.html",
+    "times": [
+      "22:30",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [
+      "André Malraux",
+    ],
+    "link": "https://www.festival-lumiere.org/film/espoir-sierra-de-teruel",
+    "times": [
+      "09:30",
+      "09:45",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [
+      "Aude Vassallo",
+    ],
+    "link": "https://www.festival-lumiere.org/film/marina-vlady-une-actrice-dans-la-guerre-froide",
+    "times": [
+      "11:30",
+      "11:45",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [
+      "Pierre Gaspard-Huit",
+    ],
+    "link": "https://www.festival-lumiere.org/film/sophie-et-le-crime",
+    "times": [
+      "14:00",
+      "14:15",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [
+      "Dino Risi",
+    ],
+    "link": "https://www.festival-lumiere.org/film/le-fanfaron",
+    "times": [
+      "16:30",
+      "16:45",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [
+      "Norman Jewison",
+    ],
+    "link": "https://www.festival-lumiere.org/film/soldiers-story",
+    "times": [
+      "19:00",
+      "19:15",
+    ],
+  },
+  {
+    "date": "2026-10-16",
+    "deaf": false,
+    "directors": [
+      "Ettore Scola",
+    ],
+    "link": "https://www.festival-lumiere.org/film/la-plus-belle-soiree-de-ma-vie",
+    "times": [
+      "21:30",
+      "21:45",
+    ],
+  },
+  {
+    "date": "2026-10-17",
+    "deaf": false,
+    "directors": [
+      "Laurent Heynemann",
+    ],
+    "link": "https://www.festival-lumiere.org/film/les-mois-davril-sont-meurtriers",
+    "times": [
+      "09:30",
+    ],
+  },
+  {
+    "date": "2026-10-17",
+    "deaf": false,
+    "directors": [
+      "Paula Delsol",
+    ],
+    "link": "https://www.festival-lumiere.org/film/la-derive",
+    "times": [
+      "11:45",
+    ],
+  },
+  {
+    "date": "2026-10-17",
+    "deaf": false,
+    "directors": [
+      "Joel",
+      "Ethan Coen",
+    ],
+    "link": "https://www.festival-lumiere.org/film/obrother",
+    "times": [
+      "16:00",
+    ],
+  },
+  {
+    "date": "2026-10-17",
+    "deaf": false,
+    "directors": [
+      "Christophe Honoré",
+    ],
+    "link": "https://www.festival-lumiere.org/film/mariage-au-gout-dorange",
+    "times": [
+      "18:45",
+    ],
+  },
+  {
+    "date": "2026-10-17",
+    "deaf": false,
+    "directors": [
+      "Stanley Kubrick",
+    ],
+    "link": "https://www.festival-lumiere.org/film/shining",
+    "times": [
+      "21:45",
+    ],
+  },
+  {
+    "date": "2026-10-17",
+    "deaf": false,
+    "directors": [
+      "Vittorio De Sica",
+    ],
+    "link": "https://www.festival-lumiere.org/film/les-fleurs-du-soleil",
+    "times": [
+      "10:30",
+    ],
+  },
+  {
+    "date": "2026-10-17",
+    "deaf": false,
+    "directors": [
+      "Wendy Toye",
+    ],
+    "link": "https://www.festival-lumiere.org/film/the-teckman-mystery",
+    "times": [
+      "14:30",
+      "14:45",
+    ],
+  },
+  {
+    "date": "2026-10-17",
+    "deaf": false,
+    "directors": [
+      "Romain Baudéan",
+    ],
+    "link": "https://www.festival-lumiere.org/film/dautres-vies-que-la-sienne",
+    "times": [
+      "16:45",
+    ],
+  },
+  {
+    "date": "2026-10-17",
+    "deaf": false,
+    "directors": [
+      "Maria Plyta",
+    ],
+    "link": "https://www.festival-lumiere.org/film/eva",
+    "times": [
+      "19:00",
+      "19:15",
+    ],
+  },
+  {
+    "date": "2026-10-17",
+    "deaf": false,
+    "directors": [
+      "Tsui Hark",
+    ],
+    "link": "https://www.festival-lumiere.org/film/time-and-tide",
+    "times": [
+      "21:00",
+      "21:15",
+    ],
+  },
+  {
+    "date": "2026-10-18",
+    "deaf": false,
+    "directors": [
+      "Norman Jewison",
+    ],
+    "link": "https://www.festival-lumiere.org/film/agnes-de-dieu",
+    "times": [
+      "09:00",
+    ],
+  },
+  {
+    "date": "2026-10-18",
+    "deaf": true,
+    "directors": [
+      "Gérard Oury",
+    ],
+    "link": "https://www.festival-lumiere.org/film/la-folie-des-grandeurs",
+    "times": [
+      "11:15",
+    ],
+  },
+  {
+    "date": "2026-10-18",
+    "deaf": true,
+    "directors": [
+      "Jean-Pierre Melville",
+    ],
+    "link": "https://www.festival-lumiere.org/film/un-flic",
+    "times": [
+      "14:00",
+    ],
+  },
+  {
+    "date": "2026-10-18",
+    "deaf": false,
+    "directors": [
+      "Vittorio De Sica",
+    ],
+    "link": "https://www.festival-lumiere.org/film/les-fleurs-du-soleil",
+    "times": [
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-10-18",
+    "deaf": false,
+    "directors": [
+      "Joel",
+      "Ethan Coen",
+    ],
+    "link": "https://www.festival-lumiere.org/film/no-country-for-old-men",
+    "times": [
+      "19:00",
+    ],
+  },
+  {
+    "date": "2026-10-18",
+    "deaf": false,
+    "directors": [
+      "Emmanuel Barnault",
+    ],
+    "link": "https://www.festival-lumiere.org/film/jane-comedienne",
+    "times": [
+      "10:30",
+    ],
+  },
+  {
+    "date": "2026-10-18",
+    "deaf": false,
+    "directors": [
+      "Norman Jewison",
+    ],
+    "link": "https://www.festival-lumiere.org/film/ne-menvoyez-pas-de-fleurs",
+    "times": [
+      "14:00",
+      "14:15",
+    ],
+  },
+  {
+    "date": "2026-10-18",
+    "deaf": false,
+    "directors": [
+      "Louis Daquin",
+    ],
+    "link": "https://www.festival-lumiere.org/film/le-point-du-jour",
+    "times": [
+      "16:15",
+      "16:30",
+    ],
+  },
+  {
+    "date": "2026-10-18",
+    "deaf": false,
+    "directors": [
+      "Georges Lautner",
+    ],
+    "link": "https://www.festival-lumiere.org/film/arretez-les-tambours",
+    "times": [
+      "18:30",
+      "18:45",
+    ],
+  },
+]
+`;
+
+exports[`film of a programme page 1`] = `
+{
+  "bookings": {
+    "2026-09-01T19:30": "https://billetterie.seetickets.fr/amadeus-loisirs-institut-lumiere-hangar-lyon-01-septembre-2026-css5-institutlumiere-pg101-ri11898177.html",
+    "2026-09-05T20:15": "https://billetterie.seetickets.fr/amadeus-loisirs-cinema-css5-institutlumiere-pg51-ei1129993.html",
+    "2026-09-13T16:45": "https://billetterie.seetickets.fr/amadeus-loisirs-cinema-css5-institutlumiere-pg51-ei1130073.html",
+    "2026-10-04T16:45": "https://billetterie.seetickets.fr/amadeus-loisirs-cinema-css5-institutlumiere-pg51-ei1130351.html",
+  },
+  "countries": [
+    "France",
+    "États-Unis",
+  ],
+  "directors": null,
+  "originalTitle": null,
+  "productionYear": 1984,
+  "runtime": "2h 40min",
+  "synopsis": "Après avoir tenté de mettre fin à ses jours, Salieri raconte la rivalité qui l’a opposé toute sa vie à Mozart… Le film aux huit Oscars, sans doute le plus populaire de Forman, qui le qualifie de “thriller dans un milieu musical”. De retour à Prague des années après Au feu les pompiers, Le cinéaste signe une mise en scène aussi somptueuse que réaliste.",
+  "title": "Amadeus",
+}
+`;
+
+exports[`film of a programme page with its director 1`] = `
+{
+  "bookings": {
+    "2026-08-30T17:00": "https://billetterie.seetickets.fr/yojimbo-loisirs-cinema-css5-institutlumiere-pg51-ei1128267.html",
+    "2026-09-08T16:30": "https://billetterie.seetickets.fr/yojimbo-loisirs-cinema-css5-institutlumiere-pg51-ei1130005.html",
+    "2026-09-12T17:00": "https://billetterie.seetickets.fr/yojimbo-loisirs-cinema-css5-institutlumiere-pg51-ei1130065.html",
+    "2026-09-18T16:00": "https://billetterie.seetickets.fr/yojimbo-loisirs-cinema-css5-institutlumiere-pg51-ei1130093.html",
+    "2026-10-04T17:00": "https://billetterie.seetickets.fr/yojimbo-loisirs-cinema-css5-institutlumiere-pg51-ei1130353.html",
+  },
+  "countries": [
+    "Japon",
+  ],
+  "directors": [
+    "Akira Kurosawa",
+  ],
+  "originalTitle": null,
+  "productionYear": 1961,
+  "runtime": "1h 50min",
+  "synopsis": "À la fin de l’ère Edo, Sanjuro, un samouraï, arrive dans un village écartelé entre deux bandes rivales… Plus grand succès de Kurosawa au Japon, Yojimbo inspirera Sergio Leone pour son fameux Pour une poignée de dollars.",
+  "title": "Yojimbo",
+}
+`;
+
+exports[`film of the festival 1`] = `
+{
+  "bookings": {},
+  "countries": [
+    "Grèce",
+  ],
+  "directors": [
+    "Jules Dassin",
+  ],
+  "originalTitle": "Pote tin Kyriaki",
+  "productionYear": 1960,
+  "runtime": "1h 32min",
+  "synopsis": "Au Pirée, Ilya (Melina Mercouri) vit de ses charmes. Ses principes : aucun tarif défini tant que ses clients lui plaisent, ne pas travailler ni le dimanche ni les jours de représentation de théâtre antique, sa grande passion. Ilya vit heureuse, jusqu’au jour où elle rencontre Homère (Jules Dassin) dans une taverne. L’Américain est un philosophe amateur, venu en Grèce pour trouver la Vérité. Tombé sous le charme de la belle et joyeuse jeune femme, il décide de la ramener sur les chemins de la vertu…",
+  "title": "Jamais le dimanche",
+}
+`;
+
+exports[`rows 1`] = `
+[
+  {
+    "movie": {
+      "countries": [
+        "France",
+        "États-Unis",
+      ],
+      "directors": [
+        "M. Forman",
+      ],
+      "genres": [],
+      "id": "lumiere:programme-milos-forman-amadeus",
+      "originalTitle": "Amadeus",
+      "productionYear": 1984,
+      "runtime": "2h 40min",
+      "synopsis": "Après avoir tenté de mettre fin à ses jours, Salieri raconte la rivalité qui l’a opposé toute sa vie à Mozart… Le film aux huit Oscars, sans doute le plus populaire de Forman, qui le qualifie de “thriller dans un milieu musical”. De retour à Prague des années après Au feu les pompiers, Le cinéaste signe une mise en scène aussi somptueuse que réaliste.",
+      "title": "Amadeus",
+      "url": "https://www.institut-lumiere.org/programme/milos-forman#amadeus",
+    },
+    "screening": {
+      "bookingUrl": "https://billetterie.seetickets.fr/amadeus-loisirs-cinema-css5-institutlumiere-pg51-ei1130351.html",
+      "experiences": [],
+      "language": "local",
+      "startsAt": "2026-10-04T16:45:00",
+      "subtitles": "none",
+      "theaterId": "P0050",
+    },
+  },
+  {
+    "movie": {
+      "countries": [
+        "France",
+        "États-Unis",
+      ],
+      "directors": [
+        "M. Forman",
+      ],
+      "genres": [],
+      "id": "lumiere:programme-milos-forman-amadeus",
+      "originalTitle": "Amadeus",
+      "productionYear": 1984,
+      "runtime": "2h 40min",
+      "synopsis": "Après avoir tenté de mettre fin à ses jours, Salieri raconte la rivalité qui l’a opposé toute sa vie à Mozart… Le film aux huit Oscars, sans doute le plus populaire de Forman, qui le qualifie de “thriller dans un milieu musical”. De retour à Prague des années après Au feu les pompiers, Le cinéaste signe une mise en scène aussi somptueuse que réaliste.",
+      "title": "Amadeus",
+      "url": "https://www.institut-lumiere.org/programme/milos-forman#amadeus",
+    },
+    "screening": {
+      "bookingUrl": null,
+      "experiences": [],
+      "language": "local",
+      "startsAt": "2026-10-04T17:00:00",
+      "subtitles": "none",
+      "theaterId": "P0050",
+    },
+  },
+]
+`;

@@ -225,7 +225,7 @@ export function parseShowtimesPage(
 
 function movieInfo(movie: z.infer<typeof MovieSchema>): MovieInfo {
   return {
-    id: movie.internalId,
+    id: allocineMovieId(movie.internalId),
     title: movie.title.trim(),
     originalTitle: movie.originalTitle.trim(),
     synopsis: movie.synopsis?.trim() || null,
@@ -243,6 +243,15 @@ function movieInfo(movie: z.infer<typeof MovieSchema>): MovieInfo {
       ),
     url: `${ORIGIN}/film/fichefilm_gen_cfilm=${String(movie.internalId)}.html`,
   };
+}
+
+export function allocineMovieId(internalId: number): string {
+  return `allocine:${String(internalId)}`;
+}
+
+/** `null` for a movie from another source. */
+export function allocineIdOf(movieId: string): string | null {
+  return /^allocine:(\d+)$/.exec(movieId)?.[1] ?? null;
 }
 
 /** The `default` provider is the theater's own ticketing site. */

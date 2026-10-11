@@ -40,14 +40,14 @@ export function Fiche({ showing }: Props) {
 }
 
 function FicheSummary({ showing }: Props) {
-  const { movie, synopsis } = showing;
+  const { movie, synopsis, genres } = showing;
   const meta = [
     movie.productionYear,
     movie.countries.join(", "),
     movie.directors.join(", "),
     // "1h 55min" stays on one line.
     movie.runtime?.replace(" ", "\u00a0"),
-    movie.genres.join(", "),
+    genres.join(", "),
   ].filter((part) => part != null && part !== "");
 
   return (

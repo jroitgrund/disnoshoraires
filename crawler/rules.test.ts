@@ -25,7 +25,7 @@ const movie = (
   productionYear: number | null,
   directors: string[],
 ): MovieInfo => ({
-  id,
+  id: `allocine:${String(id)}`,
   title,
   originalTitle,
   synopsis: null,
@@ -65,8 +65,9 @@ const [fjordTarget, belovedTarget, akiraTarget] = targets([
 ]).map((target): Linked => ({
   ...target,
   wikidata:
-    byAllocineId.find((i) => i.allocineIds.includes(String(target.movie.id))) ??
-    null,
+    byAllocineId.find((i) =>
+      i.allocineIds.includes(target.movie.id.replace("allocine:", "")),
+    ) ?? null,
 }));
 if (fjordTarget == null || belovedTarget == null || akiraTarget == null) {
   throw new Error("targets");
@@ -74,7 +75,7 @@ if (fjordTarget == null || belovedTarget == null || akiraTarget == null) {
 
 test("Wikidata lookup", () => {
   const lookup = wikidataLookup(fjordTarget);
-  const [other] = targets([{ ...fjord, id: 1 }]);
+  const [other] = targets([{ ...fjord, id: "allocine:1" }]);
   if (other == null) {
     throw new Error("targets");
   }

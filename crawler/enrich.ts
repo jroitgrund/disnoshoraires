@@ -1,5 +1,6 @@
 import type { Session } from "pantomime";
 import type { Enrichment, MovieInfo } from "../shared/schema.ts";
+import { allocineIdOf } from "./allocine.ts";
 import { type Found, NOTHING, report, toExternal } from "./external.ts";
 import { type Target, targets } from "./film.ts";
 import type { Http } from "./http.ts";
@@ -24,7 +25,7 @@ type WithTmdb = Linked & Pick<Found, "tmdb" | "backdrop">;
 type WithSessionSites = WithTmdb & Pick<Found, "letterboxd" | "rottenTomatoes">;
 
 /**
- * Links, ratings, and a backdrop for each movie, by AlloCiné ID. See README.md for the rules.
+ * Links, ratings, and a backdrop for each movie, by movie ID. See README.md for the rules.
  * The plain HTTP sites run in parallel with the session sites.
  */
 export async function enrich(
@@ -53,18 +54,18 @@ export async function enrich(
     console.error(report(movie, sites));
   });
   return Object.fromEntries(
-    external.map(([movie, sites]) => [String(movie.id), sites]),
+    external.map(([movie, sites]) => [movie.id, sites]),
   );
 }
 
-/** Queries for the items with the movies' AlloCiné IDs, then a search by title for each movie without one. */
+/** Queries for the items with the movies' AlloCiné IDs, then a search by title for each movie without an item. */
 async function wikidataPass(
   http: Http,
   all: readonly Target[],
 ): Promise<Linked[]> {
   const byAllocineId = await wikidataFilmsByAllocineIds(
     http,
-    all.map((target) => target.movie.id),
+    all.flatMap((target) => allocineIdOf(target.movie.id) ?? []),
   );
   const site = wikidataSite(http);
   const done = progress("wikidata", all.length);
@@ -130,7 +131,7 @@ async function sessionPass(
 async function sensCritiquePass(
   http: Http,
   all: readonly Linked[],
-): Promise<Map<number, SensCritiqueFilm | null>> {
+): Promise<Map<string, SensCritiqueFilm | null>> {
   const site = sensCritiqueSite(http);
   const done = progress("senscritique", all.length);
   return new Map(

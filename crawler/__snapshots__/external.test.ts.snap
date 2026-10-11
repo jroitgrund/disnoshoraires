@@ -19,6 +19,7 @@ exports[`external 1`] = `
   },
   "tmdb": {
     "backdrop": "https://image.tmdb.org/t/p/original/fjord.jpg",
+    "genres": [],
     "rating": 7.2,
     "ratingCount": 85,
     "synopsis": null,

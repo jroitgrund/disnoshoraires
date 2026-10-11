@@ -169,6 +169,9 @@ exports[`film page 1`] = `
   "directors": [
     "Cristian Mungiu",
   ],
+  "genres": [
+    "Drame",
+  ],
   "id": "1401459",
   "rating": 7.2,
   "ratingCount": 85,
@@ -186,6 +189,12 @@ exports[`film page that shares only the French title with AlloCiné 1`] = `
 {
   "directors": [
     "Tetsuo Yajima",
+  ],
+  "genres": [
+    "Animation",
+    "Aventure",
+    "Fantastique",
+    "Familial",
   ],
   "id": "1542261",
   "rating": 7.1,
