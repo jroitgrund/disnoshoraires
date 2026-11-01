@@ -67,6 +67,17 @@ test("late shows after midnight are on the day before", () => {
   expect(lateShows("2026-10-11")).toEqual([]);
 });
 
+test("null experiences are left out", () => {
+  const json = JSON.parse(fixture("allocine/showtimes-p0028.json")) as {
+    results: { showtimes: { original_st: { experience: unknown }[] } }[];
+  };
+  json.results[0]!.showtimes.original_st[0]!.experience = [null, "Dolby"];
+  const page = parseShowtimesPage(JSON.stringify(json), "P0028", "2026-10-10");
+  expect(page.results[0]!.showtimes["original_st"]![0]!.experience).toEqual([
+    "Dolby",
+  ]);
+});
+
 test("day without showtimes", () => {
   const page = parseShowtimesPage(
     fixture("allocine/showtimes-p0028-past.json"),

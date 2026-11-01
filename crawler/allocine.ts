@@ -25,7 +25,10 @@ function nullish<T extends z.ZodType>(schema: T) {
 const ShowtimeSchema = z.object({
   startsAt: z.string(),
   diffusionVersion: z.enum(["DUBBED", "ORIGINAL", "LOCAL"]),
-  experience: z.array(z.string()).nullable(),
+  // Allociné sends `null` for the list, and also `null` items in it.
+  experience: nullish(z.array(z.string().nullable())).transform((list) =>
+    (list ?? []).filter((experience) => experience !== null),
+  ),
   data: nullish(
     z.object({
       ticketing: nullish(
@@ -160,7 +163,7 @@ export function showtimeRows(
                 startsAt: showtime.startsAt,
                 language: LANGUAGES[showtime.diffusionVersion],
                 subtitles: subtitlesOf(bucket),
-                experiences: showtime.experience ?? [],
+                experiences: showtime.experience,
                 bookingUrl: bookingUrl(showtime.data?.ticketing ?? null),
               },
             })),
