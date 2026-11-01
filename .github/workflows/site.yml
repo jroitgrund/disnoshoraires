@@ -69,7 +69,11 @@ jobs:
           cache: npm
       - run: npm ci
       # pantomime opens Google Chrome with a window: it needs Chrome and a display.
-      - run: npx patchright install --with-deps --force chrome
+      # The Chrome download from dl.google.com sometimes breaks.
+      - run: >
+          npx patchright install --with-deps --force chrome
+          || npx patchright install --with-deps --force chrome
+          || npx patchright install --with-deps --force chrome
       - run: xvfb-run --auto-servernum npm run crawl -- ${{ matrix.city }}
       - uses: actions/upload-artifact@v5
         with:
@@ -96,7 +100,11 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npx patchright install --with-deps --force chrome
+      # The Chrome download from dl.google.com sometimes breaks.
+      - run: >
+          npx patchright install --with-deps --force chrome
+          || npx patchright install --with-deps --force chrome
+          || npx patchright install --with-deps --force chrome
       - uses: actions/download-artifact@v5
         with:
           pattern: showtimes-*
